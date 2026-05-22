@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta name="google-site-verification" content="ftFOlJETX-2KNjaPh8W6s8lhigItRuu9fOmjHZZ0nY0" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <title>Truly End-to-End Expressive Speech-to-Speech Translation via Voice Conversion</title>
+</head>
+<style type="text/css">
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  audio {
+    width: 100%;
+  }
+
+  thead>tr>th:first-child {
+    width: 96px;
+  }
+
+  @media (max-width: 767px) {
+    .big-screen {
+      display: none;
+    }
+  }
+
+  @media (min-width: 767px) {
+    .small-screen {
+      display: none;
+    }
+  }
+  .column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clear floats after image containers */
+</style>
+
+<body>
+  <header class="header">
+    <div class="jumbotron text-center" style="background-color: #232F3E;">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <h1><a class="text-light">Truly End-to-End Expressive Speech-to-Speech Translation via Voice Conversion for Expressive Multilingual Alignmen</h1><br>
+              <i>Anonymous Authors</i>
+              <!-- <font size=5><span style="color:#FFFFFF"> <i> Ismail Rasim Ulgen<sup>1,2</sup>, Nancy Liu<sup>2</sup>, Najmeh Sadoughi<sup>1</sup>, Abhishek Yanamandra<sup>1</sup>,Abhinav Jain<sup>1</sup>, Zhu Liu<sup>1</sup>, Vimal Bhat <sup>1</sup></i></font>   </a>  <br>
+              <font size=5><span style="color:#FFFFFF">  <sup>1</sup>Amazon Prime Video</font>   </a>  <br>
+                <font size=5><span style="color:#FFFFFF">  <sup>2</sup>Center for Language and Speech Processing (CLSP), Johns Hopkins University, USA </font>   </a> -->
+              
+            <p>
+              <div class="row">
+              </div>
+            </p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+   <p style="padding-left: 20px;"> <b> Abstract: </b> Expressive speech-to-speech translation (S2ST)
+remains limited by the lack of multilingual
+speech pairs that are parallel not only in con-
+tent but also in speaker identity and prosody.
+Existing systems therefore often rely on mod-
+ular training, target-side prompts, or partially
+aligned supervision, creating a mismatch be-
+tween training and inference. Dubbed speech
+provides a promising starting point because
+it naturally exhibits substantial temporal and
+prosodic correspondence across languages, but
+cross-lingual speaker mismatch makes it less
+suitable for truly end-to-end training, where
+the translation pairs are parallel in every as-
+pect. We propose a voice-conversion-based
+data construction framework that reduces this
+mismatch and turns dubbed speech into training
+pairs better tailored for direct expressive S2ST.
+To validate our data-level strategy, we train a
+direct S2ST model that maps source speech to
+target speech units without target-side acous-
+tic prompts or intermediate expressive-transfer
+modules. Together, the converted speech pairs
+and direct model provide a more train-test-
+consistent setup for truly end-to-end expressive
+S2ST.
+
+
+<div class="container">
+  <div class="row" id="arch">
+    <div class="col-md-12">
+
+      <h2>Voice-Conversion-Based Expressive Multilingual Alignment</h2>
+      <br />
+      <div class="row justify-content-center">
+        <figure style="text-align:center;">
+          <img src="./framework.png" class="img-fluid" style="max-width: 700px;" />
+          <figcaption style="text-align:left; font-size:16px; margin-top:10px;">
+            Figure 1: Overview of the proposed voice-conversion-based expressive multilingual alignment pipeline. 
+            Voice conversion reduces cross-lingual speaker mismatch in dubbed speech while preserving target-language content and expressive delivery.
+          </figcaption>
+        </figure>
+      </div>
+
+      <br />
+
+      <h2>Direct Speech-to-Speech Translation Model</h2>
+      <br />
+      <div class="row justify-content-center">
+        <figure style="text-align:center;">
+          <img src="./model.png" class="img-fluid" style="max-width: 100%;" />
+          <figcaption style="text-align:left; font-size:16px; margin-top:10px;">
+            Figure 2: Architecture of the direct speech-to-speech translation model. 
+            The model maps source speech representations to target Mimi codec tokens using a temporal decoder and a depth decoder.
+          </figcaption>
+        </figure>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row" id="result">
+  <div class="col-md-12">
+    <div class="big-screen">
+
+      <h2>Speech Samples</h2>
+      <div style="padding-left: 20px;">
+        <b>Experimental Setup:</b>
+        <p></p>
+        <h6>
+          The source speech is from our expressive speech translation evaluation set with different expressive styles.
+        </h6>
+        <h6>
+          <b>Methods:</b>
+          <ul>
+            <li>Ground-truth Target Speech</li>
+            <li>Baseline Direct S2ST</li>
+            <li>Proposed VC-Aligned Direct S2ST</li>
+          </ul>
+        </h6>
+      </div>
+
+      <br /><br />
+
+<br>
+                        <h2 style="text-decoration: underline;">Speech-to-Speech Translation</h2>
+                        <br>
+                      <table class="table">
+
+             
+                         
+                        </tr>
+
+
+                      <tbody>
+                                                                                                  <th colspan=5><h4> English-to-French</h4></th>
+                               </tr>
+                                
+                                <tr>
+                                    <th>Expressive Style</th>
+                                    <th style="text-align:center;">   Source Speech</th>
+                                    <th style="text-align:center;">   Seamless M4T [2] </th>
+                                    <th style="text-align:center;">   TransVIP [3]</th>
+                                    <th style="text-align:center;">   Proposed Method: PASST </th>
+		    
+                              
+                          
+                                </tr>
+
+		 <!-- single sentence -->
+                                                                  </tr>
+                                <!-- single sentence -->
+
+                                <tr>
+                                  <th>  Confused</th>
+
+  
+                                  <td style="display: flex; align-items: center;"> 
+                              
+                                    <audio controls>
+                                      <source src="speech_samples/source/ex01_confused_00289.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/seamlessm4t_fr/ex01_confused_00289.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/transvip_fr/ex01_confused_00289.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/proposed_fr/ex01_confused_00289.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+
+                                  <tr>
+                                  <th>  Default</th>
+
+  
+                                  <td style="display: flex; align-items: center;"> 
+                                    
+                                    <audio controls>
+                                      <source src="speech_samples/source/ex01_default_00040.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/seamlessm4t_fr/ex01_default_00040.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/transvip_fr/ex01_default_00040.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/proposed_fr/ex01_default_00040.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+                                                                    <tr>
+                                  <th>  Happy</th>
+
+  
+                                  <td style="display: flex; align-items: center;"> 
+                                    
+                                    <audio controls>
+                                      <source src="speech_samples/source/ex02_happy_00040.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/seamlessm4t_fr/ex02_happy_00040.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/transvip_fr/ex02_happy_00040.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/proposed_fr/ex02_happy_00040.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+                                   <tr>
+                                                                    <th>  Sad</th>
+
+  
+                                  <td style="display: flex; align-items: center;"> 
+                                    
+                                    <audio controls>
+                                      <source src="speech_samples/source/ex01_sad_00098.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/seamlessm4t_fr/ex01_sad_00098.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/transvip_fr/ex01_sad_00098.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/proposed_fr/ex01_sad_00098.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+
+                                                                  <!-- single sentence -
+                                                                  <!-- single sentence -->
+
+                              
+                                                                                                 </tr>
+                                  <th colspan=5><h4> English-to-Spanish</h4></th>
+                               </tr>
+                                <!-- single sentence -->
+ <tr>
+                                                                    <th>  Default</th>
+
+  
+                                  <td style="display: flex; align-items: center;"> 
+                                    
+                                    <audio controls>
+                                      <source src="speech_samples/source/ex01_default_00282.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/seamlessm4t_es/ex01_default_00282.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/transvip_es/ex01_default_00282.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/proposed_es/ex01_default_00282.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                   <tr>
+                                                                    <th>  Happy</th>
+
+  
+                                  <td style="display: flex; align-items: center;"> 
+                                    
+                                    <audio controls>
+                                      <source src="speech_samples/source/ex02_happy_00040.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/seamlessm4t_es/ex02_happy_00040.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/transvip_es/ex02_happy_00040.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/proposed_es/ex02_happy_00040.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+                                   <tr>
+                                                                    <th>  Sad</th>
+
+  
+                                  <td style="display: flex; align-items: center;"> 
+                                    
+                                    <audio controls>
+                                      <source src="speech_samples/source/ex01_sad_00091.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/seamlessm4t_es/ex01_sad_00091.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/transvip_es/ex01_sad_00091.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/proposed_es/ex01_sad_00091.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+
+                                   <tr>
+                                                                    <th>  Default</th>
+
+  
+                                  <td style="display: flex; align-items: center;"> 
+                                    
+                                    <audio controls>
+                                      <source src="speech_samples/source/ex02_default_00377.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/seamlessm4t_es/ex02_default_00377.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/transvip_es/ex02_default_00377.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="speech_samples/proposed_es/ex02_default_00377.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+
+                      </tbody>
+                       
+
+                    
+
+
+                    <tr></tr>
+                        </table>
+                      </div>
+ </div>
+
+ <div style="padding-left: 20px;">
+  [1] Seamless Communication, et. al. (2023). Seamless: Multilingual Expressive and Streaming Speech Translation.
+  <br>
+  [2] Seamless Communication, & et. al. (2023). SeamlessM4T: Massively Multilingual & Multimodal Machine Translation.
+  <br>
+  [3] Le, C., et. al. (2024). TransVIP: Speech to Speech Translation System with Voice and Isochrony Preservation. In Advances in Neural Information Processing Systems (pp. 89682–89705).
+  <br> 
+  [4] https://github.com/facebookresearch/seamless_communication/blob/main/SEAMLESS_LICENSE
+</div>
+
+
+
+                  </div>
+                 
+        </div>
+      </div>
+      <hr>
+      <div class="row" id="ref">
+  <div style="padding-left: 20px;">
+<b>Disclaimer:</b> The comparisons are for research purposes only as an instantiation of the paper.
+</div>
+
+       <div class="col">
+          <!--<h2>References</h2>
+         
+         -->
+        </div>
+      </div>
+      <hr>
+      <!-- <div class="row" id="contact">
+          <div class="col">
+            <h2>Contact</h2>
+            <div></div>
+          </div>
+        </div> -->
+    </div>
+  </main>
+  <footer class="bg-secondary text-light mt-4 pt-3 pb-2 ">
+    <div class="container">
+      <p class="text-center">
+        
+      </p>
+    </div>
+  </footer>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
