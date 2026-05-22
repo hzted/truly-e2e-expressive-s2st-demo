@@ -1,2 +1,2 @@
-# truely-expressive-s2st-demo
+# truly-expressive-s2st-demo
 
