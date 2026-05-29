@@ -367,12 +367,26 @@
       line-height: 1.25;
     }
 
-    .method-head .method-ref {
+    .method-head span {
       display: block;
-      margin-top: 4px;
-      color: var(--muted);
+    }
+
+    .method-head .model-name {
+      font-weight: 750;
+    }
+
+    .method-head .train-data {
+      margin-top: 3px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .method-head .proposed-tag {
+      margin-top: 2px;
       font-size: 12px;
-      font-weight: 550;
+      font-weight: 600;
+      color: var(--muted);
     }
 
     .reference-box,
@@ -529,11 +543,27 @@
             </tr>
             <tr>
               <th>Style</th>
-              <th class="method-head">Source Speech</th>
-              <th class="method-head">TransVIP - CVSS-T<span class="method-ref"><a class="cite-link" href="#ref-transvip">[1]</a> <a class="cite-link" href="#ref-cvss">[2]</a></span></th>
-              <th class="method-head">TransVIP - DUB-VC<span class="method-ref"><a class="cite-link" href="#ref-transvip">[1]</a> <a class="cite-link" href="#ref-speechvecalign">[3]</a> <a class="cite-link" href="#ref-seedvc">[4]</a></span></th>
-              <th class="method-head">DirectS2ST - CVSS-T<span class="method-ref"><a class="cite-link" href="#ref-cvss">[2]</a></span></th>
-              <th class="method-head">DirectS2ST - DUB-VC (Proposed)<span class="method-ref"><a class="cite-link" href="#ref-speechvecalign">[3]</a> <a class="cite-link" href="#ref-seedvc">[4]</a></span></th>
+              <th class="method-head">
+                <span class="model-name">Source</span>
+                <span class="train-data">Speech</span>
+              </th>
+              <th class="method-head">
+                <span class="model-name">TransVIP</span>
+                <span class="train-data">CVSS-T</span>
+              </th>
+              <th class="method-head">
+                <span class="model-name">TransVIP</span>
+                <span class="train-data">DUB-VC</span>
+              </th>
+              <th class="method-head">
+                <span class="model-name">DirectS2ST</span>
+                <span class="train-data">CVSS-T</span>
+              </th>
+              <th class="method-head">
+                <span class="model-name">DirectS2ST</span>
+                <span class="train-data">DUB-VC</span>
+                <span class="proposed-tag">(Proposed)</span>
+              </th>
             </tr>
             <tr>
               <th><span class="style-chip">Confused</span></th>
@@ -573,14 +603,30 @@
             </tr>
             <tr>
               <th>Style</th>
-              <th class="method-head">Source Speech</th>
-              <th class="method-head">TransVIP - CVSS-T<span class="method-ref"><a class="cite-link" href="#ref-transvip">[1]</a> <a class="cite-link" href="#ref-cvss">[2]</a></span></th>
-              <th class="method-head">TransVIP - DUB-VC<span class="method-ref"><a class="cite-link" href="#ref-transvip">[1]</a> <a class="cite-link" href="#ref-speechvecalign">[3]</a> <a class="cite-link" href="#ref-seedvc">[4]</a></span></th>
-              <th class="method-head">DirectS2ST - CVSS-T<span class="method-ref"><a class="cite-link" href="#ref-cvss">[2]</a></span></th>
-              <th class="method-head">DirectS2ST - DUB-VC (Proposed)<span class="method-ref"><a class="cite-link" href="#ref-speechvecalign">[3]</a> <a class="cite-link" href="#ref-seedvc">[4]</a></span></th>
+              <th class="method-head">
+                <span class="model-name">Source</span>
+                <span class="train-data">Speech</span>
+              </th>
+              <th class="method-head">
+                <span class="model-name">TransVIP</span>
+                <span class="train-data">CVSS-T</span>
+              </th>
+              <th class="method-head">
+                <span class="model-name">TransVIP</span>
+                <span class="train-data">DUB-VC</span>
+              </th>
+              <th class="method-head">
+                <span class="model-name">DirectS2ST</span>
+                <span class="train-data">CVSS-T</span>
+              </th>
+              <th class="method-head">
+                <span class="model-name">DirectS2ST</span>
+                <span class="train-data">DUB-VC</span>
+                <span class="proposed-tag">(Proposed)</span>
+              </th>
             </tr>
             <tr>
-              <th><span class="style-chip">Confused</span></th>
+              <th><span class="style-chip">Default</span></th>
               <td><audio controls><source src="speech_samples/source/ex01_default_00282.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
               <td><audio controls><source src="speech_samples/transvip_cvsst_es/ex01_default_00282.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
               <td><audio controls><source src="speech_samples/transvip_dubvc_es/ex01_default_00282.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
