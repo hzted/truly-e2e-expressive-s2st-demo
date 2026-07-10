@@ -14,7 +14,7 @@ CORE_COLS = ["path", "sentence", "translation", "src_audio", "tgt_audio"]
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Split a TransVIP ASR metadata TSV while preserving ASR-only columns "
+            "Split a VC-DUB ASR metadata TSV while preserving ASR-only columns "
             "in *_ar.tsv outputs."
         )
     )
@@ -225,8 +225,8 @@ if __name__ == "__main__":
     main()
 
 """
-python {EXPRESSIVE_S2ST_ROOT}/utils/split_transvip_asr_manifest.py \
-  --input-tsv {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/granite_asr/transvip_text_meta.tsv \
+python {EXPRESSIVE_S2ST_ROOT}/utils/build_vcdub_splits.py \
+  --input-tsv {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/granite_asr/vcdub_text_meta.tsv \
   --join-manifest-tsv {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/utmos_filtered_manifest.tsv \
   --input-id-col path \
   --join-id-col id \
@@ -234,7 +234,7 @@ python {EXPRESSIVE_S2ST_ROOT}/utils/split_transvip_asr_manifest.py \
   --target-text-col translation \
   --source-audio-col tgt_audio \
   --target-audio-col pre_tgt \
-  --out-dir {EXPRESSIVE_S2ST_ROOT}/es_en/transvip_splits \
+  --out-dir {EXPRESSIVE_S2ST_ROOT}/es_en/splits \
   --dev-test-ratio 0.12 \
   --test-size 504 \
   --seed 42 \
@@ -242,8 +242,8 @@ python {EXPRESSIVE_S2ST_ROOT}/utils/split_transvip_asr_manifest.py \
 """
 
 """
-python3 {EXPRESSIVE_S2ST_ROOT}/utils/split_transvip_asr_manifest.py \
-  --input-tsv {EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/granite_asr/transvip_text_meta.tsv \
+python3 {EXPRESSIVE_S2ST_ROOT}/utils/build_vcdub_splits.py \
+  --input-tsv {EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/granite_asr/vcdub_text_meta.tsv \
   --join-manifest-tsv {EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/utmos_filtered_manifest.tsv \
   --input-id-col path \
   --join-id-col id \
@@ -251,7 +251,7 @@ python3 {EXPRESSIVE_S2ST_ROOT}/utils/split_transvip_asr_manifest.py \
   --target-text-col translation \
   --source-audio-col tgt_audio \
   --target-audio-col pre_tgt \
-  --out-dir {EXPRESSIVE_S2ST_ROOT}/de_en/transvip_splits \
+  --out-dir {EXPRESSIVE_S2ST_ROOT}/de_en/splits \
   --dev-test-ratio 0.15 \
   --test-size 500 \
   --seed 42 \

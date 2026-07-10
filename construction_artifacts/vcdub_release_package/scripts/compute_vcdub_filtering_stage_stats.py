@@ -256,7 +256,7 @@ def build_language_rows(
     q_src = series_from_split_vad_map(quality, "out", split_vad)
     q_tgt = series_from_split_vad_map(quality, "pre_tgt", split_vad)
     if q_src.notna().all() and q_tgt.notna().all():
-        duration_source = "transvip_splits train/dev/test_ar.tsv VAD-span:out,pre_tgt"
+        duration_source = "splits train/dev/test_ar.tsv VAD-span:out,pre_tgt"
     else:
         q_src_audio = series_from_audio_paths(quality, "out", duration_cache, f"{language_pair} clean pool src fallback", cache_path)
         q_tgt_audio = series_from_audio_paths(quality, "pre_tgt", duration_cache, f"{language_pair} clean pool tgt fallback", cache_path)
@@ -322,8 +322,8 @@ def parse_args() -> argparse.Namespace:
     ap = argparse.ArgumentParser(description="Compute stage-wise VC-DUB filtering duration statistics.")
     ap.add_argument("--es-root", default="{EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised")
     ap.add_argument("--de-root", default="{EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised")
-    ap.add_argument("--es-split-dir", default="{EXPRESSIVE_S2ST_ROOT}/es_en/transvip_splits")
-    ap.add_argument("--de-split-dir", default="{EXPRESSIVE_S2ST_ROOT}/de_en/transvip_splits")
+    ap.add_argument("--es-split-dir", default="{EXPRESSIVE_S2ST_ROOT}/es_en/splits")
+    ap.add_argument("--de-split-dir", default="{EXPRESSIVE_S2ST_ROOT}/de_en/splits")
     ap.add_argument("--out-dir", default="{EXPRESSIVE_S2ST_ROOT}/data_stats/vcdub_filtering_stage_stats")
     ap.add_argument("--duration-cache", default="", help="Optional audio duration cache TSV. Defaults under --out-dir.")
     ap.add_argument("--strict-table1-check", action="store_true")

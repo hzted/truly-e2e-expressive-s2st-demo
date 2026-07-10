@@ -91,7 +91,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/train.tsv.gz",
     "required": true,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/transvip_splits/train.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/train.tsv",
     "stage": "train_split",
     "status": "existing"
   },
@@ -103,7 +103,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/train_ar.tsv.gz",
     "required": true,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/transvip_splits/train_ar.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/train_ar.tsv",
     "stage": "train_ar_split",
     "status": "existing"
   },
@@ -115,7 +115,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/train_asr.tsv.gz",
     "required": false,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/transvip_splits/train_asr.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/train_asr.tsv",
     "stage": "train_asr_split",
     "status": "existing"
   },
@@ -127,7 +127,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/dev.tsv.gz",
     "required": true,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/transvip_splits/dev.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/dev.tsv",
     "stage": "dev_split",
     "status": "existing"
   },
@@ -139,7 +139,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/dev_ar.tsv.gz",
     "required": true,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/transvip_splits/dev_ar.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/dev_ar.tsv",
     "stage": "dev_ar_split",
     "status": "existing"
   },
@@ -151,7 +151,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/dev_asr.tsv.gz",
     "required": false,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/transvip_splits/dev_asr.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/dev_asr.tsv",
     "stage": "dev_asr_split",
     "status": "existing"
   },
@@ -163,7 +163,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/test.tsv.gz",
     "required": true,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/transvip_splits/test.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/test.tsv",
     "stage": "test_split",
     "status": "existing"
   },
@@ -175,7 +175,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/test_ar.tsv.gz",
     "required": true,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/transvip_splits/test_ar.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/test_ar.tsv",
     "stage": "test_ar_split",
     "status": "existing"
   },
@@ -187,7 +187,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/test_asr.tsv.gz",
     "required": false,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/transvip_splits/test_asr.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/test_asr.tsv",
     "stage": "test_asr_split",
     "status": "existing"
   },
@@ -199,7 +199,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/all_ar_filtered.tsv.gz",
     "required": false,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/transvip_splits/all_ar_filtered.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/all_ar_filtered.tsv",
     "stage": "all_ar_filtered",
     "status": "missing"
   },
@@ -211,7 +211,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/summaries/split_summary.json",
     "required": false,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/transvip_splits/split_summary.json",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/split_summary.json",
     "stage": "split_summary",
     "status": "existing"
   },
@@ -307,7 +307,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/train.tsv.gz",
     "required": true,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/transvip_splits/train.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/train.tsv",
     "stage": "train_split",
     "status": "existing"
   },
@@ -319,7 +319,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/train_ar.tsv.gz",
     "required": true,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/transvip_splits/train_ar.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/train_ar.tsv",
     "stage": "train_ar_split",
     "status": "existing"
   },
@@ -331,7 +331,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/train_asr.tsv.gz",
     "required": false,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/transvip_splits/train_asr.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/train_asr.tsv",
     "stage": "train_asr_split",
     "status": "existing"
   },
@@ -343,7 +343,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/dev.tsv.gz",
     "required": true,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/transvip_splits/dev.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/dev.tsv",
     "stage": "dev_split",
     "status": "existing"
   },
@@ -355,7 +355,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/dev_ar.tsv.gz",
     "required": true,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/transvip_splits/dev_ar.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/dev_ar.tsv",
     "stage": "dev_ar_split",
     "status": "existing"
   },
@@ -367,7 +367,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/dev_asr.tsv.gz",
     "required": false,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/transvip_splits/dev_asr.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/dev_asr.tsv",
     "stage": "dev_asr_split",
     "status": "existing"
   },
@@ -379,7 +379,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/test.tsv.gz",
     "required": true,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/transvip_splits/test.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/test.tsv",
     "stage": "test_split",
     "status": "existing"
   },
@@ -391,7 +391,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/test_ar.tsv.gz",
     "required": true,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/transvip_splits/test_ar.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/test_ar.tsv",
     "stage": "test_ar_split",
     "status": "existing"
   },
@@ -403,7 +403,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/test_asr.tsv.gz",
     "required": false,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/transvip_splits/test_asr.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/test_asr.tsv",
     "stage": "test_asr_split",
     "status": "existing"
   },
@@ -415,7 +415,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/all_ar_filtered.tsv.gz",
     "required": false,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/transvip_splits/all_ar_filtered.tsv",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/all_ar_filtered.tsv",
     "stage": "all_ar_filtered",
     "status": "missing"
   },
@@ -427,7 +427,7 @@
     "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/summaries/split_summary.json",
     "required": false,
     "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/transvip_splits/split_summary.json",
+    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/split_summary.json",
     "stage": "split_summary",
     "status": "existing"
   },

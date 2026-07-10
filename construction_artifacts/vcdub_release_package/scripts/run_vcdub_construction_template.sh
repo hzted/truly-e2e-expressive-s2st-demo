@@ -30,7 +30,7 @@ python -u scripts/eval_utmos.py --help
 python -u scripts/select_utmos_subset_by_hours.py --help
 
 echo "[7/8] Build train/dev/test split manifests"
-python -u scripts/split_transvip_asr_manifest.py --help
+python -u scripts/build_vcdub_splits.py --help
 
 echo "[8/8] Run voice conversion locally as final materialization"
 echo "      Use the selected split manifests as input; generated audio is not part of this release."

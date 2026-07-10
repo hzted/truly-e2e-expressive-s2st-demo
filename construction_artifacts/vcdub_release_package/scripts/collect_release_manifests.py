@@ -17,12 +17,12 @@ EXP_ROOT = Path(os.environ.get("EXPRESSIVE_S2ST_ROOT", "{EXPRESSIVE_S2ST_ROOT}")
 LANG_ROOTS = {
     "en_es": {
         "work_root": EXP_ROOT / "es_en" / "seedvc_outputs_netflix_denoised",
-        "split_root": EXP_ROOT / "es_en" / "transvip_splits",
+        "split_root": EXP_ROOT / "es_en" / "splits",
         "release_subdir": "en_es",
     },
     "en_de": {
         "work_root": EXP_ROOT / "de_en" / "seedvc_outputs_netflix_denoised",
-        "split_root": EXP_ROOT / "de_en" / "transvip_splits",
+        "split_root": EXP_ROOT / "de_en" / "splits",
         "release_subdir": "en_de",
     },
 }
@@ -100,8 +100,8 @@ def replacement_pairs() -> list[tuple[str, str]]:
     pairs: list[tuple[str, str]] = [
         (str(EXP_ROOT / "es_en" / "seedvc_outputs_netflix_denoised"), "{VC_DUB_ROOT}/en_es"),
         (str(EXP_ROOT / "de_en" / "seedvc_outputs_netflix_denoised"), "{VC_DUB_ROOT}/en_de"),
-        (str(EXP_ROOT / "es_en" / "transvip_splits"), "{VC_DUB_MANIFEST_ROOT}/en_es/transvip_splits"),
-        (str(EXP_ROOT / "de_en" / "transvip_splits"), "{VC_DUB_MANIFEST_ROOT}/en_de/transvip_splits"),
+        (str(EXP_ROOT / "es_en" / "splits"), "{VC_DUB_MANIFEST_ROOT}/en_es/splits"),
+        (str(EXP_ROOT / "de_en" / "splits"), "{VC_DUB_MANIFEST_ROOT}/en_de/splits"),
         (str(EXP_ROOT), "{EXPRESSIVE_S2ST_ROOT}"),
         ("/export/fs06/bodoom1/DRAL16kHz/netflix/en_es", "{ALIGNED_DUBBING_ROOT}/en_es"),
         ("/export/fs06/bodoom1/DRAL16kHz/netflix/de_en", "{ALIGNED_DUBBING_ROOT}/de_en"),

@@ -19,7 +19,7 @@ The release package treats voice conversion as the final local materialization s
 4. Filter language pairs with MMS-LID.
 5. Remove multi-speaker or overlapped segments with Sortformer diarization.
 6. Apply scale-matched quality selection with UTMOS v2.
-7. Create train/dev/test splits and downstream TransVIP manifests.
+7. Create train/dev/test splits and downstream split manifests.
 8. Run voice conversion locally on the selected split manifests.
 
 This ordering keeps the released artifacts reusable without redistributing audio,
@@ -64,4 +64,4 @@ Table 1 and are not additional filtering gates.
 The early filtering-stage duration statistics use audio-file duration because the
 raw and intermediate cleaning manifests do not store VAD-span columns. Final clean
 pool and training split duration statistics use the VAD-span columns from the
-downstream TransVIP manifests.
+downstream split manifests.
