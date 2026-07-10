@@ -34,20 +34,32 @@ and avoids treating VC-generated waveforms as a standalone benchmark resource.
 - `manifests/`: generated, path-sanitized, compressed manifests and split files.
 - `docs/`: detailed inventory and notes for appendix/reporting.
 
+## Environment
+
+Install the Python dependencies used by the released utility scripts:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Several pipeline stages also require external model repositories or framework-specific
+environments: ClearVoice-Studio for denoising, Demucs for vocal extraction, NeMo for
+Sortformer diarization, DNSMOSPro for quality scoring, and SeedVC for the final voice
+conversion materialization. Those components should be installed following their
+upstream instructions and then wired into the command templates in `scripts/`.
+
 ## Input Requirement
 
 VC-DUB assumes an existing aligned dubbing corpus. In other words, before running
 the construction scripts, users should collect or prepare source/target dubbing
 utterance pairs with corresponding text metadata.
 
-If starting from parallel scripts/subtitles rather than pre-aligned utterances, a
-sentence alignment tool such as
-[VecAlign](https://github.com/thompsonb/vecalign) can be used to obtain bilingual
-text alignments. VecAlign is a sentence alignment method based on multilingual
-sentence embeddings; see Thompson and Koehn (2019),
-[Vecalign: Improved Sentence Alignment in Linear Time and Space](https://aclanthology.org/D19-1136/).
-Equivalent alignment tools can also be used. VC-DUB only requires that the result
-is converted into utterance-level source/target audio pairs.
+If starting from parallel speech documents rather than pre-aligned utterances,
+an embedding-based alignment method such as
+[Speech Vecalign: an Embedding-based Method for Aligning Parallel Speech Documents](https://aclanthology.org/2025.emnlp-main.833.pdf)
+can be used to obtain aligned speech segments. Equivalent alignment tools can also
+be used. VC-DUB only requires that the result is converted into utterance-level
+source/target audio pairs.
 
 The first materialization step expects a pair TSV with:
 
@@ -113,13 +125,3 @@ map placeholders to your local paths:
 - `{VC_DUB_ROOT}/de_en`
 - `{ALIGNED_DUBBING_ROOT}/en_es`
 - `{ALIGNED_DUBBING_ROOT}/de_en`
-
-## Notes
-
-The final training split rows in the statistics are reported for comparison with
-Table 1 and are not additional filtering gates.
-
-The early filtering-stage duration statistics use audio-file duration because the
-raw and intermediate cleaning manifests do not store VAD-span columns. Final clean
-pool and training split duration statistics use the VAD-span columns from the
-downstream split manifests.

@@ -1,0 +1,20 @@
+# Core utilities used by the VC-DUB release scripts.
+pandas>=2.0
+numpy>=1.24
+tqdm>=4.66
+soundfile>=0.12
+librosa>=0.10
+
+# Model/runtime dependencies used by the included filtering and VC wrappers.
+torch>=2.0
+torchaudio>=2.0
+transformers>=4.40
+demucs>=4.0
+julius>=0.2.7
+
+# External stages are intentionally not pinned here because they are commonly run
+# in separate environments:
+# - ClearVoice-Studio for denoising
+# - NeMo / nemo_toolkit[asr] for Sortformer diarization
+# - DNSMOSPro for quality scoring
+# - SeedVC and its project-specific dependencies for voice conversion
