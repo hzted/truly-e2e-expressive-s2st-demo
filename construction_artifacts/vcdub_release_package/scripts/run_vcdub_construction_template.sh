@@ -25,9 +25,9 @@ echo "[5/8] Run Sortformer diarization filtering"
 python -u scripts/eval_sortformer_pair_filter.py --help
 python -u scripts/filter_sortformer_pair_strict.py --help
 
-echo "[6/8] Run UTMOS quality scoring and scale-matched selection"
-python -u scripts/eval_utmos.py --help
-python -u scripts/select_utmos_subset_by_hours.py --help
+echo "[6/8] Run DNSMOSPro quality scoring and scale-matched selection"
+python -u scripts/eval_dnsmospro_quality.py --help
+python -u scripts/select_dnsmospro_quality_subset.py --help
 
 echo "[7/8] Build train/dev/test split manifests"
 python -u scripts/build_vcdub_splits.py --help

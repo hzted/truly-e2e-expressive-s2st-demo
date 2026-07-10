@@ -226,8 +226,8 @@ if __name__ == "__main__":
 
 """
 python {EXPRESSIVE_S2ST_ROOT}/utils/build_vcdub_splits.py \
-  --input-tsv {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/granite_asr/vcdub_text_meta.tsv \
-  --join-manifest-tsv {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/utmos_filtered_manifest.tsv \
+  --input-tsv {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/quality_selection/granite_asr/vcdub_text_meta.tsv \
+  --join-manifest-tsv {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/quality_selection/dnsmospro_filtered_manifest.tsv \
   --input-id-col path \
   --join-id-col id \
   --source-text-col out_sentence \
@@ -243,8 +243,8 @@ python {EXPRESSIVE_S2ST_ROOT}/utils/build_vcdub_splits.py \
 
 """
 python3 {EXPRESSIVE_S2ST_ROOT}/utils/build_vcdub_splits.py \
-  --input-tsv {EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/granite_asr/vcdub_text_meta.tsv \
-  --join-manifest-tsv {EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/utmos_filtered_manifest.tsv \
+  --input-tsv {EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/quality_selection/granite_asr/vcdub_text_meta.tsv \
+  --join-manifest-tsv {EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/quality_selection/dnsmospro_filtered_manifest.tsv \
   --input-id-col path \
   --join-id-col id \
   --source-text-col out_sentence \

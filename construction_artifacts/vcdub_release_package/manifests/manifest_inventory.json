@@ -1,542 +1,192 @@
 [
   {
-    "bytes": 9318910,
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/filtering/stage_00_raw_vc_manifest.tsv.gz",
-    "required": true,
-    "rows_or_items": 352947,
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/manifests/vc_manifest.tsv",
-    "stage": "raw_vc_manifest",
-    "status": "written"
-  },
-  {
-    "bytes": 10023052,
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/filtering/stage_01_mms_lid_pass_manifest.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/lid_pass_manifest.tsv",
-    "stage": "mms_lid_pass",
-    "status": "existing"
-  },
-  {
-    "bytes": 7297440,
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/filtering/stage_02_sortformer_single_speaker_pass.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/sortformer_pair_pass_strict.tsv",
-    "stage": "sortformer_single_speaker_pass",
-    "status": "existing"
-  },
-  {
-    "bytes": 4024453,
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/filtering/stage_03_utmos_quality_selected_manifest.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/utmos_filtered_manifest.tsv",
-    "stage": "scale_matched_quality_selection",
-    "status": "existing"
-  },
-  {
-    "bytes": 532,
-    "kind": "json",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/summaries/mms_lid_summary.json",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/lid_pass_manifest_summary.json",
-    "stage": "mms_lid_summary",
-    "status": "existing"
-  },
-  {
-    "bytes": 1437,
-    "kind": "json",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/summaries/sortformer_summary.json",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/sortformer_pair_summary.json",
-    "stage": "sortformer_summary",
-    "status": "existing"
-  },
-  {
-    "bytes": 2589,
-    "kind": "json",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/summaries/utmos_summary.json",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/utmos_summary.json",
-    "stage": "utmos_summary",
-    "status": "existing"
-  },
-  {
-    "bytes": 6432938,
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/train.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/train.tsv",
-    "stage": "train_split",
-    "status": "existing"
-  },
-  {
-    "bytes": 53746744,
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/train_ar.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/train_ar.tsv",
-    "stage": "train_ar_split",
-    "status": "existing"
-  },
-  {
-    "bytes": 11767580,
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/train_asr.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/train_asr.tsv",
-    "stage": "train_asr_split",
-    "status": "existing"
-  },
-  {
-    "bytes": 837309,
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/dev.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/dev.tsv",
-    "stage": "dev_split",
-    "status": "existing"
-  },
-  {
-    "bytes": 6998123,
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/dev_ar.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/dev_ar.tsv",
-    "stage": "dev_ar_split",
-    "status": "existing"
-  },
-  {
-    "bytes": 1530374,
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/dev_asr.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/dev_asr.tsv",
-    "stage": "dev_asr_split",
-    "status": "existing"
-  },
-  {
-    "bytes": 42625,
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/test.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/test.tsv",
-    "stage": "test_split",
-    "status": "existing"
-  },
-  {
-    "bytes": 347829,
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/test_ar.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/test_ar.tsv",
-    "stage": "test_ar_split",
-    "status": "existing"
-  },
-  {
-    "bytes": 76229,
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/test_asr.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/test_asr.tsv",
-    "stage": "test_asr_split",
-    "status": "existing"
-  },
-  {
-    "bytes": "",
-    "kind": "tsv",
-    "language_pair": "en_es",
-    "note": "missing optional file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/splits/all_ar_filtered.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/all_ar_filtered.tsv",
-    "stage": "all_ar_filtered",
-    "status": "missing"
-  },
-  {
-    "bytes": 1548,
-    "kind": "json",
-    "language_pair": "en_es",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_es/summaries/split_summary.json",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/es_en/splits/split_summary.json",
-    "stage": "split_summary",
-    "status": "existing"
-  },
-  {
+    "release_path": "manifests/en_de/filtering/stage_00_raw_vc_manifest.tsv.gz",
     "bytes": 9579587,
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/filtering/stage_00_raw_vc_manifest.tsv.gz",
-    "required": true,
-    "rows_or_items": 369139,
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/manifests/vc_manifest.tsv",
-    "stage": "raw_vc_manifest",
-    "status": "written"
+    "kind": "tsv.gz"
   },
   {
+    "release_path": "manifests/en_de/filtering/stage_01_mms_lid_pass_manifest.tsv.gz",
     "bytes": 13294606,
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/filtering/stage_01_mms_lid_pass_manifest.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/lid_pass_manifest.tsv",
-    "stage": "mms_lid_pass",
-    "status": "existing"
+    "kind": "tsv.gz"
   },
   {
+    "release_path": "manifests/en_de/filtering/stage_02_sortformer_single_speaker_pass.tsv.gz",
     "bytes": 10025355,
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/filtering/stage_02_sortformer_single_speaker_pass.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/sortformer_pair_pass_strict.tsv",
-    "stage": "sortformer_single_speaker_pass",
-    "status": "existing"
+    "kind": "tsv.gz"
   },
   {
+    "release_path": "manifests/en_de/filtering/stage_03_dnsmospro_quality_selected_manifest.tsv.gz",
     "bytes": 6288191,
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/filtering/stage_03_utmos_quality_selected_manifest.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/utmos_filtered_manifest.tsv",
-    "stage": "scale_matched_quality_selection",
-    "status": "existing"
+    "kind": "tsv.gz"
   },
   {
-    "bytes": 530,
-    "kind": "json",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/summaries/mms_lid_summary.json",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/lid_pass_manifest_summary.json",
-    "stage": "mms_lid_summary",
-    "status": "existing"
+    "release_path": "manifests/en_de/splits/dev.tsv.gz",
+    "bytes": 1258758,
+    "kind": "tsv.gz"
   },
   {
-    "bytes": 1437,
-    "kind": "json",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/summaries/sortformer_summary.json",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/sortformer_pair_summary.json",
-    "stage": "sortformer_summary",
-    "status": "existing"
+    "release_path": "manifests/en_de/splits/dev_ar.tsv.gz",
+    "bytes": 9957409,
+    "kind": "tsv.gz"
   },
   {
-    "bytes": 2571,
-    "kind": "json",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/summaries/utmos_summary.json",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/utmos_summary.json",
-    "stage": "utmos_summary",
-    "status": "existing"
+    "release_path": "manifests/en_de/splits/dev_asr.tsv.gz",
+    "bytes": 2283621,
+    "kind": "tsv.gz"
   },
   {
-    "bytes": 10505433,
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/train.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/train.tsv",
-    "stage": "train_split",
-    "status": "existing"
-  },
-  {
-    "bytes": 82978388,
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/train_ar.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/train_ar.tsv",
-    "stage": "train_ar_split",
-    "status": "existing"
-  },
-  {
-    "bytes": 19071738,
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/train_asr.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/train_asr.tsv",
-    "stage": "train_asr_split",
-    "status": "existing"
-  },
-  {
-    "bytes": 1258749,
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/dev.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/dev.tsv",
-    "stage": "dev_split",
-    "status": "existing"
-  },
-  {
-    "bytes": 9957400,
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/dev_ar.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/dev_ar.tsv",
-    "stage": "dev_ar_split",
-    "status": "existing"
-  },
-  {
-    "bytes": 2283610,
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/dev_asr.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/dev_asr.tsv",
-    "stage": "dev_asr_split",
-    "status": "existing"
-  },
-  {
+    "release_path": "manifests/en_de/splits/test.tsv.gz",
     "bytes": 40625,
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/test.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/test.tsv",
-    "stage": "test_split",
-    "status": "existing"
+    "kind": "tsv.gz"
   },
   {
+    "release_path": "manifests/en_de/splits/test_ar.tsv.gz",
     "bytes": 312400,
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/test_ar.tsv.gz",
-    "required": true,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/test_ar.tsv",
-    "stage": "test_ar_split",
-    "status": "existing"
+    "kind": "tsv.gz"
   },
   {
+    "release_path": "manifests/en_de/splits/test_asr.tsv.gz",
     "bytes": 73021,
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/test_asr.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/test_asr.tsv",
-    "stage": "test_asr_split",
-    "status": "existing"
+    "kind": "tsv.gz"
   },
   {
-    "bytes": "",
-    "kind": "tsv",
-    "language_pair": "en_de",
-    "note": "missing optional file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/splits/all_ar_filtered.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/all_ar_filtered.tsv",
-    "stage": "all_ar_filtered",
-    "status": "missing"
+    "release_path": "manifests/en_de/splits/train.tsv.gz",
+    "bytes": 10505485,
+    "kind": "tsv.gz"
   },
   {
-    "bytes": 1551,
-    "kind": "json",
-    "language_pair": "en_de",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/en_de/summaries/split_summary.json",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/de_en/splits/split_summary.json",
-    "stage": "split_summary",
-    "status": "existing"
+    "release_path": "manifests/en_de/splits/train_ar.tsv.gz",
+    "bytes": 82978411,
+    "kind": "tsv.gz"
   },
   {
-    "bytes": 1242,
-    "kind": "tsv",
-    "language_pair": "all",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/global/vcdub_filtering_stage_stats.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/data_stats/vcdub_filtering_stage_stats/vcdub_filtering_stage_stats.tsv",
-    "stage": "filtering_stage_stats",
-    "status": "existing"
+    "release_path": "manifests/en_de/splits/train_asr.tsv.gz",
+    "bytes": 19071781,
+    "kind": "tsv.gz"
   },
   {
-    "bytes": 6686,
-    "kind": "json",
-    "language_pair": "all",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/global/vcdub_filtering_stage_stats.json",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/data_stats/vcdub_filtering_stage_stats/vcdub_filtering_stage_stats.json",
-    "stage": "filtering_stage_stats_json",
-    "status": "existing"
+    "release_path": "manifests/en_de/summaries/dnsmospro_quality_summary.json",
+    "bytes": 805,
+    "kind": "json"
   },
   {
-    "bytes": 2090,
-    "kind": "tsv",
-    "language_pair": "all",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/global/threshold_samples/all_utmos_threshold_critical_40.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/threshold_samples/utmos_critical/all_utmos_threshold_critical_40.tsv",
-    "stage": "threshold_samples",
-    "status": "existing"
+    "release_path": "manifests/en_de/summaries/mms_lid_summary.json",
+    "bytes": 530,
+    "kind": "json"
   },
   {
-    "bytes": 1226,
-    "kind": "tsv",
-    "language_pair": "all",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/global/threshold_samples/es_en_utmos_threshold_critical_20.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/threshold_samples/utmos_critical/es_en_utmos_threshold_critical_20.tsv",
-    "stage": "threshold_samples",
-    "status": "existing"
+    "release_path": "manifests/en_de/summaries/sortformer_summary.json",
+    "bytes": 1437,
+    "kind": "json"
   },
   {
-    "bytes": 666,
-    "kind": "tsv",
-    "language_pair": "all",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/global/threshold_samples/es_en_utmos_threshold_critical_20_audio.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/threshold_samples/utmos_critical/es_en_utmos_threshold_critical_20_audio.tsv",
-    "stage": "threshold_samples",
-    "status": "existing"
+    "release_path": "manifests/en_de/summaries/split_summary.json",
+    "bytes": 1427,
+    "kind": "json"
   },
   {
+    "release_path": "manifests/en_es/filtering/stage_00_raw_vc_manifest.tsv.gz",
+    "bytes": 9318910,
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/en_es/filtering/stage_01_mms_lid_pass_manifest.tsv.gz",
+    "bytes": 10023052,
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/en_es/filtering/stage_02_sortformer_single_speaker_pass.tsv.gz",
+    "bytes": 7297440,
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/en_es/filtering/stage_03_dnsmospro_quality_selected_manifest.tsv.gz",
+    "bytes": 4024453,
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/en_es/splits/dev.tsv.gz",
+    "bytes": 837320,
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/en_es/splits/dev_ar.tsv.gz",
+    "bytes": 6998133,
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/en_es/splits/dev_asr.tsv.gz",
+    "bytes": 1530384,
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/en_es/splits/test.tsv.gz",
+    "bytes": 42625,
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/en_es/splits/test_ar.tsv.gz",
+    "bytes": 347829,
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/en_es/splits/test_asr.tsv.gz",
+    "bytes": 76229,
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/en_es/splits/train.tsv.gz",
+    "bytes": 6432973,
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/en_es/splits/train_ar.tsv.gz",
+    "bytes": 53746777,
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/en_es/splits/train_asr.tsv.gz",
+    "bytes": 11767621,
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/en_es/summaries/dnsmospro_quality_summary.json",
+    "bytes": 805,
+    "kind": "json"
+  },
+  {
+    "release_path": "manifests/en_es/summaries/mms_lid_summary.json",
+    "bytes": 532,
+    "kind": "json"
+  },
+  {
+    "release_path": "manifests/en_es/summaries/sortformer_summary.json",
+    "bytes": 1437,
+    "kind": "json"
+  },
+  {
+    "release_path": "manifests/en_es/summaries/split_summary.json",
+    "bytes": 1424,
+    "kind": "json"
+  },
+  {
+    "release_path": "manifests/global/threshold_samples/de_en_dnsmospro_threshold_critical_summary.tsv.gz",
     "bytes": 548,
-    "kind": "tsv",
-    "language_pair": "all",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/global/threshold_samples/es_en_dnsmospro_threshold_critical_summary.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/threshold_samples/utmos_critical/es_en_dnsmospro_threshold_critical_summary.tsv",
-    "stage": "threshold_samples",
-    "status": "existing"
+    "kind": "tsv.gz"
   },
   {
-    "bytes": 1246,
-    "kind": "tsv",
-    "language_pair": "all",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/global/threshold_samples/de_en_utmos_threshold_critical_20.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/threshold_samples/utmos_critical/de_en_utmos_threshold_critical_20.tsv",
-    "stage": "threshold_samples",
-    "status": "existing"
-  },
-  {
-    "bytes": 732,
-    "kind": "tsv",
-    "language_pair": "all",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/global/threshold_samples/de_en_utmos_threshold_critical_20_audio.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/threshold_samples/utmos_critical/de_en_utmos_threshold_critical_20_audio.tsv",
-    "stage": "threshold_samples",
-    "status": "existing"
-  },
-  {
+    "release_path": "manifests/global/threshold_samples/es_en_dnsmospro_threshold_critical_summary.tsv.gz",
     "bytes": 548,
-    "kind": "tsv",
-    "language_pair": "all",
-    "note": "kept existing packaged file",
-    "release_path": "{VC_DUB_RELEASE_ROOT}/manifests/global/threshold_samples/de_en_dnsmospro_threshold_critical_summary.tsv.gz",
-    "required": false,
-    "rows_or_items": "",
-    "source_path": "{EXPRESSIVE_S2ST_ROOT}/threshold_samples/utmos_critical/de_en_dnsmospro_threshold_critical_summary.tsv",
-    "stage": "threshold_samples",
-    "status": "existing"
+    "kind": "tsv.gz"
+  },
+  {
+    "release_path": "manifests/global/vcdub_filtering_stage_stats.json",
+    "bytes": 6650,
+    "kind": "json"
+  },
+  {
+    "release_path": "manifests/global/vcdub_filtering_stage_stats.tsv.gz",
+    "bytes": 1241,
+    "kind": "tsv.gz"
   }
 ]

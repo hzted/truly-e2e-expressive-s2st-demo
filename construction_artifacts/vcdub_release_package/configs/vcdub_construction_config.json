@@ -6,7 +6,7 @@
     "demucs_vocal_extraction",
     "mms_lid_filtering",
     "sortformer_single_speaker_filtering",
-    "utmos_quality_selection",
+    "dnsmospro_quality_selection",
     "train_dev_test_split",
     "local_voice_conversion_materialization"
   ],
@@ -39,7 +39,7 @@
       "audio_preprocessing": "16 kHz mono before diarization"
     },
     "quality_selection": {
-      "model": "UTMOS v2",
+      "model": "DNSMOSPro",
       "config": "fusion_stage3",
       "fold": 0,
       "seed": 42,

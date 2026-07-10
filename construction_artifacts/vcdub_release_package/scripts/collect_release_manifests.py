@@ -50,10 +50,10 @@ def build_specs() -> list[ReleaseFile]:
                 ReleaseFile(pair, "raw_vc_manifest", work / "manifests" / "vc_manifest.tsv", rel / "filtering" / "stage_00_raw_vc_manifest.tsv.gz", "tsv"),
                 ReleaseFile(pair, "mms_lid_pass", work / "mms_lid_preprocessed_filter" / "lid_pass_manifest.tsv", rel / "filtering" / "stage_01_mms_lid_pass_manifest.tsv.gz", "tsv"),
                 ReleaseFile(pair, "sortformer_single_speaker_pass", work / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "sortformer_pair_pass_strict.tsv", rel / "filtering" / "stage_02_sortformer_single_speaker_pass.tsv.gz", "tsv"),
-                ReleaseFile(pair, "scale_matched_quality_selection", work / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "utmos_pre_src_pre_tgt" / "utmos_filtered_manifest.tsv", rel / "filtering" / "stage_03_utmos_quality_selected_manifest.tsv.gz", "tsv"),
+                ReleaseFile(pair, "scale_matched_quality_selection", work / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "quality_selection" / "dnsmospro_filtered_manifest.tsv", rel / "filtering" / "stage_03_dnsmospro_quality_selected_manifest.tsv.gz", "tsv"),
                 ReleaseFile(pair, "mms_lid_summary", work / "mms_lid_preprocessed_filter" / "lid_pass_manifest_summary.json", rel / "summaries" / "mms_lid_summary.json", "json", required=False),
                 ReleaseFile(pair, "sortformer_summary", work / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "sortformer_pair_summary.json", rel / "summaries" / "sortformer_summary.json", "json", required=False),
-                ReleaseFile(pair, "utmos_summary", work / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "utmos_pre_src_pre_tgt" / "utmos_summary.json", rel / "summaries" / "utmos_summary.json", "json", required=False),
+                ReleaseFile(pair, "dnsmospro_quality_summary", work / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "quality_selection" / "dnsmospro_quality_summary.json", rel / "summaries" / "dnsmospro_quality_summary.json", "json", required=False),
             ]
         )
 
@@ -80,14 +80,14 @@ def build_specs() -> list[ReleaseFile]:
         ]
     )
 
-    threshold_root = EXP_ROOT / "threshold_samples" / "utmos_critical"
+    threshold_root = EXP_ROOT / "threshold_samples" / "dnsmospro_critical"
     for name in (
-        "all_utmos_threshold_critical_40.tsv",
-        "es_en_utmos_threshold_critical_20.tsv",
-        "es_en_utmos_threshold_critical_20_audio.tsv",
+        "all_dnsmospro_threshold_critical_40.tsv",
+        "es_en_dnsmospro_threshold_critical_20.tsv",
+        "es_en_dnsmospro_threshold_critical_20_audio.tsv",
         "es_en_dnsmospro_threshold_critical_summary.tsv",
-        "de_en_utmos_threshold_critical_20.tsv",
-        "de_en_utmos_threshold_critical_20_audio.tsv",
+        "de_en_dnsmospro_threshold_critical_20.tsv",
+        "de_en_dnsmospro_threshold_critical_20_audio.tsv",
         "de_en_dnsmospro_threshold_critical_summary.tsv",
     ):
         specs.append(

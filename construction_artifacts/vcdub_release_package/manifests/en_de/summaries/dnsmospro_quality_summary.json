@@ -1,0 +1,16 @@
+{
+  "language_pair": "en-de",
+  "quality_predictor": "DNSMOSPro",
+  "quality_predictor_role": "Quality floor characterization and scale-matched clean-pool selection.",
+  "scored_audio": [
+    "source_utterance",
+    "target_utterance"
+  ],
+  "combined_quality_score": "source-target combined DNSMOSPro quality score",
+  "selection_rule": "Retain pairs above the empirical quality cutoff while keeping the final VC-DUB training split comparable in scale to CVSS-T.",
+  "empirical_retained_dropped_boundary": "approximately 3.60",
+  "dnsmospro_cutoff_approx": 3.6,
+  "retained_clean_pool_pairs": 147639,
+  "selected_manifest": "manifests/en_de/filtering/stage_03_dnsmospro_quality_selected_manifest.tsv.gz",
+  "note": "The cutoff is reported to characterize the quality floor of the retained clean pool."
+}

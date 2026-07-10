@@ -18,7 +18,7 @@ The release package treats voice conversion as the final local materialization s
 3. Extract vocals with Demucs.
 4. Filter language pairs with MMS-LID.
 5. Remove multi-speaker or overlapped segments with Sortformer diarization.
-6. Apply scale-matched quality selection with UTMOS v2.
+6. Apply scale-matched quality selection with DNSMOSPro.
 7. Create train/dev/test splits and downstream split manifests.
 8. Run voice conversion locally on the selected split manifests.
 

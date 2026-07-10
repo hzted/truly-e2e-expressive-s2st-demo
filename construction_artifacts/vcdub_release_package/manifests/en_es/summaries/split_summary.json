@@ -19,7 +19,7 @@
     "train_asr": "{VC_DUB_MANIFEST_ROOT}/en_es/splits/train_asr.tsv"
   },
   "input_rows": 90000,
-  "input_tsv": "{VC_DUB_ROOT}/en_es/mms_lid_preprocessed_filter/sortformer_pair_filter/utmos_pre_src_pre_tgt/whisper_largev3_asr/vcdub_text_meta.tsv",
+  "input_tsv": "{VC_DUB_ROOT}/en_es/mms_lid_preprocessed_filter/sortformer_pair_filter/quality_selection/whisper_largev3_asr/vcdub_text_meta.tsv",
   "out_dir": "{VC_DUB_MANIFEST_ROOT}/en_es/splits",
   "rows_after_filter": 90000,
   "seed": 42,

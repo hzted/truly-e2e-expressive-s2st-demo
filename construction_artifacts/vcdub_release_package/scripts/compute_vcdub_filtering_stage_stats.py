@@ -216,7 +216,7 @@ def build_language_rows(
     raw_path = root / "manifests" / "vc_manifest.tsv"
     lid_path = root / "mms_lid_preprocessed_filter" / "lid_pass_manifest.tsv"
     sort_path = root / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "sortformer_pair_pass_strict.tsv"
-    quality_path = root / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "utmos_pre_src_pre_tgt" / "utmos_filtered_manifest.tsv"
+    quality_path = root / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "quality_selection" / "dnsmospro_filtered_manifest.tsv"
     train_path = split_dir / "train_ar.tsv"
 
     raw = read_tsv(raw_path)
