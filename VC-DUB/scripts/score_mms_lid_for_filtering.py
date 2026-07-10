@@ -158,6 +158,7 @@ def main():
     summary_json = out_dir / 'mms_lid_summary.json'
     summary_tsv = out_dir / 'mms_lid_summary.tsv'
     filtered_manifest = out_dir / 'vc_manifest_lang_filtered.tsv'
+    canonical_pass_manifest = out_dir / 'lid_pass_manifest.tsv'
 
     df = pd.read_csv(args.input_tsv, sep='\t')
     required = [args.id_col, args.src_audio_col, args.tgt_audio_col]
@@ -266,6 +267,7 @@ def main():
 
     if args.write_filtered_manifest:
         good_df[df.columns].to_csv(filtered_manifest, sep='\t', index=False)
+        good_df[df.columns].to_csv(canonical_pass_manifest, sep='\t', index=False)
 
     summary = {
         'input_tsv': args.input_tsv,
@@ -288,6 +290,7 @@ def main():
         'bad_rows_tsv': str(bad_rows_path),
         'good_rows_tsv': str(good_rows_path),
         'filtered_manifest_tsv': str(filtered_manifest) if args.write_filtered_manifest else '',
+        'canonical_pass_manifest_tsv': str(canonical_pass_manifest) if args.write_filtered_manifest else '',
     }
     pd.DataFrame([summary]).to_csv(summary_tsv, sep='\t', index=False)
     with summary_json.open('w') as f:

@@ -112,16 +112,16 @@ def fill_audio_durations(
 
 
 def load_split_vad_map(split_dir: Path) -> dict[str, float]:
-    """Map split audio paths to VAD-span durations from train/dev/test_ar.tsv."""
+    """Map split audio paths to VAD-span durations from train/dev/test_metadata.tsv."""
     out: dict[str, float] = {}
     for split in ["train", "dev", "test"]:
-        path = split_dir / f"{split}_ar.tsv"
+        path = split_dir / f"{split}_metadata.tsv"
         if not path.is_file():
             continue
         df = read_tsv(path)
         for _, row in df.iterrows():
-            src_path = str(row.get("src_path", ""))
-            tgt_path = str(row.get("tgt_path", ""))
+            src_path = str(row.get("pre_src", row.get("src_path", "")))
+            tgt_path = str(row.get("pre_tgt", row.get("tgt_path", "")))
             src_dur = vad_span_duration(row.get("src_vad"))
             tgt_dur = vad_span_duration(row.get("tgt_vad"))
             if src_path and src_dur is not None:
@@ -217,7 +217,7 @@ def build_language_rows(
     lid_path = root / "mms_lid" / "lid_pass_manifest.tsv"
     sort_path = root / "sortformer" / "sortformer_pair_pass_strict.tsv"
     quality_path = root / "quality_selection" / "dnsmospro_filtered_manifest.tsv"
-    train_path = split_dir / "train_ar.tsv"
+    train_path = split_dir / "train_metadata.tsv"
 
     raw = read_tsv(raw_path)
     pre = raw.loc[preprocess_success_mask(raw)].copy()

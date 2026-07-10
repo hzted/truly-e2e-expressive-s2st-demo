@@ -54,8 +54,8 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Use an existing split column instead of assigning new random splits.",
     )
-    parser.add_argument("--dev-test-ratio", type=float, default=0.15)
-    parser.add_argument("--test-size", type=int, default=500)
+    parser.add_argument("--dev-test-ratio", type=float, default=None)
+    parser.add_argument("--test-size", type=int, default=None)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--drop-duplicates", action="store_true")
     parser.add_argument("--drop-missing-audio", action="store_true")
@@ -133,6 +133,8 @@ def assign_random_splits(
     seed: int,
 ) -> dict[str, pd.DataFrame]:
     n_rows = len(df)
+    if dev_test_ratio is None or test_size is None:
+        raise ValueError("--dev-test-ratio and --test-size must be explicit when assigning random splits.")
     holdout_rows = round(n_rows * dev_test_ratio)
     if test_size <= 0:
         raise ValueError("--test-size must be positive")

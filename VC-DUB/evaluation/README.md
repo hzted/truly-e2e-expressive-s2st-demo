@@ -69,6 +69,7 @@ python -u evaluation/scripts/run_all_metrics.py \
   --hypo-lang spa \
   --wavlm-ckpt /path/to/wavlm_large_finetune.pth \
   --dnsmospro-cmd 'python /path/to/DNSMOSPro/infer.py --audio {audio}' \
+  --dnsmospro-score-key <confirmed_json_score_key> \
   --num-shards 1 \
   --parallel-jobs 1
 ```
@@ -101,3 +102,7 @@ The wrappers call the project implementations under `verify_scripts` rather than
 reimplementing metric proxies. If a model checkpoint, dependency version, or
 official implementation commit is missing, treat it as a blocker and fill it from
 the original experiment environment instead of guessing.
+
+DNSMOSPro evaluation also requires explicit parsing through
+`--dnsmospro-score-key` or `--dnsmospro-score-regex`; implicit first-number
+parsing is disabled.

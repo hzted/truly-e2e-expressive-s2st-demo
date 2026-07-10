@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Score source/target utterances with DNSMOSPro and write pair-level quality scores.
+"""Score source/target utterances with DNSMOSPro for construction filtering.
 
-This wrapper intentionally uses a command template so it can work with different
-DNSMOSPro checkouts. The command must contain ``{audio}`` and print at least one
-numeric MOS-like score; the first parsed number is used.
+The DNSMOSPro output parser is explicit by design: pass either --score-key for
+JSON output or --score-regex for named text output. The script never uses "first
+number in stdout" parsing, because that can accidentally read version strings or
+progress counters instead of the MOS/naturalness score.
 """
 
 from __future__ import annotations
@@ -14,22 +15,55 @@ import re
 import shlex
 import subprocess
 from pathlib import Path
+from typing import Any
 
 import pandas as pd
 from tqdm import tqdm
 
 
-FLOAT_RE = re.compile(r"[-+]?(?:\d*\.\d+|\d+)")
+def nested_get(obj: Any, dotted_key: str) -> Any:
+    cur = obj
+    for part in dotted_key.split("."):
+        if isinstance(cur, dict) and part in cur:
+            cur = cur[part]
+        else:
+            return None
+    return cur
 
 
-def parse_score(text: str) -> float:
-    match = FLOAT_RE.search(text)
-    if not match:
-        raise ValueError(f"No numeric DNSMOSPro score found in output: {text[:200]}")
-    return float(match.group(0))
+def parse_json_score(text: str, key: str) -> float | None:
+    try:
+        data: Any = json.loads(text)
+    except Exception:
+        return None
+    if isinstance(data, list):
+        for item in data:
+            val = nested_get(item, key)
+            if val is not None:
+                return float(val)
+    val = nested_get(data, key)
+    if val is not None:
+        return float(val)
+    return None
 
 
-def score_audio(audio: str, command_template: str, timeout_sec: float) -> float:
+def parse_score(text: str, score_key: str, score_regex: str) -> float:
+    if score_key:
+        parsed = parse_json_score(text, score_key)
+        if parsed is not None:
+            return parsed
+    if score_regex:
+        match = re.search(score_regex, text, flags=re.MULTILINE)
+        if match:
+            group = match.group(1) if match.groups() else match.group(0)
+            return float(group)
+    raise ValueError(
+        "Could not parse DNSMOSPro score. Provide a JSON --score-key or a named "
+        "--score-regex that captures the intended score field."
+    )
+
+
+def score_audio(audio: str, command_template: str, timeout_sec: float, score_key: str, score_regex: str) -> float:
     cmd = command_template.format(audio=shlex.quote(audio))
     proc = subprocess.run(
         cmd,
@@ -40,7 +74,7 @@ def score_audio(audio: str, command_template: str, timeout_sec: float) -> float:
         stderr=subprocess.PIPE,
         timeout=timeout_sec,
     )
-    return parse_score(proc.stdout + "\n" + proc.stderr)
+    return parse_score(proc.stdout + "\n" + proc.stderr, score_key=score_key, score_regex=score_regex)
 
 
 def combine_scores(src_score: float, tgt_score: float, mode: str) -> float:
@@ -59,14 +93,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-id-col", default="sample_id")
     parser.add_argument("--src-audio-col", default="pre_src")
     parser.add_argument("--tgt-audio-col", default="pre_tgt")
-    parser.add_argument("--combine", choices=["mean", "min"], default="mean")
+    parser.add_argument("--combine", choices=["mean", "min"], required=True)
     parser.add_argument("--dnsmospro-cmd", required=True, help="Command template containing {audio}.")
+    parser.add_argument("--score-key", default="", help="JSON key or dotted key, e.g. nat or scores.nat.")
+    parser.add_argument("--score-regex", default="", help="Regex for named text output; first capture group is used.")
     parser.add_argument("--timeout-sec", type=float, default=120.0)
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+    if not args.score_key and not args.score_regex:
+        raise ValueError("Pass --score-key or --score-regex; implicit first-number parsing is disabled.")
+
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -75,6 +114,9 @@ def main() -> None:
     missing = [col for col in required if col not in df.columns]
     if missing:
         raise ValueError(f"Missing required columns: {missing}")
+    if df[args.id_col].duplicated().any():
+        dupes = df.loc[df[args.id_col].duplicated(), args.id_col].head(10).tolist()
+        raise ValueError(f"Duplicate sample IDs in input manifest: {dupes}")
 
     audio_cache: dict[str, float] = {}
     rows = []
@@ -83,7 +125,13 @@ def main() -> None:
         tgt_audio = str(row[args.tgt_audio_col])
         for audio in (src_audio, tgt_audio):
             if audio not in audio_cache:
-                audio_cache[audio] = score_audio(audio, args.dnsmospro_cmd, args.timeout_sec)
+                audio_cache[audio] = score_audio(
+                    audio,
+                    args.dnsmospro_cmd,
+                    args.timeout_sec,
+                    score_key=args.score_key,
+                    score_regex=args.score_regex,
+                )
         src_score = audio_cache[src_audio]
         tgt_score = audio_cache[tgt_audio]
         rows.append(
@@ -107,6 +155,8 @@ def main() -> None:
         "num_pairs": int(len(scores)),
         "num_unique_audio": int(len(audio_cache)),
         "combine": args.combine,
+        "score_key": args.score_key,
+        "score_regex": args.score_regex,
         "combined_dnsmospro_mean": float(scores["combined_dnsmospro"].mean()) if len(scores) else None,
         "combined_dnsmospro_median": float(scores["combined_dnsmospro"].median()) if len(scores) else None,
     }

@@ -52,7 +52,7 @@ def build_specs() -> list[ReleaseFile]:
                 ReleaseFile(pair, "mms_lid_pass", work / "mms_lid" / "lid_pass_manifest.tsv", rel / "filtering" / "stage_01_mms_lid_pass_manifest.tsv.gz", "tsv"),
                 ReleaseFile(pair, "sortformer_single_speaker_pass", work / "sortformer" / "sortformer_pair_pass_strict.tsv", rel / "filtering" / "stage_02_sortformer_single_speaker_pass.tsv.gz", "tsv"),
                 ReleaseFile(pair, "scale_matched_quality_selection", work / "quality_selection" / "dnsmospro_filtered_manifest.tsv", rel / "filtering" / "stage_03_dnsmospro_quality_selected_manifest.tsv.gz", "tsv"),
-                ReleaseFile(pair, "mms_lid_summary", work / "mms_lid" / "lid_pass_manifest_summary.json", rel / "summaries" / "mms_lid_summary.json", "json", required=False),
+                ReleaseFile(pair, "mms_lid_summary", work / "mms_lid" / "mms_lid_summary.json", rel / "summaries" / "mms_lid_summary.json", "json", required=False),
                 ReleaseFile(pair, "sortformer_summary", work / "sortformer" / "sortformer_pair_summary.json", rel / "summaries" / "sortformer_summary.json", "json", required=False),
                 ReleaseFile(pair, "dnsmospro_quality_summary", work / "quality_selection" / "dnsmospro_quality_summary.json", rel / "summaries" / "dnsmospro_quality_summary.json", "json", required=False),
             ]

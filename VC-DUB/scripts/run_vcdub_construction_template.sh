@@ -11,14 +11,20 @@ WORK_ROOT="${WORK_ROOT:-/path/to/vcdub_work/${PAIR}}"
 PREPROCESSED_MANIFEST="${PREPROCESSED_MANIFEST:-/path/to/preprocessed_pair_manifest.tsv}"
 ALIGNED_METADATA_TSV="${ALIGNED_METADATA_TSV:-/path/to/aligned_pair_metadata.tsv}"
 DNSMOSPRO_CMD="${DNSMOSPRO_CMD:-python /path/to/DNSMOSPro/infer.py --audio {audio}}"
+DNSMOSPRO_SCORE_KEY="${DNSMOSPRO_SCORE_KEY:-}"
+DNSMOSPRO_SCORE_REGEX="${DNSMOSPRO_SCORE_REGEX:-}"
 
 SRC_LID="${SRC_LID:-eng}"
 if [ "${PAIR}" = "en_de" ]; then
   TGT_LID="${TGT_LID:-deu}"
   TARGET_KEEP="${TARGET_KEEP:-147639}"
+  DEV_TEST_RATIO="${DEV_TEST_RATIO:-0.11}"
+  TEST_SIZE="${TEST_SIZE:-504}"
 else
   TGT_LID="${TGT_LID:-spa}"
   TARGET_KEEP="${TARGET_KEEP:-90000}"
+  DEV_TEST_RATIO="${DEV_TEST_RATIO:-0.12}"
+  TEST_SIZE="${TEST_SIZE:-504}"
 fi
 
 mkdir -p "${WORK_ROOT}"
@@ -37,7 +43,8 @@ python -u scripts/score_mms_lid_for_filtering.py \
   --src-audio-col pre_src \
   --tgt-audio-col pre_tgt \
   --expected-src-lang "${SRC_LID}" \
-  --expected-tgt-lang "${TGT_LID}"
+  --expected-tgt-lang "${TGT_LID}" \
+  --write-filtered-manifest
 
 echo "[4/7] Sortformer speaker filtering"
 python -u scripts/score_sortformer_for_filtering.py \
@@ -51,6 +58,18 @@ python -u scripts/filter_sortformer_pair_strict.py \
   --out-dir "${WORK_ROOT}/sortformer"
 
 echo "[5/7] DNSMOSPro scoring and quality selection"
+dnsmos_parse_args=()
+if [ -n "${DNSMOSPRO_SCORE_KEY}" ]; then
+  dnsmos_parse_args+=(--score-key "${DNSMOSPRO_SCORE_KEY}")
+fi
+if [ -n "${DNSMOSPRO_SCORE_REGEX}" ]; then
+  dnsmos_parse_args+=(--score-regex "${DNSMOSPRO_SCORE_REGEX}")
+fi
+if [ "${#dnsmos_parse_args[@]}" -eq 0 ]; then
+  echo "ERROR: set DNSMOSPRO_SCORE_KEY or DNSMOSPRO_SCORE_REGEX so DNSMOSPro parsing is explicit." >&2
+  exit 2
+fi
+
 python -u scripts/score_dnsmospro_for_filtering.py \
   --input-tsv "${WORK_ROOT}/sortformer/sortformer_pair_pass_strict.tsv" \
   --out-dir "${WORK_ROOT}/dnsmospro" \
@@ -58,7 +77,8 @@ python -u scripts/score_dnsmospro_for_filtering.py \
   --src-audio-col pre_src \
   --tgt-audio-col pre_tgt \
   --combine mean \
-  --dnsmospro-cmd "${DNSMOSPRO_CMD}"
+  --dnsmospro-cmd "${DNSMOSPRO_CMD}" \
+  "${dnsmos_parse_args[@]}"
 
 python -u scripts/select_dnsmospro_quality_subset.py \
   --manifest-tsv "${WORK_ROOT}/sortformer/sortformer_pair_pass_strict.tsv" \
@@ -78,8 +98,8 @@ python -u scripts/build_vcdub_splits.py \
   --source-text-col src_text \
   --target-text-col tgt_text \
   --out-dir "${WORK_ROOT}/splits" \
-  --dev-test-ratio 0.15 \
-  --test-size 500 \
+  --dev-test-ratio "${DEV_TEST_RATIO}" \
+  --test-size "${TEST_SIZE}" \
   --seed 42 \
   --overwrite
 

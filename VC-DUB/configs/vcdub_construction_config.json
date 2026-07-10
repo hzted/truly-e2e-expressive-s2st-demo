@@ -53,13 +53,17 @@
           "expected_source_lid": "eng",
           "expected_target_lid": "spa",
           "target_keep_pairs": 90000,
-          "reported_approximate_retained_dropped_boundary": 3.57
+          "reported_approximate_retained_dropped_boundary": 3.57,
+          "split_dev_test_fraction_matching_released_counts": 0.12,
+          "split_test_size_pairs_matching_released_counts": 504
         },
         "en_de": {
           "expected_source_lid": "eng",
           "expected_target_lid": "deu",
           "target_keep_pairs": 147639,
-          "reported_approximate_retained_dropped_boundary": 3.60
+          "reported_approximate_retained_dropped_boundary": 3.60,
+          "split_dev_test_fraction_matching_released_counts": 0.11,
+          "split_test_size_pairs_matching_released_counts": 504
         }
       },
       "blocker": "Exact DNSMOSPro implementation commit, score field, source-target combination rule, and threshold/duration-matching rule require confirmation; see docs/blockers.md."
@@ -67,8 +71,11 @@
   },
   "splits": {
     "script": "scripts/build_vcdub_splits.py",
-    "test_size_pairs": 500,
-    "dev_test_fraction_before_fixed_test": 0.15,
+    "test_size_pairs_matching_released_counts": 504,
+    "language_pair_dev_test_fraction_matching_released_counts": {
+      "en_es": 0.12,
+      "en_de": 0.11
+    },
     "seed": 42,
     "outputs": [
       "all_metadata.tsv",

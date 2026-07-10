@@ -91,15 +91,44 @@ drop_reason
 ```
 
 The paper text reports retained/dropped boundaries of approximately 3.57 for
-En-Es and 3.60 for En-De. The exact implementation commit, score field,
-source-target combination rule, and cutoff/duration-matching rule require
+En-Es and 3.60 for En-De. These are observed boundaries after selection, not
+necessarily preset cutoffs. The exact implementation commit, checkpoint, score
+field, source-target combination rule, and cutoff/duration-matching rule require
 confirmation from the original experiment logs. These unresolved items are listed
 in `docs/blockers.md`; the public package does not guess them.
+
+The DNSMOSPro scoring wrapper requires explicit parsing:
+
+```bash
+python -u scripts/score_dnsmospro_for_filtering.py \
+  --input-tsv /path/to/sortformer_pair_pass_strict.tsv \
+  --out-dir /path/to/dnsmospro \
+  --id-col sample_id \
+  --src-audio-col pre_src \
+  --tgt-audio-col pre_tgt \
+  --combine mean \
+  --dnsmospro-cmd 'python /path/to/DNSMOSPro/infer.py --audio {audio}' \
+  --score-key <confirmed_json_score_key>
+```
+
+Use `--score-regex` instead of `--score-key` only when the DNSMOSPro checkout
+prints named text output. The wrapper deliberately rejects implicit "first
+number in stdout" parsing.
 
 ## Build Splits
 
 The split builder reads the selected construction manifest and optional aligned
 metadata. It does not read ASR metadata.
+
+The settings matching the currently released split counts are:
+
+| Pair | Clean pool | Dev+test fraction | Test pairs | Train pairs |
+| --- | ---: | ---: | ---: | ---: |
+| En-Es | 90,000 | 0.12 | 504 | 79,200 |
+| En-De | 147,639 | 0.11 | 504 | 131,399 |
+
+These values should still be confirmed against original experiment logs before
+claiming bit-for-bit rerun reproducibility.
 
 ```bash
 cd /path/to/truly-e2e-expressive-s2st-demo/VC-DUB
@@ -171,6 +200,11 @@ SHA256SUMS
 If the source corpus license does not permit redistribution of text,
 translations, or codec tokens, release only sanitized metadata such as
 `sample_id`, split, stage decisions, scores, and placeholder reference IDs.
+
+Reviewer-facing releases should not claim that full per-example manifests or
+checkpoints are available until a real private artifact URL and `SHA256SUMS` are
+added. The current placeholder is documented in
+`examples/full_artifact_package.json`.
 
 ## Paper Evaluation
 

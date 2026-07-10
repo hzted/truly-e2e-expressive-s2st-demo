@@ -39,6 +39,8 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--hypo-lang", default="")
     p.add_argument("--wavlm-ckpt", default="/home/hzhan276/stopes/models/wavlm_large_finetune.pth")
     p.add_argument("--dnsmospro-cmd", default="")
+    p.add_argument("--dnsmospro-score-key", default="")
+    p.add_argument("--dnsmospro-score-regex", default="")
     p.add_argument("--num-shards", default="1")
     p.add_argument("--parallel-jobs", default="1")
     p.add_argument("--uncertainty", choices=["none", "std", "sem", "ci95"], default="none")
@@ -102,13 +104,21 @@ def main() -> None:
     if metrics.get("dnsmospro", {}).get("enabled", False):
         if not args.dnsmospro_cmd and not args.dry_run:
             raise ValueError("Real DNSMOSPro evaluation requires --dnsmospro-cmd; dry-run is the only mode that may use a placeholder.")
+        if not args.dry_run and not (args.dnsmospro_score_key or args.dnsmospro_score_regex):
+            raise ValueError("Real DNSMOSPro evaluation requires --dnsmospro-score-key or --dnsmospro-score-regex.")
         dnsmos_cmd = args.dnsmospro_cmd or "echo 3.5"
+        dnsmos_parse_args = []
+        if args.dnsmospro_score_key:
+            dnsmos_parse_args += ["--score-key", args.dnsmospro_score_key]
+        if args.dnsmospro_score_regex:
+            dnsmos_parse_args += ["--score-regex", args.dnsmospro_score_regex]
         run([
             args.python,
             str(root / "scripts" / "run_dnsmospro.py"),
             *base_args(args, out_dir, "dnsmospro"),
             "--dnsmospro-cmd",
             dnsmos_cmd,
+            *dnsmos_parse_args,
             *dry,
         ])
     if metrics.get("whisper_asr", {}).get("enabled", False):

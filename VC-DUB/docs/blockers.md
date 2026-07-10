@@ -18,6 +18,15 @@ the package to claim bit-for-bit reconstruction of the paper manifests.
    `src_dnsmospro`, `tgt_dnsmospro`, `combined_dnsmospro`, `selected`, and
    `drop_reason`. If those files are absent from the external artifact, they
    must be regenerated from the original experiment logs, not inferred.
+6. The split settings currently match the released split counts
+   (`En-Es: dev_test_fraction=0.12, test_size=504`;
+   `En-De: dev_test_fraction=0.11, test_size=504`) and should still be
+   confirmed against original experiment logs before claiming exact rerunnable
+   reconstruction.
+7. The external full-manifest/checkpoint artifact URL is not yet present in this
+   GitHub mirror. Do not claim that per-example manifests or checkpoints are
+   released to reviewers until the private Figshare/Zenodo link and SHA256SUMS
+   are added.
 
 These blockers do not change sample IDs, split assignments, or paper-reported
 results. They document the remaining provenance checks required for exact

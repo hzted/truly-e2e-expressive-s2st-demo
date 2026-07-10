@@ -23,9 +23,6 @@ import pandas as pd
 from _wrapper_utils import write_dry_outputs
 
 
-FLOAT_RE = re.compile(r"[-+]?(?:\d*\.\d+|\d+)")
-
-
 def parse_json_score(text: str, key: str) -> float | None:
     try:
         data: Any = json.loads(text)
@@ -57,10 +54,10 @@ def parse_score(text: str, score_key: str, score_regex: str) -> float:
             group = match.group(1) if match.groups() else match.group(0)
             return float(group)
 
-    match = FLOAT_RE.search(text)
-    if not match:
-        raise ValueError(f"No DNSMOSPro/NAT numeric score found in output: {text[:300]}")
-    return float(match.group(0))
+    raise ValueError(
+        "Could not parse DNSMOSPro/NAT score. Provide --score-key for JSON output "
+        "or --score-regex for named text output; first-number fallback is disabled."
+    )
 
 
 def score_audio(audio: str, command_template: str, timeout_sec: float, score_key: str, score_regex: str) -> tuple[float, str]:
@@ -121,6 +118,8 @@ def main() -> None:
             "dnsmospro_per_example.tsv",
         )
         return
+    if not args.score_key and not args.score_regex:
+        raise ValueError("Real DNSMOSPro evaluation requires --score-key or --score-regex.")
 
     df = pd.read_csv(args.manifest, sep="\t", low_memory=False)
     missing = [c for c in [args.id_col, args.audio_col] if c not in df.columns]
