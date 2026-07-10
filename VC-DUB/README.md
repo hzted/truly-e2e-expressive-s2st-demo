@@ -15,6 +15,7 @@ permits it.
 - `configs/`: model choices, filtering criteria, and observed thresholds.
 - `scripts/`: construction, filtering, splitting, and release helper scripts.
 - `scripts/voice_conversion/`: final local VC materialization wrapper.
+- `evaluation/`: selected generated-audio evaluation templates and schema.
 - `small_example_manifests/`: synthetic toy manifests that exercise the expected schemas.
 - `manifest_schema.md`: required columns for each construction stage.
 - `examples/`: small non-sensitive statistics and command examples.
@@ -127,3 +128,11 @@ Git repository, then upload them to the chosen anonymous artifact host.
 If the source corpus license does not permit redistribution of text, translations,
 or codec tokens, release only sanitized metadata such as `sample_id`, `split`,
 stage decisions, scores, and placeholder reference IDs.
+
+## Output Evaluation
+
+Generated-audio evaluation commands are separated under `evaluation/`. The
+included template runs only BLASER2.0, AutoPCP, speech-rate compliance at 20% and
+40%, syllable speech-rate Pearson, pause weighted-mean duration score, vocal-style
+similarity, and DNSMOSPro naturalness/MOS. It does not run ASR-BLEU, EmoCos, F0,
+WER/CER, or any other MOS variants.
