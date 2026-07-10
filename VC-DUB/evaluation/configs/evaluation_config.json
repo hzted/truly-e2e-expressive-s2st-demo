@@ -1,0 +1,52 @@
+{
+  "manifest_schema_version": "vcdub-eval-v1",
+  "random_seed": 42,
+  "sample_subset": "all rows unless --sample-frac is passed to underlying scripts",
+  "id_col": "sample_id",
+  "source_audio_col": "source_audio",
+  "hypo_audio_col": "hypo_audio",
+  "reference_audio_col": "reference_audio",
+  "source_text_col": "source_text",
+  "hypo_text_col": "hypo_text",
+  "source_lang": "eng",
+  "hypo_lang": "spa",
+  "target_lang_col": "target_lang",
+  "uncertainty_note": "The table-facing plus/minus must be explicitly labeled as standard deviation, standard error, or 95% confidence interval by the calling paper script.",
+  "metrics": {
+    "blaser2": {
+      "enabled": true,
+      "script": "scripts/run_blaser2.py",
+      "reported_fields": ["blaser2_qe_audio_mean", "blaser2_ref_mean"]
+    },
+    "apcp": {
+      "enabled": true,
+      "script": "scripts/run_apcp.py",
+      "reported_fields": ["autopcp_mean"]
+    },
+    "isochrony": {
+      "enabled": true,
+      "script": "scripts/run_isochrony_metrics.py",
+      "reported_fields": [
+        "dc_0p2_compliance",
+        "dc_0p4_compliance",
+        "speech_rate_syllable_spearman",
+        "pause_wmean_duration_score"
+      ]
+    },
+    "vsim": {
+      "enabled": true,
+      "script": "scripts/run_vsim.py",
+      "reported_fields": ["vsim_mean"]
+    },
+    "dnsmospro": {
+      "enabled": true,
+      "script": "scripts/run_dnsmospro.py",
+      "reported_fields": ["dnsmospro_nat_mean"]
+    },
+    "whisper_asr": {
+      "enabled": false,
+      "script": "scripts/run_whisper_asr.py",
+      "note": "Enable only for paper-reported ASR-based evaluation; not a construction dependency."
+    }
+  }
+}

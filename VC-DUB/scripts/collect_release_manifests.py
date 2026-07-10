@@ -61,14 +61,14 @@ def build_specs() -> list[ReleaseFile]:
         for split_name in ("train", "dev", "test"):
             specs.extend(
                 [
-                    ReleaseFile(pair, f"{split_name}_split", split / f"{split_name}.tsv", rel / "splits" / f"{split_name}.tsv.gz", "tsv"),
-                    ReleaseFile(pair, f"{split_name}_ar_split", split / f"{split_name}_ar.tsv", rel / "splits" / f"{split_name}_ar.tsv.gz", "tsv"),
-                    ReleaseFile(pair, f"{split_name}_asr_split", split / f"{split_name}_asr.tsv", rel / "splits" / f"{split_name}_asr.tsv.gz", "tsv", required=False),
+                    ReleaseFile(pair, f"{split_name}_metadata_split", split / f"{split_name}_metadata.tsv", rel / "splits" / f"{split_name}_metadata.tsv.gz", "tsv"),
+                    ReleaseFile(pair, f"{split_name}_vc_split", split / f"{split_name}_vc.tsv", rel / "splits" / f"{split_name}_vc.tsv.gz", "tsv", required=False),
                 ]
             )
         specs.extend(
             [
-                ReleaseFile(pair, "all_ar_filtered", split / "all_ar_filtered.tsv", rel / "splits" / "all_ar_filtered.tsv.gz", "tsv", required=False),
+                ReleaseFile(pair, "all_metadata", split / "all_metadata.tsv", rel / "splits" / "all_metadata.tsv.gz", "tsv", required=False),
+                ReleaseFile(pair, "dnsmospro_quality_pairs", work / "quality_selection" / "dnsmospro_quality_pairs.tsv", rel / "filtering" / "dnsmospro_quality_pairs.tsv.gz", "tsv", required=False),
                 ReleaseFile(pair, "split_summary", split / "split_summary.json", rel / "summaries" / "split_summary.json", "json", required=False),
             ]
         )

@@ -1,3 +1,5 @@
-id	pre_src	pre_tgt	src_dnsmospro	tgt_dnsmospro	combined_dnsmospro	dnsmospro_quality_pass
-en_de_demo_0001	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/source/en_de_demo_0001.wav	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/target/en_de_demo_0001.wav	3.88	3.76	3.82	true
-en_de_demo_0002	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/source/en_de_demo_0002.wav	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/target/en_de_demo_0002.wav	3.59	3.55	3.57	false
+sample_id	src_dnsmospro	tgt_dnsmospro	combined_dnsmospro	selected	drop_reason
+en_de_demo_0001	3.88	3.76	3.82	true	
+en_de_demo_0101	3.77	3.71	3.74	true	
+en_de_demo_0201	3.83	3.79	3.81	true	
+en_de_demo_0002	3.59	3.55	3.57	false	below_top_n_boundary

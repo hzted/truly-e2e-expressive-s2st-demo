@@ -20,7 +20,7 @@ def main() -> None:
     )
     ap.add_argument("--pair-results", required=True)
     ap.add_argument("--out-dir", default="")
-    ap.add_argument("--id-col", default="id")
+    ap.add_argument("--id-col", default="sample_id")
     ap.add_argument(
         "--pass-column",
         default="both_strict_single",

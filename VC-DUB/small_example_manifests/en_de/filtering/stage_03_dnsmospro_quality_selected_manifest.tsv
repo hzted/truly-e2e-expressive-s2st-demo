@@ -1,0 +1,4 @@
+sample_id	pre_src	pre_tgt	src_text	tgt_text	combined_dnsmospro	selected
+en_de_demo_0001	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/source/en_de_demo_0001.wav	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/target/en_de_demo_0001.wav	<synthetic English source text 1>	<synthetic German target text 1>	3.82	true
+en_de_demo_0101	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/source/en_de_demo_0101.wav	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/target/en_de_demo_0101.wav	<synthetic English source text dev>	<synthetic German target text dev>	3.74	true
+en_de_demo_0201	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/source/en_de_demo_0201.wav	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/target/en_de_demo_0201.wav	<synthetic English source text test>	<synthetic German target text test>	3.81	true

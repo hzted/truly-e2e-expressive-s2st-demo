@@ -1,15 +1,14 @@
 {
   "release_scope": "VC-DUB construction procedure; no audio or full source-corpus manifests are redistributed in the GitHub mirror.",
+  "construction_only": true,
   "pipeline_order": [
-    "aligned_speech_segments",
-    "clearvoice_denoising",
-    "demucs_vocal_extraction",
+    "aligned_pair_metadata_preparation",
+    "clearvoice_demucs_preprocessing",
     "mms_lid_filtering",
-    "sortformer_single_speaker_filtering",
-    "dnsmospro_quality_selection",
-    "whisper_large_v3_text_metadata",
-    "train_dev_test_split",
-    "local_voice_conversion_materialization"
+    "sortformer_speaker_filtering",
+    "dnsmospro_quality_scoring_and_selection",
+    "train_dev_test_split_assignment",
+    "optional_local_voice_conversion_materialization"
   ],
   "preprocessing": {
     "denoising": {
@@ -25,53 +24,69 @@
   },
   "filtering": {
     "mms_lid": {
+      "script": "scripts/score_mms_lid_for_filtering.py",
       "model": "facebook/mms-lid-126",
       "criterion": "top-1 predicted labels must match expected source and target languages",
       "confidence_threshold": null
     },
     "sortformer": {
+      "script": "scripts/score_sortformer_for_filtering.py",
       "model": "nvidia/diar_sortformer_4spk-v1",
       "criterion": "source and target each have <= 1 detected active speaker",
       "audio_preprocessing": "16 kHz mono before diarization"
     },
-    "quality_selection": {
+    "dnsmospro_quality_selection": {
+      "script": "scripts/score_dnsmospro_for_filtering.py",
+      "selector_script": "scripts/select_dnsmospro_quality_subset.py",
       "model": "DNSMOSPro",
-      "score_columns": [
+      "per_example_decision_file": "dnsmospro_quality_pairs.tsv.gz",
+      "required_decision_columns": [
+        "sample_id",
         "src_dnsmospro",
         "tgt_dnsmospro",
-        "combined_dnsmospro"
+        "combined_dnsmospro",
+        "selected",
+        "drop_reason"
       ],
-      "combined_score": "source-target combined DNSMOSPro quality score",
-      "silence_removal": true,
       "language_pair_settings": {
         "en_es": {
           "expected_source_lid": "eng",
           "expected_target_lid": "spa",
           "target_keep_pairs": 90000,
-          "empirical_retained_dropped_boundary": 3.57
+          "reported_approximate_retained_dropped_boundary": 3.57
         },
         "en_de": {
           "expected_source_lid": "eng",
           "expected_target_lid": "deu",
           "target_keep_pairs": 147639,
-          "empirical_retained_dropped_boundary": 3.60
+          "reported_approximate_retained_dropped_boundary": 3.60
         }
-      }
+      },
+      "blocker": "Exact DNSMOSPro implementation commit, score field, source-target combination rule, and threshold/duration-matching rule require confirmation; see docs/blockers.md."
     }
   },
-  "text_metadata": {
-    "asr_model": "openai/whisper-large-v3",
-    "purpose": "populate text-bearing *_asr.tsv split manifests used by downstream evaluation and VC materialization"
-  },
   "splits": {
+    "script": "scripts/build_vcdub_splits.py",
     "test_size_pairs": 500,
     "dev_test_fraction_before_fixed_test": 0.15,
-    "seed": 42
+    "seed": 42,
+    "outputs": [
+      "all_metadata.tsv",
+      "train_metadata.tsv",
+      "dev_metadata.tsv",
+      "test_metadata.tsv",
+      "train_vc.tsv",
+      "dev_vc.tsv",
+      "test_vc.tsv"
+    ]
   },
   "voice_conversion": {
-    "position": "final local materialization step after filtering and splitting",
-    "input_manifest": "*_asr.tsv with id/pre_src/pre_tgt columns",
+    "position": "optional final local materialization step after filtering and splitting",
+    "input_manifest": "*_metadata.tsv, *_vc.tsv, or stage-03 selected manifest with sample_id/pre_src/pre_tgt columns",
     "redistribution_policy": "generated VC waveforms are not redistributed"
+  },
+  "not_construction_dependencies": {
+    "whisper_large_v3": "Used only for ASR-based paper evaluation when that metric is run; it does not affect construction filtering, ordering, or split assignment."
   },
   "observed_stage_counts": {
     "en_es": {

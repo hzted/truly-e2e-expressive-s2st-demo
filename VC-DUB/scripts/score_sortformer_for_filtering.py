@@ -260,7 +260,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Run NVIDIA Sortformer diarization on both source and target columns and make pair-level keep/drop decisions.")
     ap.add_argument("--input-tsv", required=True)
     ap.add_argument("--out-dir", required=True)
-    ap.add_argument("--id-col", default="id")
+    ap.add_argument("--id-col", default="sample_id")
     ap.add_argument("--src-audio-col", default="pre_src")
     ap.add_argument("--tgt-audio-col", default="pre_tgt")
     ap.add_argument("--model-id", default="nvidia/diar_sortformer_4spk-v1")
@@ -492,10 +492,10 @@ if __name__ == "__main__":
 source {USER_HOME}/.bashrc
 conda activate nemo_diar
 
-python -u scripts/eval_sortformer_pair_filter.py \
+python -u scripts/score_sortformer_for_filtering.py \
   --input-tsv {WORK_ROOT}/mms_lid/lid_pass_manifest.tsv \
   --out-dir {WORK_ROOT}/sortformer \
-  --id-col id \
+  --id-col sample_id \
   --src-audio-col pre_src \
   --tgt-audio-col pre_tgt \
   --device cuda \
@@ -505,10 +505,10 @@ python -u scripts/eval_sortformer_pair_filter.py \
 source {USER_HOME}/.bashrc
 conda activate nemo_diar
 
-python -u scripts/eval_sortformer_pair_filter.py \
+python -u scripts/score_sortformer_for_filtering.py \
   --input-tsv {WORK_ROOT}/mms_lid/lid_pass_manifest.tsv \
   --out-dir {WORK_ROOT}/sortformer \
-  --id-col id \
+  --id-col sample_id \
   --src-audio-col pre_src \
   --tgt-audio-col pre_tgt \
   --device cuda \

@@ -1,2 +1,0 @@
-id	pre_src	pre_tgt	sentence	translation	src_asr	tgt_asr	split
-en_de_demo_0001	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/source/en_de_demo_0001.wav	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/target/en_de_demo_0001.wav	<synthetic English source text 1>	<synthetic German target text 1>	<synthetic English ASR 1>	<synthetic German ASR 1>	train

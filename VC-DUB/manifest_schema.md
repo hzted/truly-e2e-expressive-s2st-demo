@@ -8,7 +8,7 @@ redistributable, should follow the same schemas.
 Required columns:
 
 ```text
-id
+sample_id
 src_audio
 tgt_audio
 src_text
@@ -25,7 +25,7 @@ utterance used as the reference voice/prosody side.
 Required columns:
 
 ```text
-id
+sample_id
 pre_src
 pre_tgt
 src_text
@@ -44,7 +44,7 @@ paths.
 Required columns:
 
 ```text
-id
+sample_id
 pre_src
 pre_tgt
 src_lid_label
@@ -61,7 +61,7 @@ The released setting uses top-1 label matching and no confidence threshold.
 Required columns:
 
 ```text
-id
+sample_id
 pre_src
 pre_tgt
 src_num_speakers
@@ -71,47 +71,59 @@ tgt_segments_json
 sortformer_single_speaker_pass
 ```
 
-The strict gate keeps pairs where source and target each have at most one detected
-active speaker.
+The strict gate keeps pairs where source and target each have at most one
+detected active speaker.
 
 ## DNSMOSPro Quality Output
 
 Required columns:
 
 ```text
-id
+sample_id
 pre_src
 pre_tgt
 src_dnsmospro
 tgt_dnsmospro
 combined_dnsmospro
-dnsmospro_quality_pass
+selected
+drop_reason
 ```
 
-The empirical retained/dropped boundary is approximately `3.57` for En-Es and
-`3.60` for En-De.
+This is a construction-time artifact. Exact score combination and selection
+settings must be confirmed from experiment logs; see `docs/blockers.md`.
 
-## Text-Bearing Split Manifest
+## Metadata Split Manifest
 
-The VC materialization wrapper expects the `*_asr.tsv` split format:
+Required columns:
 
 ```text
-id
+sample_id
 pre_src
 pre_tgt
-sentence
-translation
-src_asr
-tgt_asr
+src_text
+tgt_text
 split
 ```
 
-Only `id`, `pre_src`, and `pre_tgt` are required for voice conversion. The text
-columns are preserved for downstream organization and evaluation.
+Additional construction metadata columns may be retained. ASR-specific fields do
+not belong in construction split manifests.
+
+## VC Split Manifest
+
+Required columns:
+
+```text
+sample_id
+pre_src
+pre_tgt
+```
+
+These are the minimal columns needed by optional final voice-conversion
+materialization.
 
 ## SeedVC Pair TSV
 
-The final local materialization step converts a split manifest into:
+The final local materialization step converts a metadata or VC manifest into:
 
 ```text
 source

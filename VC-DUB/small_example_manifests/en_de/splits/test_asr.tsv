@@ -1,2 +1,0 @@
-id	pre_src	pre_tgt	sentence	translation	src_asr	tgt_asr	split
-en_de_demo_0201	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/source/en_de_demo_0201.wav	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/target/en_de_demo_0201.wav	<synthetic English source text test>	<synthetic German target text test>	<synthetic English ASR test>	<synthetic German ASR test>	test

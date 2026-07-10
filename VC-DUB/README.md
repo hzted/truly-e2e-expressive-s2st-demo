@@ -1,48 +1,48 @@
 # VC-DUB Construction Artifacts
 
-This directory contains the reviewer-facing artifacts for reproducing the VC-DUB
+This directory contains reviewer-facing artifacts for reproducing the VC-DUB
 supervision construction procedure. VC-DUB is released as a construction method,
 not as a fixed standalone audio dataset.
 
 The GitHub package intentionally contains code, configuration, schemas, and small
-synthetic examples only. Complete per-example manifests are too large for an
-anonymous GitHub mirror and may contain source-corpus text or derived metadata, so
-they should be distributed through a separate artifact package only when licensing
-permits it.
+synthetic examples only. Complete per-example manifests are distributed through a
+separate artifact package only when licensing permits it.
 
 ## Repository Contents
 
-- `configs/`: model choices, filtering criteria, and observed thresholds.
+- `configs/`: model choices, filtering criteria, and confirmed/unconfirmed settings.
 - `scripts/`: construction, filtering, splitting, and release helper scripts.
-- `scripts/voice_conversion/`: final local VC materialization wrapper.
-- `evaluation/`: selected generated-audio evaluation templates and schema.
-- `small_example_manifests/`: synthetic toy manifests that exercise the expected schemas.
+- `scripts/voice_conversion/`: optional final local VC materialization wrapper.
+- `evaluation/`: paper evaluation package for generated audio.
+- `small_example_manifests/`: synthetic toy manifests that exercise the schemas.
 - `manifest_schema.md`: required columns for each construction stage.
+- `docs/blockers.md`: configuration conflicts that require experiment-log confirmation.
 - `examples/`: small non-sensitive statistics and command examples.
 - `DATA_LICENSE.md`: data-release and redistribution guidance.
-- `requirements.txt` and `environment.yml`: lightweight runtime dependencies for utility scripts.
 
-## Pipeline Order
+## Construction Pipeline
 
-The public reconstruction order is:
+Construction contains exactly these stages:
 
-1. Obtain aligned source/target speech segments.
-2. Denoise both sides with ClearVoice-Studio.
-3. Extract vocal stems with Demucs.
-4. Filter language pairs with MMS-LID.
-5. Remove multi-speaker or overlapped segments with Sortformer diarization.
-6. Score both sides with DNSMOSPro and apply scale-matched quality selection.
-7. Run ASR/text-metadata preparation with Whisper large-v3 when text-bearing split manifests are needed.
-8. Create train/dev/test split manifests.
-9. Run voice conversion locally as the final materialization step.
+1. aligned-pair metadata preparation
+2. ClearVoice/Demucs preprocessing
+3. MMS-LID filtering
+4. Sortformer speaker filtering
+5. DNSMOSPro quality scoring and selection
+6. train/dev/test split assignment
+7. optional local voice-conversion materialization
 
-Voice conversion is therefore the last step in this release. The filtering stages
-operate on aligned, cleaned source/target utterance pairs and their metadata. The
-generated VC waveforms are not redistributed.
+Voice conversion is the last step in this release. Filtering and split assignment
+operate on aligned, cleaned source/target utterance pairs and their construction
+metadata. Generated VC waveforms are not redistributed.
+
+Whisper large-v3 is not a construction dependency. It must not affect sample
+retention, deletion, ordering, or train/dev/test split assignment. If ASR-based
+paper evaluation is run, it lives under `evaluation/`.
 
 ## Environment
 
-Install the Python dependencies used by the released utility scripts:
+Install the lightweight Python dependencies used by the released utility scripts:
 
 ```bash
 python -m pip install -r requirements.txt
@@ -50,9 +50,9 @@ python -m pip install -r requirements.txt
 
 Several stages require external model repositories or framework-specific
 environments: ClearVoice-Studio for denoising, Demucs for vocal extraction, NeMo
-for Sortformer diarization, DNSMOSPro for quality scoring, and SeedVC for the
-final voice conversion materialization. Install those components from their
-upstream projects and point the command templates to the local checkouts.
+for Sortformer diarization, DNSMOSPro for quality scoring, and SeedVC for optional
+final VC materialization. Install those components from their upstream projects
+and point the command templates to the local checkouts.
 
 ## Input Requirement
 
@@ -62,9 +62,9 @@ prepare source/target speech segment pairs with corresponding text metadata.
 If starting from parallel speech documents rather than pre-aligned utterances, an
 embedding-based speech alignment method such as
 [Speech Vecalign: an Embedding-based Method for Aligning Parallel Speech Documents](https://aclanthology.org/2025.emnlp-main.833.pdf)
-can be used to obtain aligned speech segments. Equivalent alignment tools can also
-be used. VC-DUB only requires that the result is converted into utterance-level
-source/target audio pairs.
+can be used to obtain aligned speech segments. Equivalent alignment tools can
+also be used. VC-DUB only requires that the result is converted into
+utterance-level source/target audio pairs.
 
 See `manifest_schema.md` for the expected columns. The synthetic examples under
 `small_example_manifests/` use placeholder paths and do not contain source-corpus
@@ -72,31 +72,78 @@ text.
 
 ## DNSMOSPro Quality Selection
 
-DNSMOSPro is used as the quality predictor. We score both source and target
-utterances, compute a source-target combined quality score, and retain pairs above
-the empirical quality cutoff. The cutoff characterizes the quality floor of the
-retained clean pool while keeping the final VC-DUB training split comparable in
-scale to CVSS-T.
+DNSMOSPro is the construction-time quality-selection criterion. The auditable
+artifact is:
 
-Observed retained/dropped boundaries:
+```text
+dnsmospro_quality_pairs.tsv.gz
+```
 
-| Pair | Combined quality column | Approx. cutoff | Retained clean pool |
-| --- | --- | ---: | ---: |
-| En-Es | `combined_dnsmospro` | 3.57 | 90,000 |
-| En-De | `combined_dnsmospro` | 3.60 | 147,639 |
+It must contain at least:
+
+```text
+sample_id
+src_dnsmospro
+tgt_dnsmospro
+combined_dnsmospro
+selected
+drop_reason
+```
+
+The paper text reports retained/dropped boundaries of approximately 3.57 for
+En-Es and 3.60 for En-De. The exact implementation commit, score field,
+source-target combination rule, and cutoff/duration-matching rule require
+confirmation from the original experiment logs. These unresolved items are listed
+in `docs/blockers.md`; the public package does not guess them.
+
+## Build Splits
+
+The split builder reads the selected construction manifest and optional aligned
+metadata. It does not read ASR metadata.
+
+```bash
+cd /path/to/truly-e2e-expressive-s2st-demo/VC-DUB
+
+python -u scripts/build_vcdub_splits.py \
+  --selected-manifest-tsv small_example_manifests/en_es/filtering/stage_03_dnsmospro_quality_selected_manifest.tsv \
+  --aligned-metadata-tsv small_example_manifests/en_es/filtering/stage_00_aligned_pair_manifest.tsv \
+  --out-dir /tmp/vcdub_example_splits \
+  --id-col sample_id \
+  --source-audio-col pre_src \
+  --target-audio-col pre_tgt \
+  --source-text-col src_text \
+  --target-text-col tgt_text \
+  --dev-test-ratio 0.50 \
+  --test-size 1 \
+  --seed 42 \
+  --overwrite
+```
+
+The outputs are:
+
+```text
+all_metadata.tsv
+train_metadata.tsv
+dev_metadata.tsv
+test_metadata.tsv
+train_vc.tsv
+dev_vc.tsv
+test_vc.tsv
+split_summary.json
+```
 
 ## Voice Conversion Materialization
 
-After filtering and splitting, run voice conversion locally from a selected
-`*_asr.tsv` split manifest. The `*_asr.tsv` files retain the `id`, `pre_src`, and
-`pre_tgt` columns required by the VC wrapper.
-
-Example:
+After filtering and splitting, run voice conversion locally from `*_metadata.tsv`,
+`*_vc.tsv`, or a selected stage-03 manifest containing `sample_id`, `pre_src`,
+and `pre_tgt`.
 
 ```bash
-SPLIT_TSV=/path/to/VC-DUB/small_example_manifests/en_es/splits/train_asr.tsv \
+cd /path/to/truly-e2e-expressive-s2st-demo/VC-DUB
+
+SPLIT_TSV=small_example_manifests/en_es/splits/train_metadata.tsv \
 SEEDVC_ROOT=/path/to/seed-vc-main \
-OUTPUT_ROOT=/path/to/vcdub_vc_outputs/en_es/train \
+OUTPUT_ROOT=/tmp/vcdub_vc_outputs/en_es/train \
 PYTHON=/path/to/python \
 NUM_SHARDS=1 \
 MAX_PARALLEL=1 \
@@ -104,8 +151,7 @@ CUDA_DEV=0 \
 bash scripts/voice_conversion/run_voice_conversion_materialization.sh
 ```
 
-The wrapper writes the SeedVC-style pair TSV and, after local inference, a merged
-materialization manifest:
+The wrapper writes:
 
 ```text
 ${OUTPUT_ROOT}/pair_tsvs/all_pairs.tsv
@@ -122,17 +168,22 @@ VC-DUB_full_manifests.tar.gz
 SHA256SUMS
 ```
 
-During local preparation, keep the full archive and its `SHA256SUMS` outside the
-Git repository, then upload them to the chosen anonymous artifact host.
+If the source corpus license does not permit redistribution of text,
+translations, or codec tokens, release only sanitized metadata such as
+`sample_id`, split, stage decisions, scores, and placeholder reference IDs.
 
-If the source corpus license does not permit redistribution of text, translations,
-or codec tokens, release only sanitized metadata such as `sample_id`, `split`,
-stage decisions, scores, and placeholder reference IDs.
-
-## Output Evaluation
+## Paper Evaluation
 
 Generated-audio evaluation commands are separated under `evaluation/`. The
-included template runs only BLASER2.0, AutoPCP, speech-rate compliance at 20% and
-40%, syllable speech-rate Pearson, pause weighted-mean duration score, vocal-style
-similarity, and DNSMOSPro naturalness/MOS. It does not run ASR-BLEU, EmoCos, F0,
-WER/CER, or any other MOS variants.
+evaluation package covers only paper-reported metrics:
+
+- BLASER 2.0
+- A.PCP
+- SLC at `p = 0.2` and `p = 0.4`
+- syllable speech-rate correlation
+- pause weighted-mean duration score
+- Vsim
+- DNSMOSPro when reported as a quality metric
+- optional ASR-based evaluation only when explicitly enabled
+
+See `evaluation/README.md`.

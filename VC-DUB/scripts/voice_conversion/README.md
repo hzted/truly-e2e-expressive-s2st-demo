@@ -6,15 +6,15 @@ generated voice-converted waveforms are intentionally not redistributed.
 
 ## Inputs
 
-- A selected VC-DUB `*_asr.tsv` split manifest, for example
-  `small_example_manifests/en_es/splits/train_asr.tsv`.
+- A selected VC-DUB `*_metadata.tsv`, `*_vc.tsv`, or stage-03 construction
+  manifest, for example `small_example_manifests/en_es/splits/train_metadata.tsv`.
 - A local SeedVC checkout containing `inference.py` and its model dependencies.
 - Local access to the cleaned source/target audio paths referenced by the manifest.
 
 ## Build And Run
 
 ```bash
-SPLIT_TSV=/path/to/VC-DUB/small_example_manifests/en_es/splits/train_asr.tsv \
+SPLIT_TSV=/path/to/VC-DUB/small_example_manifests/en_es/splits/train_metadata.tsv \
 SEEDVC_ROOT=/path/to/seed-vc-main \
 OUTPUT_ROOT=/path/to/vcdub_vc_outputs/en_es/train \
 PYTHON=/path/to/python \
@@ -54,4 +54,5 @@ The source and target columns can be changed through:
 ```bash
 SOURCE_AUDIO_COL=pre_src
 TARGET_AUDIO_COL=pre_tgt
+ID_COL=sample_id
 ```

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Build SeedVC-style pair TSVs from a VC-DUB split manifest.
+"""Build SeedVC-style pair TSVs from a VC-DUB construction manifest.
 
-Input manifests are expected to contain cleaned source and target utterance paths.
+Input manifests may be `*_metadata.tsv`, `*_vc.tsv`, or a selected stage-03
+construction manifest. They are expected to contain cleaned source and target
+utterance paths.
 The output TSV has the three columns expected by the SeedVC batch runner:
 
 source<TAB>target<TAB>output
@@ -25,10 +27,10 @@ def read_tsv(path: Path) -> pd.DataFrame:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input-tsv", required=True, help="VC-DUB split manifest, optionally .gz")
+    parser.add_argument("--input-tsv", required=True, help="VC-DUB metadata/VC manifest, optionally .gz")
     parser.add_argument("--output-tsv", required=True, help="SeedVC pair TSV to write.")
     parser.add_argument("--output-audio-root", required=True, help="Directory for generated VC wavs.")
-    parser.add_argument("--id-col", default="id")
+    parser.add_argument("--id-col", default="sample_id")
     parser.add_argument("--source-audio-col", default="pre_src")
     parser.add_argument("--target-audio-col", default="pre_tgt")
     parser.add_argument("--output-prefix", default="")

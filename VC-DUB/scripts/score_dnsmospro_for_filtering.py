@@ -55,7 +55,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input-tsv", required=True)
     parser.add_argument("--out-dir", required=True)
-    parser.add_argument("--id-col", default="id")
+    parser.add_argument("--id-col", default="sample_id")
+    parser.add_argument("--output-id-col", default="sample_id")
     parser.add_argument("--src-audio-col", default="pre_src")
     parser.add_argument("--tgt-audio-col", default="pre_tgt")
     parser.add_argument("--combine", choices=["mean", "min"], default="mean")
@@ -87,7 +88,7 @@ def main() -> None:
         tgt_score = audio_cache[tgt_audio]
         rows.append(
             {
-                args.id_col: row[args.id_col],
+                args.output_id_col: row[args.id_col],
                 args.src_audio_col: src_audio,
                 args.tgt_audio_col: tgt_audio,
                 "src_dnsmospro": src_score,

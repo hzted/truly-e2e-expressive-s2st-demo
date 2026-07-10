@@ -4,13 +4,13 @@ set -euo pipefail
 # Materialize VC-DUB voice-converted audio from a selected split manifest.
 #
 # Required inputs:
-#   SPLIT_TSV: VC-DUB split manifest with pre_src/pre_tgt columns.
+#   SPLIT_TSV: VC-DUB *_metadata.tsv, *_vc.tsv, or selected stage-03 manifest.
 #   SEEDVC_ROOT: local SeedVC checkout containing inference.py and model dependencies.
 #   OUTPUT_ROOT: output directory for pair TSVs, wav shards, logs, and merged manifest.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-SPLIT_TSV="${SPLIT_TSV:?Set SPLIT_TSV to train/dev/test split manifest.}"
+SPLIT_TSV="${SPLIT_TSV:?Set SPLIT_TSV to a train/dev/test metadata or VC manifest.}"
 SEEDVC_ROOT="${SEEDVC_ROOT:?Set SEEDVC_ROOT to the local SeedVC repository.}"
 OUTPUT_ROOT="${OUTPUT_ROOT:?Set OUTPUT_ROOT for generated VC materialization outputs.}"
 
@@ -22,7 +22,7 @@ PREFETCH_WORKERS="${PREFETCH_WORKERS:-4}"
 PREFETCH_DEPTH="${PREFETCH_DEPTH:-16}"
 SOURCE_AUDIO_COL="${SOURCE_AUDIO_COL:-pre_src}"
 TARGET_AUDIO_COL="${TARGET_AUDIO_COL:-pre_tgt}"
-ID_COL="${ID_COL:-id}"
+ID_COL="${ID_COL:-sample_id}"
 OUTPUT_SR="${OUTPUT_SR:-16000}"
 DEMUX_PREPROCESS="${DEMUX_PREPROCESS:-false}"
 DEMUX_ON="${DEMUX_ON:-both}"

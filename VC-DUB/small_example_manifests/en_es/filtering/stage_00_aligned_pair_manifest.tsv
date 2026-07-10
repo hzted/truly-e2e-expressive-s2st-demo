@@ -1,0 +1,5 @@
+sample_id	src_audio	tgt_audio	src_text	tgt_text	src_lang	tgt_lang
+en_es_demo_0001	{ALIGNED_DUBBING_ROOT}/en_es/raw/source/en_es_demo_0001.wav	{ALIGNED_DUBBING_ROOT}/en_es/raw/target/en_es_demo_0001.wav	<synthetic English source text 1>	<synthetic Spanish target text 1>	eng	spa
+en_es_demo_0002	{ALIGNED_DUBBING_ROOT}/en_es/raw/source/en_es_demo_0002.wav	{ALIGNED_DUBBING_ROOT}/en_es/raw/target/en_es_demo_0002.wav	<synthetic English source text 2>	<synthetic Spanish target text 2>	eng	spa
+en_es_demo_0101	{ALIGNED_DUBBING_ROOT}/en_es/raw/source/en_es_demo_0101.wav	{ALIGNED_DUBBING_ROOT}/en_es/raw/target/en_es_demo_0101.wav	<synthetic English source text dev>	<synthetic Spanish target text dev>	eng	spa
+en_es_demo_0201	{ALIGNED_DUBBING_ROOT}/en_es/raw/source/en_es_demo_0201.wav	{ALIGNED_DUBBING_ROOT}/en_es/raw/target/en_es_demo_0201.wav	<synthetic English source text test>	<synthetic Spanish target text test>	eng	spa

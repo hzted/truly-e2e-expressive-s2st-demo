@@ -1,0 +1,2 @@
+sample_id	pre_src	pre_tgt	src_text	tgt_text	split
+en_de_demo_0101	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/source/en_de_demo_0101.wav	{ALIGNED_DUBBING_ROOT}/en_de/preprocessed/target/en_de_demo_0101.wav	<synthetic English source text dev>	<synthetic German target text dev>	dev

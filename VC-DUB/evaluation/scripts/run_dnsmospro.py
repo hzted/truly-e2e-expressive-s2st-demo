@@ -20,6 +20,8 @@ from typing import Any
 
 import pandas as pd
 
+from _wrapper_utils import write_dry_outputs
+
 
 FLOAT_RE = re.compile(r"[-+]?(?:\d*\.\d+|\d+)")
 
@@ -90,7 +92,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", required=True, help="Evaluation manifest TSV.")
     parser.add_argument("--out-dir", required=True)
-    parser.add_argument("--id-col", default="id")
+    parser.add_argument("--id-col", default="sample_id")
     parser.add_argument("--audio-col", default="hypo_audio")
     parser.add_argument("--status-col", default="status")
     parser.add_argument("--ok-status", default="ok")
@@ -100,6 +102,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--score-regex", default="", help="Optional regex; first capture group is used when present.")
     parser.add_argument("--timeout-sec", type=float, default=120.0)
     parser.add_argument("--max-rows", type=int, default=0)
+    parser.add_argument("--dry-run", action="store_true")
     return parser.parse_args()
 
 
@@ -107,6 +110,17 @@ def main() -> None:
     args = parse_args()
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    if args.dry_run:
+        write_dry_outputs(
+            args.manifest,
+            out_dir,
+            args.id_col,
+            {"dnsmospro_nat": 3.5},
+            "dnsmospro_nat_summary.json",
+            "dnsmospro_per_example.tsv",
+        )
+        return
 
     df = pd.read_csv(args.manifest, sep="\t", low_memory=False)
     missing = [c for c in [args.id_col, args.audio_col] if c not in df.columns]
@@ -162,8 +176,10 @@ def main() -> None:
 
     scores = pd.DataFrame(rows)
     score_path = out_dir / "dnsmospro_nat_scores.tsv"
+    per_example_path = out_dir / "dnsmospro_per_example.tsv"
     summary_path = out_dir / "dnsmospro_nat_summary.json"
     scores.to_csv(score_path, sep="\t", index=False)
+    scores.to_csv(per_example_path, sep="\t", index=False)
 
     vals = pd.to_numeric(scores["dnsmospro_nat"], errors="coerce").dropna()
     summary = {

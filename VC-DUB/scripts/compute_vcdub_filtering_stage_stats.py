@@ -256,7 +256,7 @@ def build_language_rows(
     q_src = series_from_split_vad_map(quality, "pre_src", split_vad)
     q_tgt = series_from_split_vad_map(quality, "pre_tgt", split_vad)
     if q_src.notna().all() and q_tgt.notna().all():
-        duration_source = "splits train/dev/test_asr.tsv VAD-span:pre_src,pre_tgt"
+        duration_source = "splits train/dev/test_metadata.tsv VAD-span:pre_src,pre_tgt"
     else:
         q_src_audio = series_from_audio_paths(quality, "pre_src", duration_cache, f"{language_pair} clean pool src fallback", cache_path)
         q_tgt_audio = series_from_audio_paths(quality, "pre_tgt", duration_cache, f"{language_pair} clean pool tgt fallback", cache_path)

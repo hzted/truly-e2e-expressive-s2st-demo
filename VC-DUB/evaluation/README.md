@@ -1,64 +1,103 @@
-# VC-DUB Output Evaluation
+# VC-DUB Paper Evaluation Package
 
-This folder documents the selected output-audio metrics used for generated
-speech evaluation. It is separate from the data-cleaning pipeline: cleaning uses
-Whisper large-v3 only for ASR/text metadata, while this folder evaluates final
-generated audio.
+This package is separate from VC-DUB construction/cleaning. It evaluates final
+generated audio and must not be used to decide which construction examples are
+kept, dropped, ordered, or assigned to train/dev/test.
 
-## Metrics Included
+## Metrics
 
-Only the following metrics are included:
+The package covers only paper-facing metrics:
 
-- BLASER2.0 audio score (`blaser2_qe_audio_mean`, and `blaser2_ref_mean` when a reference audio column is provided).
-- AutoPCP (`autopcp_mean`).
-- Speech-rate compliance within 20% and 40% (`sc_0p2_compliance`, `sc_0p4_compliance`).
-- Syllable speech-rate Pearson correlation (`speech_rate_syllable_pearson`).
-- Pause weighted-mean duration score (`pause_wmean_duration_score`).
-- Vocal-style similarity (`vsim_mean`).
-- DNSMOSPro naturalness/MOS (`dnsmospro_nat_mean`).
+- Content: BLASER 2.0
+- Prosody: A.PCP
+- Isochrony: SLC at `p = 0.2`, SLC at `p = 0.4`, syllable speech-rate correlation, pause weighted-mean duration score
+- Speaker identity: Vsim
+- Quality: DNSMOSPro, only when reported as an evaluation metric
+- ASR: Whisper large-v3, only when an ASR-based evaluation metric is explicitly enabled
 
-No ASR-BLEU, EmoCos, F0, WER/CER, or additional metrics are run here.
+Whisper large-v3 is not a BLASER, DNSMOSPro, Vsim, A.PCP, or VC-DUB cleaning
+dependency.
 
-## Manifest
+## Input Manifest
 
-See `eval_manifest_schema.md`. The expected TSV columns are:
+Use a single TSV keyed by `sample_id`. See `examples/manifest_schema.md`.
+
+Required core columns:
 
 ```text
-id
+sample_id
 source_audio
 hypo_audio
 source_text
 hypo_text
 source_lang
 hypo_lang
-reference_audio
-reference_text
+target_lang
 status
 ```
 
-The text columns should come from the same Whisper large-v3 ASR/text-metadata
-logic used elsewhere in the project when generated-audio transcripts are needed.
-
-## Command Template
-
-```bash
-EVAL_MANIFEST=/path/to/eval_manifest.tsv \
-OUT_DIR=/path/to/evaluation_outputs \
-VERIFY_SCRIPTS_ROOT=/path/to/Expressive_S2ST/verify_scripts \
-PYTHON=/path/to/python \
-SOURCE_LANG=eng \
-HYPO_LANG=spa \
-WAVLM_CKPT=/path/to/wavlm_large_finetune.pth \
-DNSMOSPRO_CMD='python /path/to/DNSMOSPro/infer.py --audio {audio}' \
-bash evaluation/run_selected_metrics_template.sh
-```
-
-The final paper-facing output is:
+Recommended optional columns:
 
 ```text
-${OUT_DIR}/selected_metrics_summary.tsv
-${OUT_DIR}/selected_metrics_summary.json
+reference_audio
+reference_text
+reference_translation
 ```
 
-These files contain only the metric whitelist listed above, even if the underlying
-Stopes or BLASER scripts write additional diagnostic outputs.
+## One-Command Smoke Test
+
+From the `VC-DUB` directory:
+
+```bash
+bash evaluation/tests/test_smoke.sh
+```
+
+This uses `--dry-run`, so it does not require model checkpoints or audio files.
+
+## Real Evaluation Command
+
+From the `VC-DUB` directory:
+
+```bash
+python -u evaluation/scripts/run_all_metrics.py \
+  --manifest /path/to/eval_manifest.tsv \
+  --out-dir /path/to/evaluation_outputs \
+  --config evaluation/configs/evaluation_config.json \
+  --python /path/to/python \
+  --verify-scripts-root /export/fs06/hzhan276/Expressive_S2ST/verify_scripts \
+  --source-lang eng \
+  --hypo-lang spa \
+  --wavlm-ckpt /path/to/wavlm_large_finetune.pth \
+  --dnsmospro-cmd 'python /path/to/DNSMOSPro/infer.py --audio {audio}' \
+  --num-shards 1 \
+  --parallel-jobs 1
+```
+
+Outputs:
+
+```text
+per-example_metrics.tsv
+aggregate_metrics.json
+aggregate_metrics.tsv
+```
+
+## Plus/Minus Reporting
+
+The aggregator does not silently choose what table `±` means. Pass one of:
+
+```text
+--uncertainty std
+--uncertainty sem
+--uncertainty ci95
+```
+
+If omitted, no `*_pm` fields are added. The paper table caption should explicitly
+state whether `±` is standard deviation, standard error, or a 95% confidence
+interval margin.
+
+## Implementation Notes
+
+The wrappers call the project implementations under `verify_scripts` rather than
+reimplementing metric proxies. If a model checkpoint, dependency version, or
+official implementation commit is missing, treat it as a blocker and fill it from
+the original experiment environment instead of guessing.

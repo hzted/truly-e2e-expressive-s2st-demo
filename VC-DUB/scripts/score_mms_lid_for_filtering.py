@@ -43,7 +43,7 @@ def parse_args():
     ap = argparse.ArgumentParser(description='Filter language-mismatched rows using facebook/mms-lid-126.')
     ap.add_argument('--input-tsv', required=True)
     ap.add_argument('--out-dir', required=True)
-    ap.add_argument('--id-col', default='id')
+    ap.add_argument('--id-col', default='sample_id')
     ap.add_argument('--src-audio-col', default='pre_src')
     ap.add_argument('--tgt-audio-col', default='pre_tgt')
     ap.add_argument('--expected-src-lang', default='eng')
@@ -303,10 +303,10 @@ source {USER_HOME}/.bashrc
 conda activate stopes_eval_a100
 export HF_HOME={USER_WORK_ROOT}/.cache/huggingface
 
-python -u scripts/eval_mms_lid_filter.py \
+python -u scripts/score_mms_lid_for_filtering.py \
   --input-tsv {WORK_ROOT}/manifests/preprocessed_pair_manifest.tsv \
   --out-dir {WORK_ROOT}/mms_lid \
-  --id-col id \
+  --id-col sample_id \
   --src-audio-col pre_src \
   --tgt-audio-col pre_tgt \
   --expected-src-lang eng \
