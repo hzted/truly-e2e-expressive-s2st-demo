@@ -13,6 +13,7 @@ supervision locally from an aligned dubbing corpus.
 
 The release package treats voice conversion as the final local materialization step:
 
+0. Obtain an aligned bilingual dubbing corpus and format it as VC-DUB input manifests.
 1. Start from an aligned dubbing manifest with source/target audio and text.
 2. Denoise source and target utterances with ClearVoice-Studio.
 3. Extract vocals with Demucs.
@@ -29,8 +30,43 @@ and avoids treating VC-generated waveforms as a standalone benchmark resource.
 
 - `configs/vcdub_construction_config.json`: model names, thresholds, and filtering criteria.
 - `scripts/`: copied construction/filtering scripts plus release helper scripts.
+- `scripts/voice_conversion/`: final local VC materialization wrapper and SeedVC batch helpers.
 - `manifests/`: generated, path-sanitized, compressed manifests and split files.
 - `docs/`: detailed inventory and notes for appendix/reporting.
+
+## Input Requirement
+
+VC-DUB assumes an existing aligned dubbing corpus. In other words, before running
+the construction scripts, users should collect or prepare source/target dubbing
+utterance pairs with corresponding text metadata.
+
+If starting from parallel scripts/subtitles rather than pre-aligned utterances, a
+sentence alignment tool such as
+[VecAlign](https://github.com/thompsonb/vecalign) can be used to obtain bilingual
+text alignments. VecAlign is a sentence alignment method based on multilingual
+sentence embeddings; see Thompson and Koehn (2019),
+[Vecalign: Improved Sentence Alignment in Linear Time and Space](https://aclanthology.org/D19-1136/).
+Equivalent alignment tools can also be used. VC-DUB only requires that the result
+is converted into utterance-level source/target audio pairs.
+
+The first materialization step expects a pair TSV with:
+
+```text
+source    target    output
+```
+
+where `source` is the source/content utterance path, `target` is the target/reference
+voice utterance path, and `output` is the desired local path for the generated
+voice-converted waveform. The batch VC step writes `manifests/vc_manifest.tsv`,
+which is then consumed by the filtering and splitting scripts.
+
+The released split manifests use the cleaned-audio columns:
+
+```text
+id    pre_src    pre_tgt
+```
+
+Additional text, ASR, duration, and bookkeeping columns are preserved when present.
 
 ## Build The Release Manifests
 
@@ -44,6 +80,28 @@ python -u scripts/collect_release_manifests.py \
 
 The script writes `.tsv.gz` and `.json` files with absolute local paths replaced by
 portable placeholders such as `{VC_DUB_ROOT}` and `{ALIGNED_DUBBING_ROOT}`.
+
+## Voice Conversion Materialization
+
+After filtering and splitting, run voice conversion locally from a selected split
+manifest. Example:
+
+```bash
+SPLIT_TSV=/path/to/VC-DUB/manifests/en_es/splits/train.tsv.gz \
+SEEDVC_ROOT=/path/to/seed-vc-main \
+OUTPUT_ROOT=/path/to/vcdub_vc_outputs/en_es/train \
+PYTHON=/path/to/python \
+NUM_SHARDS=8 \
+MAX_PARALLEL=1 \
+CUDA_DEV=0 \
+bash scripts/voice_conversion/run_voice_conversion_materialization.sh
+```
+
+The wrapper writes a merged materialization manifest to:
+
+```text
+${OUTPUT_ROOT}/merged/vc_manifest.tsv
+```
 
 ## Audio Path Placeholders
 

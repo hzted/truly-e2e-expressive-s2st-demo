@@ -34,3 +34,5 @@ python -u scripts/build_vcdub_splits.py --help
 
 echo "[8/8] Run voice conversion locally as final materialization"
 echo "      Use the selected split manifests as input; generated audio is not part of this release."
+echo "      Example:"
+echo "      SPLIT_TSV=/path/to/train.tsv.gz SEEDVC_ROOT=/path/to/seed-vc-main OUTPUT_ROOT=/path/to/vc_outputs bash scripts/voice_conversion/run_voice_conversion_materialization.sh"
