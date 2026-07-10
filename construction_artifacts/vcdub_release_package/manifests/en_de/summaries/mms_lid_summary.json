@@ -1,0 +1,20 @@
+{
+  "datasets": [
+    {
+      "dataset_tag": "de_en",
+      "drop_rows": 70210,
+      "input_path": "{VC_DUB_ROOT}/en_de/mms_lid_preprocessed_filter/mms_lid_results.tsv",
+      "input_rows": 369139,
+      "pass_rows": 298929,
+      "pass_rule": "both_match"
+    }
+  ],
+  "id_col": "id",
+  "n_datasets": 1,
+  "out_tsv": "{VC_DUB_ROOT}/en_de/mms_lid_preprocessed_filter/lid_pass_manifest.tsv",
+  "output_id_example": "0",
+  "prefix_id": false,
+  "total_drop_rows": 70210,
+  "total_input_rows": 369139,
+  "total_pass_rows": 298929
+}

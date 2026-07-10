@@ -1,0 +1,74 @@
+{
+  "release_scope": "VC-DUB construction procedure and manifests; no audio is redistributed.",
+  "pipeline_order": [
+    "aligned_dubbing_manifest",
+    "clearvoice_denoising",
+    "demucs_vocal_extraction",
+    "mms_lid_filtering",
+    "sortformer_single_speaker_filtering",
+    "utmos_quality_selection",
+    "train_dev_test_split",
+    "local_voice_conversion_materialization"
+  ],
+  "preprocessing": {
+    "denoising": {
+      "tool": "ClearVoice-Studio",
+      "model": "MossFormer2_SE_48K",
+      "inference_settings": "default"
+    },
+    "vocal_extraction": {
+      "tool": "Demucs",
+      "model": "htdemucs",
+      "inference_settings": "default",
+      "known_defaults": {
+        "sample_rate_hz": 44100,
+        "channels": 2,
+        "sources": ["drums", "bass", "other", "vocals"]
+      }
+    }
+  },
+  "filtering": {
+    "mms_lid": {
+      "model": "facebook/mms-lid-126",
+      "criterion": "top-1 predicted labels must match expected source and target languages",
+      "confidence_threshold": null
+    },
+    "sortformer": {
+      "model": "nvidia/diar_sortformer_4spk-v1",
+      "criterion": "source and target each have <= 1 detected active speaker",
+      "audio_preprocessing": "16 kHz mono before diarization"
+    },
+    "quality_selection": {
+      "model": "UTMOS v2",
+      "config": "fusion_stage3",
+      "fold": 0,
+      "seed": 42,
+      "silence_removal": true,
+      "language_pair_settings": {
+        "en_es": {
+          "expected_source_lid": "eng",
+          "expected_target_lid": "spa",
+          "score_mode": "both_min",
+          "target_keep_pairs": 90000,
+          "observed_cutoff": 1.8466796875
+        },
+        "en_de": {
+          "expected_source_lid": "eng",
+          "expected_target_lid": "deu",
+          "score_mode": "both_mean",
+          "target_combined_audio_hours": 300.0,
+          "observed_cutoff": 2.048828125
+        }
+      }
+    }
+  },
+  "splits": {
+    "test_size_pairs": 500,
+    "dev_test_fraction_before_fixed_test": 0.15,
+    "seed": 42
+  },
+  "voice_conversion": {
+    "release_policy": "Run after filtering/splitting as a local materialization step.",
+    "reason": "Generated VC audio is not redistributed; manifests are sufficient to reproduce the construction procedure when paired with local audio."
+  }
+}

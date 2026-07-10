@@ -1,0 +1,26 @@
+{
+  "batch_size": 1,
+  "both_done_pairs": 298929,
+  "both_relaxed_single_pairs": 240055,
+  "both_strict_single_pairs": 237743,
+  "device": "cuda",
+  "done_audio_checks": 597858,
+  "either_multi_or_error_pairs": 58874,
+  "error_audio_checks": 0,
+  "files": {
+    "audio_results": "{VC_DUB_ROOT}/en_de/mms_lid_preprocessed_filter/sortformer_pair_filter/sortformer_audio_results.tsv",
+    "bad_ids": "{VC_DUB_ROOT}/en_de/mms_lid_preprocessed_filter/sortformer_pair_filter/sortformer_pair_bad_ids.txt",
+    "bad_rows": "{VC_DUB_ROOT}/en_de/mms_lid_preprocessed_filter/sortformer_pair_filter/sortformer_pair_bad_rows.tsv",
+    "good_ids": "{VC_DUB_ROOT}/en_de/mms_lid_preprocessed_filter/sortformer_pair_filter/sortformer_pair_good_ids.txt",
+    "good_rows": "{VC_DUB_ROOT}/en_de/mms_lid_preprocessed_filter/sortformer_pair_filter/sortformer_pair_good_rows.tsv",
+    "pair_results": "{VC_DUB_ROOT}/en_de/mms_lid_preprocessed_filter/sortformer_pair_filter/sortformer_pair_results.tsv",
+    "progress": "{VC_DUB_ROOT}/en_de/mms_lid_preprocessed_filter/sortformer_pair_filter/sortformer_audio_progress.tsv"
+  },
+  "input_tsv": "{VC_DUB_ROOT}/en_de/mms_lid_preprocessed_filter/lid_pass_manifest.tsv",
+  "model_id": "nvidia/diar_sortformer_4spk-v1",
+  "n_audio_checks": 597858,
+  "n_pairs": 298929,
+  "out_dir": "{VC_DUB_ROOT}/en_de/mms_lid_preprocessed_filter/sortformer_pair_filter",
+  "src_audio_col": "pre_src",
+  "tgt_audio_col": "pre_tgt"
+}
