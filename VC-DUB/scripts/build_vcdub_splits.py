@@ -14,7 +14,7 @@ CORE_COLS = ["path", "sentence", "translation", "src_audio", "tgt_audio"]
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Split a VC-DUB ASR metadata TSV while preserving ASR-only columns "
+            "Split a VC-DUB Whisper large-v3 ASR metadata TSV while preserving ASR-only columns "
             "in *_ar.tsv outputs."
         )
     )
@@ -225,16 +225,16 @@ if __name__ == "__main__":
     main()
 
 """
-python {EXPRESSIVE_S2ST_ROOT}/utils/build_vcdub_splits.py \
-  --input-tsv {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/quality_selection/granite_asr/vcdub_text_meta.tsv \
-  --join-manifest-tsv {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/quality_selection/dnsmospro_filtered_manifest.tsv \
+python scripts/build_vcdub_splits.py \
+  --input-tsv {WORK_ROOT}/quality_selection/whisper_largev3_asr/vcdub_text_meta.tsv \
+  --join-manifest-tsv {WORK_ROOT}/quality_selection/dnsmospro_filtered_manifest.tsv \
   --input-id-col path \
   --join-id-col id \
   --source-text-col out_sentence \
   --target-text-col translation \
-  --source-audio-col tgt_audio \
+  --source-audio-col pre_src \
   --target-audio-col pre_tgt \
-  --out-dir {EXPRESSIVE_S2ST_ROOT}/es_en/splits \
+  --out-dir {WORK_ROOT}/splits \
   --dev-test-ratio 0.12 \
   --test-size 504 \
   --seed 42 \
@@ -242,16 +242,16 @@ python {EXPRESSIVE_S2ST_ROOT}/utils/build_vcdub_splits.py \
 """
 
 """
-python3 {EXPRESSIVE_S2ST_ROOT}/utils/build_vcdub_splits.py \
-  --input-tsv {EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/quality_selection/granite_asr/vcdub_text_meta.tsv \
-  --join-manifest-tsv {EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/quality_selection/dnsmospro_filtered_manifest.tsv \
+python3 scripts/build_vcdub_splits.py \
+  --input-tsv {WORK_ROOT}/quality_selection/whisper_largev3_asr/vcdub_text_meta.tsv \
+  --join-manifest-tsv {WORK_ROOT}/quality_selection/dnsmospro_filtered_manifest.tsv \
   --input-id-col path \
   --join-id-col id \
   --source-text-col out_sentence \
   --target-text-col translation \
-  --source-audio-col tgt_audio \
+  --source-audio-col pre_src \
   --target-audio-col pre_tgt \
-  --out-dir {EXPRESSIVE_S2ST_ROOT}/de_en/splits \
+  --out-dir {WORK_ROOT}/splits \
   --dev-test-ratio 0.15 \
   --test-size 500 \
   --seed 42 \

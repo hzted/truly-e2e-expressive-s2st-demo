@@ -11,11 +11,11 @@ import soundfile as sf
 
 
 STAGES = [
-    "Raw dubbing/VC manifest",
+    "Raw aligned dubbing manifest",
     "After ClearVoice + Demucs success",
     "After MMS-LID language filtering",
     "After Sortformer single-speaker gate",
-    "After scale-matched quality selection",
+    "After DNSMOSPro scale-matched quality selection",
     "Training split used in Table 1",
 ]
 
@@ -213,10 +213,10 @@ def build_language_rows(
     expected_train: Optional[Tuple[int, float, float, float]],
     strict_table1_check: bool,
 ) -> list[dict]:
-    raw_path = root / "manifests" / "vc_manifest.tsv"
-    lid_path = root / "mms_lid_preprocessed_filter" / "lid_pass_manifest.tsv"
-    sort_path = root / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "sortformer_pair_pass_strict.tsv"
-    quality_path = root / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "quality_selection" / "dnsmospro_filtered_manifest.tsv"
+    raw_path = root / "manifests" / "aligned_pair_manifest.tsv"
+    lid_path = root / "mms_lid" / "lid_pass_manifest.tsv"
+    sort_path = root / "sortformer" / "sortformer_pair_pass_strict.tsv"
+    quality_path = root / "quality_selection" / "dnsmospro_filtered_manifest.tsv"
     train_path = split_dir / "train_ar.tsv"
 
     raw = read_tsv(raw_path)
@@ -236,7 +236,7 @@ def build_language_rows(
         (STAGES[2], lid, lid_path),
         (STAGES[3], sort, sort_path),
     ]:
-        src = series_from_audio_paths(df, "out", duration_cache, f"{language_pair} {stage} src", cache_path)
+        src = series_from_audio_paths(df, "pre_src", duration_cache, f"{language_pair} {stage} src", cache_path)
         tgt = series_from_audio_paths(df, "pre_tgt", duration_cache, f"{language_pair} {stage} tgt", cache_path)
         row = summarize_stage(
             language_pair,
@@ -245,7 +245,7 @@ def build_language_rows(
             str(path),
             src,
             tgt,
-            "audio_file_duration:out,pre_tgt",
+            "audio_file_duration:pre_src,pre_tgt",
             prev,
         )
         rows.append(row)
@@ -253,12 +253,12 @@ def build_language_rows(
 
     # The clean pool is exactly split into train/dev/test AR manifests, so use
     # the same VAD-span definition as Table 1 when all paths are covered.
-    q_src = series_from_split_vad_map(quality, "out", split_vad)
+    q_src = series_from_split_vad_map(quality, "pre_src", split_vad)
     q_tgt = series_from_split_vad_map(quality, "pre_tgt", split_vad)
     if q_src.notna().all() and q_tgt.notna().all():
-        duration_source = "splits train/dev/test_ar.tsv VAD-span:out,pre_tgt"
+        duration_source = "splits train/dev/test_asr.tsv VAD-span:pre_src,pre_tgt"
     else:
-        q_src_audio = series_from_audio_paths(quality, "out", duration_cache, f"{language_pair} clean pool src fallback", cache_path)
+        q_src_audio = series_from_audio_paths(quality, "pre_src", duration_cache, f"{language_pair} clean pool src fallback", cache_path)
         q_tgt_audio = series_from_audio_paths(quality, "pre_tgt", duration_cache, f"{language_pair} clean pool tgt fallback", cache_path)
         q_src = q_src.fillna(q_src_audio)
         q_tgt = q_tgt.fillna(q_tgt_audio)
@@ -320,10 +320,10 @@ def write_outputs(rows: list[dict], out_dir: Path) -> None:
 
 def parse_args() -> argparse.Namespace:
     ap = argparse.ArgumentParser(description="Compute stage-wise VC-DUB filtering duration statistics.")
-    ap.add_argument("--es-root", default="{EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised")
-    ap.add_argument("--de-root", default="{EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised")
-    ap.add_argument("--es-split-dir", default="{EXPRESSIVE_S2ST_ROOT}/es_en/splits")
-    ap.add_argument("--de-split-dir", default="{EXPRESSIVE_S2ST_ROOT}/de_en/splits")
+    ap.add_argument("--es-root", default="{EXPRESSIVE_S2ST_ROOT}/en_es/work")
+    ap.add_argument("--de-root", default="{EXPRESSIVE_S2ST_ROOT}/en_de/work")
+    ap.add_argument("--es-split-dir", default="{EXPRESSIVE_S2ST_ROOT}/en_es/splits")
+    ap.add_argument("--de-split-dir", default="{EXPRESSIVE_S2ST_ROOT}/en_de/splits")
     ap.add_argument("--out-dir", default="{EXPRESSIVE_S2ST_ROOT}/data_stats/vcdub_filtering_stage_stats")
     ap.add_argument("--duration-cache", default="", help="Optional audio duration cache TSV. Defaults under --out-dir.")
     ap.add_argument("--strict-table1-check", action="store_true")

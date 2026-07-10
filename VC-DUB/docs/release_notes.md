@@ -1,29 +1,38 @@
 # VC-DUB Release Notes
 
-## What Is Released
+## What Is Released In GitHub
 
-This package is intended for anonymous review and reproducibility. It includes:
+This package is intended for anonymous review and method reproducibility. It
+includes:
 
-- End-to-end filtering and construction scripts.
+- End-to-end construction, filtering, splitting, and VC materialization scripts.
 - Model names and filtering criteria.
-- Observed thresholds used for the En-Es and En-De experimental instantiations.
-- Per-example manifests for intermediate filtering stages and train/dev/test splits.
-- Stage-wise duration/count statistics.
+- Observed DNSMOSPro quality cutoffs for the En-Es and En-De experimental
+  instantiations.
+- Synthetic small manifests documenting the expected schemas.
+- Non-sensitive stage-wise duration/count statistics.
 
-## What Is Not Released
+## What Is Not Released In GitHub
 
-Audio waveforms are not included:
+The GitHub mirror does not include:
 
-- Original aligned dubbing audio is subject to the source corpus license.
-- ClearVoice/Demucs-enhanced waveforms are derived audio.
-- Voice-converted waveforms are generated materializations and should be recreated locally.
+- Original aligned dubbing audio.
+- ClearVoice/Demucs-enhanced audio.
+- Voice-converted waveforms.
+- Full per-example manifests containing source-corpus text, translations, codec
+  tokens, or derived row-level metadata.
+- Checkpoints.
 
-## Recommended Reviewer-Facing Description
+Full manifests should be uploaded to a separate anonymous artifact host only when
+the source-corpus license permits redistribution. Otherwise, share a sanitized
+metadata table and let authorized users join it against their local corpus copy.
+
+## Reviewer-Facing Description
 
 VC-DUB is a supervision-construction method. The En-De and En-Es corpora used in
 the paper are experimental instantiations for validating the construction method,
 not proposed as fixed standalone datasets.
 
-The released manifests allow reviewers to inspect exact row identities, filtering
-decisions, splits, thresholds, and downstream training inputs without redistributing
-restricted audio.
+Voice conversion is treated as the final local materialization step after
+filtering and splitting. DNSMOSPro is the quality predictor used for
+scale-matched filtering.

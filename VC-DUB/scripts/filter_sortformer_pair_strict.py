@@ -134,8 +134,8 @@ if __name__ == "__main__":
 source {USER_HOME}/.bashrc
 conda activate stopes_eval_a100
 
-python -u {EXPRESSIVE_S2ST_ROOT}/verify_scripts/filter_sortformer_pair_strict.py \
-  --pair-results {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter/sortformer_pair_results.tsv \
+python -u scripts/filter_sortformer_pair_strict.py \
+  --pair-results {WORK_ROOT}/sortformer/sortformer_pair_results.tsv \
   --manifest-only
 
 """

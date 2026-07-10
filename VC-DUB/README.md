@@ -1,38 +1,43 @@
 # VC-DUB Construction Artifacts
 
-This directory contains scripts, configuration files, and manifest packaging utilities
-for reproducing the VC-DUB supervision construction pipeline used in the paper.
+This directory contains the reviewer-facing artifacts for reproducing the VC-DUB
+supervision construction procedure. VC-DUB is released as a construction method,
+not as a fixed standalone audio dataset.
 
-VC-DUB is released here as a construction procedure rather than a fixed audio
-dataset. The original aligned dubbing audio and generated voice-converted audio are
-not included. Instead, this package records the exact filtering stages, thresholds,
-model choices, and per-example manifests/splits needed to re-materialize the
-supervision locally from an aligned dubbing corpus.
+The GitHub package intentionally contains code, configuration, schemas, and small
+synthetic examples only. Complete per-example manifests are too large for an
+anonymous GitHub mirror and may contain source-corpus text or derived metadata, so
+they should be distributed through a separate artifact package only when licensing
+permits it.
+
+## Repository Contents
+
+- `configs/`: model choices, filtering criteria, and observed thresholds.
+- `scripts/`: construction, filtering, splitting, and release helper scripts.
+- `scripts/voice_conversion/`: final local VC materialization wrapper.
+- `small_example_manifests/`: synthetic toy manifests that exercise the expected schemas.
+- `manifest_schema.md`: required columns for each construction stage.
+- `examples/`: small non-sensitive statistics and command examples.
+- `DATA_LICENSE.md`: data-release and redistribution guidance.
+- `requirements.txt` and `environment.yml`: lightweight runtime dependencies for utility scripts.
 
 ## Pipeline Order
 
-The release package treats voice conversion as the final local materialization step:
+The public reconstruction order is:
 
-0. Obtain an aligned bilingual dubbing corpus and format it as VC-DUB input manifests.
-1. Start from an aligned dubbing manifest with source/target audio and text.
-2. Denoise source and target utterances with ClearVoice-Studio.
-3. Extract vocals with Demucs.
+1. Obtain aligned source/target speech segments.
+2. Denoise both sides with ClearVoice-Studio.
+3. Extract vocal stems with Demucs.
 4. Filter language pairs with MMS-LID.
 5. Remove multi-speaker or overlapped segments with Sortformer diarization.
-6. Apply scale-matched quality selection with DNSMOSPro.
-7. Create train/dev/test splits and downstream split manifests.
-8. Run voice conversion locally on the selected split manifests.
+6. Score both sides with DNSMOSPro and apply scale-matched quality selection.
+7. Run ASR/text-metadata preparation with Whisper large-v3 when text-bearing split manifests are needed.
+8. Create train/dev/test split manifests.
+9. Run voice conversion locally as the final materialization step.
 
-This ordering keeps the released artifacts reusable without redistributing audio,
-and avoids treating VC-generated waveforms as a standalone benchmark resource.
-
-## Contents
-
-- `configs/vcdub_construction_config.json`: model names, thresholds, and filtering criteria.
-- `scripts/`: copied construction/filtering scripts plus release helper scripts.
-- `scripts/voice_conversion/`: final local VC materialization wrapper and SeedVC batch helpers.
-- `manifests/`: generated, path-sanitized, compressed manifests and split files.
-- `docs/`: detailed inventory and notes for appendix/reporting.
+Voice conversion is therefore the last step in this release. The filtering stages
+operate on aligned, cleaned source/target utterance pairs and their metadata. The
+generated VC waveforms are not redistributed.
 
 ## Environment
 
@@ -42,86 +47,83 @@ Install the Python dependencies used by the released utility scripts:
 python -m pip install -r requirements.txt
 ```
 
-Several pipeline stages also require external model repositories or framework-specific
-environments: ClearVoice-Studio for denoising, Demucs for vocal extraction, NeMo for
-Sortformer diarization, DNSMOSPro for quality scoring, and SeedVC for the final voice
-conversion materialization. Those components should be installed following their
-upstream instructions and then wired into the command templates in `scripts/`.
+Several stages require external model repositories or framework-specific
+environments: ClearVoice-Studio for denoising, Demucs for vocal extraction, NeMo
+for Sortformer diarization, DNSMOSPro for quality scoring, and SeedVC for the
+final voice conversion materialization. Install those components from their
+upstream projects and point the command templates to the local checkouts.
 
 ## Input Requirement
 
-VC-DUB assumes an existing aligned dubbing corpus. In other words, before running
-the construction scripts, users should collect or prepare source/target dubbing
-utterance pairs with corresponding text metadata.
+VC-DUB assumes an aligned bilingual dubbing corpus. Users should first collect or
+prepare source/target speech segment pairs with corresponding text metadata.
 
-If starting from parallel speech documents rather than pre-aligned utterances,
-an embedding-based alignment method such as
+If starting from parallel speech documents rather than pre-aligned utterances, an
+embedding-based speech alignment method such as
 [Speech Vecalign: an Embedding-based Method for Aligning Parallel Speech Documents](https://aclanthology.org/2025.emnlp-main.833.pdf)
 can be used to obtain aligned speech segments. Equivalent alignment tools can also
 be used. VC-DUB only requires that the result is converted into utterance-level
 source/target audio pairs.
 
-The first materialization step expects a pair TSV with:
+See `manifest_schema.md` for the expected columns. The synthetic examples under
+`small_example_manifests/` use placeholder paths and do not contain source-corpus
+text.
 
-```text
-source    target    output
-```
+## DNSMOSPro Quality Selection
 
-where `source` is the source/content utterance path, `target` is the target/reference
-voice utterance path, and `output` is the desired local path for the generated
-voice-converted waveform. The batch VC step writes `manifests/vc_manifest.tsv`,
-which is then consumed by the filtering and splitting scripts.
+DNSMOSPro is used as the quality predictor. We score both source and target
+utterances, compute a source-target combined quality score, and retain pairs above
+the empirical quality cutoff. The cutoff characterizes the quality floor of the
+retained clean pool while keeping the final VC-DUB training split comparable in
+scale to CVSS-T.
 
-The released split manifests use the cleaned-audio columns:
+Observed retained/dropped boundaries:
 
-```text
-id    pre_src    pre_tgt
-```
-
-Additional text, ASR, duration, and bookkeeping columns are preserved when present.
-
-## Build The Release Manifests
-
-Run from the repository root:
-
-```bash
-EXPRESSIVE_S2ST_ROOT=/path/to/Expressive_S2ST \
-python -u scripts/collect_release_manifests.py \
-  --output-root manifests
-```
-
-The script writes `.tsv.gz` and `.json` files with absolute local paths replaced by
-portable placeholders such as `{VC_DUB_ROOT}` and `{ALIGNED_DUBBING_ROOT}`.
+| Pair | Combined quality column | Approx. cutoff | Retained clean pool |
+| --- | --- | ---: | ---: |
+| En-Es | `combined_dnsmospro` | 3.57 | 90,000 |
+| En-De | `combined_dnsmospro` | 3.60 | 147,639 |
 
 ## Voice Conversion Materialization
 
-After filtering and splitting, run voice conversion locally from a selected split
-manifest. Example:
+After filtering and splitting, run voice conversion locally from a selected
+`*_asr.tsv` split manifest. The `*_asr.tsv` files retain the `id`, `pre_src`, and
+`pre_tgt` columns required by the VC wrapper.
+
+Example:
 
 ```bash
-SPLIT_TSV=/path/to/VC-DUB/manifests/en_es/splits/train.tsv.gz \
+SPLIT_TSV=/path/to/VC-DUB/small_example_manifests/en_es/splits/train_asr.tsv \
 SEEDVC_ROOT=/path/to/seed-vc-main \
 OUTPUT_ROOT=/path/to/vcdub_vc_outputs/en_es/train \
 PYTHON=/path/to/python \
-NUM_SHARDS=8 \
+NUM_SHARDS=1 \
 MAX_PARALLEL=1 \
 CUDA_DEV=0 \
 bash scripts/voice_conversion/run_voice_conversion_materialization.sh
 ```
 
-The wrapper writes a merged materialization manifest to:
+The wrapper writes the SeedVC-style pair TSV and, after local inference, a merged
+materialization manifest:
 
 ```text
+${OUTPUT_ROOT}/pair_tsvs/all_pairs.tsv
 ${OUTPUT_ROOT}/merged/vc_manifest.tsv
 ```
 
-## Audio Path Placeholders
+## Full Manifest Artifacts
 
-The packaged manifests preserve the column names and row identities used during
-construction, but local machine paths are anonymized. Before re-running the pipeline,
-map placeholders to your local paths:
+The full manifests are not stored in this GitHub tree. If licensing permits
+redistribution, package them separately, for example:
 
-- `{VC_DUB_ROOT}/es_en`
-- `{VC_DUB_ROOT}/de_en`
-- `{ALIGNED_DUBBING_ROOT}/en_es`
-- `{ALIGNED_DUBBING_ROOT}/de_en`
+```text
+VC-DUB_full_manifests.tar.gz
+SHA256SUMS
+```
+
+During local preparation, keep the full archive and its `SHA256SUMS` outside the
+Git repository, then upload them to the chosen anonymous artifact host.
+
+If the source corpus license does not permit redistribution of text, translations,
+or codec tokens, release only sanitized metadata such as `sample_id`, `split`,
+stage decisions, scores, and placeholder reference IDs.

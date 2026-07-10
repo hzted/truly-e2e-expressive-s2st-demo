@@ -489,13 +489,12 @@ if __name__ == "__main__":
 
 
 """
-最新
 source {USER_HOME}/.bashrc
 conda activate nemo_diar
 
-python -u {EXPRESSIVE_S2ST_ROOT}/verify_scripts/eval_sortformer_pair_filter.py \
-  --input-tsv {EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/lid_pass_manifest.tsv \
-  --out-dir {EXPRESSIVE_S2ST_ROOT}/de_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter \
+python -u scripts/eval_sortformer_pair_filter.py \
+  --input-tsv {WORK_ROOT}/mms_lid/lid_pass_manifest.tsv \
+  --out-dir {WORK_ROOT}/sortformer \
   --id-col id \
   --src-audio-col pre_src \
   --tgt-audio-col pre_tgt \
@@ -506,9 +505,9 @@ python -u {EXPRESSIVE_S2ST_ROOT}/verify_scripts/eval_sortformer_pair_filter.py \
 source {USER_HOME}/.bashrc
 conda activate nemo_diar
 
-python -u {EXPRESSIVE_S2ST_ROOT}/verify_scripts/eval_sortformer_pair_filter.py \
-  --input-tsv {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/lid_pass_manifest.tsv \
-  --out-dir {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter/sortformer_pair_filter \
+python -u scripts/eval_sortformer_pair_filter.py \
+  --input-tsv {WORK_ROOT}/mms_lid/lid_pass_manifest.tsv \
+  --out-dir {WORK_ROOT}/sortformer \
   --id-col id \
   --src-audio-col pre_src \
   --tgt-audio-col pre_tgt \

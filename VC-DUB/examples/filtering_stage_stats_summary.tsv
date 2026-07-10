@@ -1,0 +1,13 @@
+language_pair	stage	num_pairs	source_hours	target_hours	total_hours	retention_from_previous_stage
+En-Es	Raw aligned dubbing manifest	352947	373.8212	374.4709	748.2921	
+En-Es	After ClearVoice + Demucs success	352947	373.8212	374.4709	748.2921	1.0000
+En-Es	After MMS-LID language filtering	213469	267.4592	269.1736	536.6328	0.6048
+En-Es	After Sortformer single-speaker gate	164746	172.8236	176.6021	349.4257	0.7718
+En-Es	After DNSMOSPro scale-matched quality selection	90000	96.1669	98.3385	194.5054	0.5463
+En-Es	Training split used in Table 1	79200	84.6091	86.5168	171.1259	
+En-De	Raw aligned dubbing manifest	369139	377.6722	405.1914	782.8636	
+En-De	After ClearVoice + Demucs success	369137	377.6722	405.1914	782.8636	1.0000
+En-De	After MMS-LID language filtering	298929	335.4944	357.9015	693.3959	0.8098
+En-De	After Sortformer single-speaker gate	237743	225.7510	242.5308	468.2818	0.7953
+En-De	After DNSMOSPro scale-matched quality selection	147639	143.1542	152.6500	295.8042	0.6210
+En-De	Training split used in Table 1	131399	127.4048	135.8197	263.2245	

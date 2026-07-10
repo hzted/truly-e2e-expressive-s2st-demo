@@ -15,7 +15,7 @@ import torchaudio
 import librosa
 import soundfile as sf
 
-import inference  # same dir: inference.py
+import inference  # resolved from SEEDVC_ROOT via PYTHONPATH
 
 from julius import resample_frac as julius_resample
 from demucs.pretrained import get_model

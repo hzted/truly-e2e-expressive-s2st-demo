@@ -303,14 +303,14 @@ source {USER_HOME}/.bashrc
 conda activate stopes_eval_a100
 export HF_HOME={USER_WORK_ROOT}/.cache/huggingface
 
-python -u {EXPRESSIVE_S2ST_ROOT}/verify_scripts/eval_mms_lid_filter.py \
-  --input-tsv {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/manifests/vc_manifest.tsv \
-  --out-dir {EXPRESSIVE_S2ST_ROOT}/es_en/seedvc_outputs_netflix_denoised/mms_lid_preprocessed_filter \
+python -u scripts/eval_mms_lid_filter.py \
+  --input-tsv {WORK_ROOT}/manifests/preprocessed_pair_manifest.tsv \
+  --out-dir {WORK_ROOT}/mms_lid \
   --id-col id \
   --src-audio-col pre_src \
   --tgt-audio-col pre_tgt \
   --expected-src-lang eng \
-  --expected-tgt-lang es \
+  --expected-tgt-lang spa \
   --device cuda \
   --batch-size 16 \
   --write-filtered-manifest

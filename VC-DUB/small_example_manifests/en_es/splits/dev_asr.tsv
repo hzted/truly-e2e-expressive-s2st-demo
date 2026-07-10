@@ -1,0 +1,2 @@
+id	pre_src	pre_tgt	sentence	translation	src_asr	tgt_asr	split
+en_es_demo_0101	{ALIGNED_DUBBING_ROOT}/en_es/preprocessed/source/en_es_demo_0101.wav	{ALIGNED_DUBBING_ROOT}/en_es/preprocessed/target/en_es_demo_0101.wav	<synthetic English source text dev>	<synthetic Spanish target text dev>	<synthetic English ASR dev>	<synthetic Spanish ASR dev>	dev

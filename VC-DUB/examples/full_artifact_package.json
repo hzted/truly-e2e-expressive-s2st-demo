@@ -1,0 +1,6 @@
+{
+  "full_manifests_archive": "VC-DUB_full_manifests.tar.gz",
+  "sha256": "c8763b66a28e12b0b0b85bbe2d48e73ad81745d6366afe7db7ccaf1b8ddc2d98",
+  "github_policy": "The full manifests are not committed to the anonymous GitHub package. Upload this archive to an external anonymous artifact host only if redistribution is permitted by the source-corpus license.",
+  "local_prepared_path": "<outside-git>/VC-DUB_full_manifests.tar.gz"
+}

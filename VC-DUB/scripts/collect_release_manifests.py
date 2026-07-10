@@ -13,16 +13,17 @@ from typing import Any
 
 
 EXP_ROOT = Path(os.environ.get("EXPRESSIVE_S2ST_ROOT", "{EXPRESSIVE_S2ST_ROOT}"))
+ALIGNED_DUBBING_ROOT = Path(os.environ.get("ALIGNED_DUBBING_ROOT", "{ALIGNED_DUBBING_ROOT}"))
 
 LANG_ROOTS = {
     "en_es": {
-        "work_root": EXP_ROOT / "es_en" / "seedvc_outputs_netflix_denoised",
-        "split_root": EXP_ROOT / "es_en" / "splits",
+        "work_root": Path(os.environ.get("VC_DUB_EN_ES_WORK_ROOT", str(EXP_ROOT / "en_es" / "work"))),
+        "split_root": Path(os.environ.get("VC_DUB_EN_ES_SPLIT_ROOT", str(EXP_ROOT / "en_es" / "splits"))),
         "release_subdir": "en_es",
     },
     "en_de": {
-        "work_root": EXP_ROOT / "de_en" / "seedvc_outputs_netflix_denoised",
-        "split_root": EXP_ROOT / "de_en" / "splits",
+        "work_root": Path(os.environ.get("VC_DUB_EN_DE_WORK_ROOT", str(EXP_ROOT / "en_de" / "work"))),
+        "split_root": Path(os.environ.get("VC_DUB_EN_DE_SPLIT_ROOT", str(EXP_ROOT / "en_de" / "splits"))),
         "release_subdir": "en_de",
     },
 }
@@ -47,13 +48,13 @@ def build_specs() -> list[ReleaseFile]:
 
         specs.extend(
             [
-                ReleaseFile(pair, "raw_vc_manifest", work / "manifests" / "vc_manifest.tsv", rel / "filtering" / "stage_00_raw_vc_manifest.tsv.gz", "tsv"),
-                ReleaseFile(pair, "mms_lid_pass", work / "mms_lid_preprocessed_filter" / "lid_pass_manifest.tsv", rel / "filtering" / "stage_01_mms_lid_pass_manifest.tsv.gz", "tsv"),
-                ReleaseFile(pair, "sortformer_single_speaker_pass", work / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "sortformer_pair_pass_strict.tsv", rel / "filtering" / "stage_02_sortformer_single_speaker_pass.tsv.gz", "tsv"),
-                ReleaseFile(pair, "scale_matched_quality_selection", work / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "quality_selection" / "dnsmospro_filtered_manifest.tsv", rel / "filtering" / "stage_03_dnsmospro_quality_selected_manifest.tsv.gz", "tsv"),
-                ReleaseFile(pair, "mms_lid_summary", work / "mms_lid_preprocessed_filter" / "lid_pass_manifest_summary.json", rel / "summaries" / "mms_lid_summary.json", "json", required=False),
-                ReleaseFile(pair, "sortformer_summary", work / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "sortformer_pair_summary.json", rel / "summaries" / "sortformer_summary.json", "json", required=False),
-                ReleaseFile(pair, "dnsmospro_quality_summary", work / "mms_lid_preprocessed_filter" / "sortformer_pair_filter" / "quality_selection" / "dnsmospro_quality_summary.json", rel / "summaries" / "dnsmospro_quality_summary.json", "json", required=False),
+                ReleaseFile(pair, "aligned_pair_manifest", work / "manifests" / "aligned_pair_manifest.tsv", rel / "filtering" / "stage_00_aligned_pair_manifest.tsv.gz", "tsv"),
+                ReleaseFile(pair, "mms_lid_pass", work / "mms_lid" / "lid_pass_manifest.tsv", rel / "filtering" / "stage_01_mms_lid_pass_manifest.tsv.gz", "tsv"),
+                ReleaseFile(pair, "sortformer_single_speaker_pass", work / "sortformer" / "sortformer_pair_pass_strict.tsv", rel / "filtering" / "stage_02_sortformer_single_speaker_pass.tsv.gz", "tsv"),
+                ReleaseFile(pair, "scale_matched_quality_selection", work / "quality_selection" / "dnsmospro_filtered_manifest.tsv", rel / "filtering" / "stage_03_dnsmospro_quality_selected_manifest.tsv.gz", "tsv"),
+                ReleaseFile(pair, "mms_lid_summary", work / "mms_lid" / "lid_pass_manifest_summary.json", rel / "summaries" / "mms_lid_summary.json", "json", required=False),
+                ReleaseFile(pair, "sortformer_summary", work / "sortformer" / "sortformer_pair_summary.json", rel / "summaries" / "sortformer_summary.json", "json", required=False),
+                ReleaseFile(pair, "dnsmospro_quality_summary", work / "quality_selection" / "dnsmospro_quality_summary.json", rel / "summaries" / "dnsmospro_quality_summary.json", "json", required=False),
             ]
         )
 
@@ -83,12 +84,12 @@ def build_specs() -> list[ReleaseFile]:
     threshold_root = EXP_ROOT / "threshold_samples" / "dnsmospro_critical"
     for name in (
         "all_dnsmospro_threshold_critical_40.tsv",
-        "es_en_dnsmospro_threshold_critical_20.tsv",
-        "es_en_dnsmospro_threshold_critical_20_audio.tsv",
-        "es_en_dnsmospro_threshold_critical_summary.tsv",
-        "de_en_dnsmospro_threshold_critical_20.tsv",
-        "de_en_dnsmospro_threshold_critical_20_audio.tsv",
-        "de_en_dnsmospro_threshold_critical_summary.tsv",
+        "en_es_dnsmospro_threshold_critical_20.tsv",
+        "en_es_dnsmospro_threshold_critical_20_audio.tsv",
+        "en_es_dnsmospro_threshold_critical_summary.tsv",
+        "en_de_dnsmospro_threshold_critical_20.tsv",
+        "en_de_dnsmospro_threshold_critical_20_audio.tsv",
+        "en_de_dnsmospro_threshold_critical_summary.tsv",
     ):
         specs.append(
             ReleaseFile("all", "threshold_samples", threshold_root / name, Path("global") / "threshold_samples" / f"{name}.gz", "tsv", required=False)
@@ -98,14 +99,14 @@ def build_specs() -> list[ReleaseFile]:
 
 def replacement_pairs() -> list[tuple[str, str]]:
     pairs: list[tuple[str, str]] = [
-        (str(EXP_ROOT / "es_en" / "seedvc_outputs_netflix_denoised"), "{VC_DUB_ROOT}/en_es"),
-        (str(EXP_ROOT / "de_en" / "seedvc_outputs_netflix_denoised"), "{VC_DUB_ROOT}/en_de"),
-        (str(EXP_ROOT / "es_en" / "splits"), "{VC_DUB_MANIFEST_ROOT}/en_es/splits"),
-        (str(EXP_ROOT / "de_en" / "splits"), "{VC_DUB_MANIFEST_ROOT}/en_de/splits"),
+        (str(EXP_ROOT / "en_es" / "work"), "{VC_DUB_ROOT}/en_es/work"),
+        (str(EXP_ROOT / "en_de" / "work"), "{VC_DUB_ROOT}/en_de/work"),
+        (str(EXP_ROOT / "en_es" / "splits"), "{VC_DUB_MANIFEST_ROOT}/en_es/splits"),
+        (str(EXP_ROOT / "en_de" / "splits"), "{VC_DUB_MANIFEST_ROOT}/en_de/splits"),
+        (str(ALIGNED_DUBBING_ROOT / "en_es"), "{ALIGNED_DUBBING_ROOT}/en_es"),
+        (str(ALIGNED_DUBBING_ROOT / "en_de"), "{ALIGNED_DUBBING_ROOT}/en_de"),
+        (str(ALIGNED_DUBBING_ROOT), "{ALIGNED_DUBBING_ROOT}"),
         (str(EXP_ROOT), "{EXPRESSIVE_S2ST_ROOT}"),
-        ("/export/fs06/bodoom1/DRAL16kHz/netflix/en_es", "{ALIGNED_DUBBING_ROOT}/en_es"),
-        ("/export/fs06/bodoom1/DRAL16kHz/netflix/de_en", "{ALIGNED_DUBBING_ROOT}/de_en"),
-        ("/export/fs06/bodoom1/DRAL16kHz/netflix", "{ALIGNED_DUBBING_ROOT}"),
         ("{USER_WORK_ROOT}", "{USER_WORK_ROOT}"),
         ("{USER_HOME}", "{USER_HOME}"),
     ]

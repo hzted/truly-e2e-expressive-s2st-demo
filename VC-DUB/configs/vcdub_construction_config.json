@@ -1,12 +1,13 @@
 {
-  "release_scope": "VC-DUB construction procedure and manifests; no audio is redistributed.",
+  "release_scope": "VC-DUB construction procedure; no audio or full source-corpus manifests are redistributed in the GitHub mirror.",
   "pipeline_order": [
-    "aligned_dubbing_manifest",
+    "aligned_speech_segments",
     "clearvoice_denoising",
     "demucs_vocal_extraction",
     "mms_lid_filtering",
     "sortformer_single_speaker_filtering",
     "dnsmospro_quality_selection",
+    "whisper_large_v3_text_metadata",
     "train_dev_test_split",
     "local_voice_conversion_materialization"
   ],
@@ -19,12 +20,7 @@
     "vocal_extraction": {
       "tool": "Demucs",
       "model": "htdemucs",
-      "inference_settings": "default",
-      "known_defaults": {
-        "sample_rate_hz": 44100,
-        "channels": 2,
-        "sources": ["drums", "bass", "other", "vocals"]
-      }
+      "inference_settings": "default"
     }
   },
   "filtering": {
@@ -40,27 +36,32 @@
     },
     "quality_selection": {
       "model": "DNSMOSPro",
-      "config": "fusion_stage3",
-      "fold": 0,
-      "seed": 42,
+      "score_columns": [
+        "src_dnsmospro",
+        "tgt_dnsmospro",
+        "combined_dnsmospro"
+      ],
+      "combined_score": "source-target combined DNSMOSPro quality score",
       "silence_removal": true,
       "language_pair_settings": {
         "en_es": {
           "expected_source_lid": "eng",
           "expected_target_lid": "spa",
-          "score_mode": "both_min",
           "target_keep_pairs": 90000,
-          "observed_cutoff": 1.8466796875
+          "empirical_retained_dropped_boundary": 3.57
         },
         "en_de": {
           "expected_source_lid": "eng",
           "expected_target_lid": "deu",
-          "score_mode": "both_mean",
-          "target_combined_audio_hours": 300.0,
-          "observed_cutoff": 2.048828125
+          "target_keep_pairs": 147639,
+          "empirical_retained_dropped_boundary": 3.60
         }
       }
     }
+  },
+  "text_metadata": {
+    "asr_model": "openai/whisper-large-v3",
+    "purpose": "populate text-bearing *_asr.tsv split manifests used by downstream evaluation and VC materialization"
   },
   "splits": {
     "test_size_pairs": 500,
@@ -68,7 +69,24 @@
     "seed": 42
   },
   "voice_conversion": {
-    "release_policy": "Run after filtering/splitting as a local materialization step.",
-    "reason": "Generated VC audio is not redistributed; manifests are sufficient to reproduce the construction procedure when paired with local audio."
+    "position": "final local materialization step after filtering and splitting",
+    "input_manifest": "*_asr.tsv with id/pre_src/pre_tgt columns",
+    "redistribution_policy": "generated VC waveforms are not redistributed"
+  },
+  "observed_stage_counts": {
+    "en_es": {
+      "raw_pairs": 352947,
+      "after_mms_lid": 213469,
+      "after_sortformer_single_speaker": 164746,
+      "after_dnsmospro_quality_selection": 90000,
+      "train_pairs": 79200
+    },
+    "en_de": {
+      "raw_pairs": 369139,
+      "after_mms_lid": 298929,
+      "after_sortformer_single_speaker": 237743,
+      "after_dnsmospro_quality_selection": 147639,
+      "train_pairs": 131399
+    }
   }
 }

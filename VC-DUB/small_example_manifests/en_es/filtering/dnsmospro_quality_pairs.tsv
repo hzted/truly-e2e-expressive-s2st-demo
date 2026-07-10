@@ -1,0 +1,4 @@
+id	pre_src	pre_tgt	src_dnsmospro	tgt_dnsmospro	combined_dnsmospro	dnsmospro_quality_pass
+en_es_demo_0001	{ALIGNED_DUBBING_ROOT}/en_es/preprocessed/source/en_es_demo_0001.wav	{ALIGNED_DUBBING_ROOT}/en_es/preprocessed/target/en_es_demo_0001.wav	3.82	3.74	3.78	true
+en_es_demo_0002	{ALIGNED_DUBBING_ROOT}/en_es/preprocessed/source/en_es_demo_0002.wav	{ALIGNED_DUBBING_ROOT}/en_es/preprocessed/target/en_es_demo_0002.wav	3.65	3.61	3.63	true
+en_es_demo_0003	{ALIGNED_DUBBING_ROOT}/en_es/preprocessed/source/en_es_demo_0003.wav	{ALIGNED_DUBBING_ROOT}/en_es/preprocessed/target/en_es_demo_0003.wav	3.40	3.52	3.46	false

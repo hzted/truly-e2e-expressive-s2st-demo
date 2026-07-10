@@ -5,7 +5,7 @@ set -euo pipefail
 #
 # Required inputs:
 #   SPLIT_TSV: VC-DUB split manifest with pre_src/pre_tgt columns.
-#   SEEDVC_ROOT: local SeedVC checkout containing inference_batch_denoise_both.py.
+#   SEEDVC_ROOT: local SeedVC checkout containing inference.py and model dependencies.
 #   OUTPUT_ROOT: output directory for pair TSVs, wav shards, logs, and merged manifest.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -60,7 +60,7 @@ for shard_tsv in "${SHARD_ROOT}"/pair_tsvs/shard*.tsv; do
   (
     export CUDA_VISIBLE_DEVICES="${CUDA_DEV}"
     cd "${SEEDVC_ROOT}"
-    "${PYTHON}" inference_batch_denoise_both.py \
+    PYTHONPATH="${SEEDVC_ROOT}:${PYTHONPATH:-}" "${PYTHON}" "${SCRIPT_DIR}/inference_batch_denoise_both.py" \
       --pair_tsv "${shard_tsv}" \
       --output_dir "${shard_dir}/vc_wavs" \
       --output_sr "${OUTPUT_SR}" \

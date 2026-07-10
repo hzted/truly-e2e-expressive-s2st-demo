@@ -6,14 +6,15 @@ generated voice-converted waveforms are intentionally not redistributed.
 
 ## Inputs
 
-- A selected VC-DUB split manifest, for example `manifests/en_es/splits/train.tsv.gz`.
-- A local SeedVC checkout containing `inference_batch_denoise_both.py` and its model dependencies.
+- A selected VC-DUB `*_asr.tsv` split manifest, for example
+  `small_example_manifests/en_es/splits/train_asr.tsv`.
+- A local SeedVC checkout containing `inference.py` and its model dependencies.
 - Local access to the cleaned source/target audio paths referenced by the manifest.
 
 ## Build And Run
 
 ```bash
-SPLIT_TSV=/path/to/VC-DUB/manifests/en_es/splits/train.tsv.gz \
+SPLIT_TSV=/path/to/VC-DUB/small_example_manifests/en_es/splits/train_asr.tsv \
 SEEDVC_ROOT=/path/to/seed-vc-main \
 OUTPUT_ROOT=/path/to/vcdub_vc_outputs/en_es/train \
 PYTHON=/path/to/python \
@@ -42,6 +43,11 @@ The default released setup uses:
 - `pre_src` as the content/source utterance.
 - `pre_tgt` as the target/reference voice utterance.
 - generated `output` as the local VC materialization.
+
+The bundled wrapper calls the release package's
+`scripts/voice_conversion/inference_batch_denoise_both.py` with `PYTHONPATH`
+pointing at `SEEDVC_ROOT`, so the normal SeedVC checkout does not need to contain
+the custom batch script.
 
 The source and target columns can be changed through:
 
