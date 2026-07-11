@@ -1622,8 +1622,8 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    
-    
+
+
 """
 python -u \
 VC-DUB/evaluation/scripts/impl/eval_stopes_switch.py \
