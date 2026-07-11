@@ -18,12 +18,22 @@ AGGREGATE_KEYS = [
     "autopcp_mean",
     "dc_0p2_compliance_mean",
     "dc_0p4_compliance_mean",
-    "sc_0p2_compliance_mean",
-    "sc_0p4_compliance_mean",
     "speech_rate_syllable_spearman_mean",
     "pause_wmean_duration_score_mean",
     "vsim_mean",
     "dnsmospro_nat_mean",
+]
+
+PAPER_TABLE_FIELDS = [
+    ("BLASER2_QE", "blaser2_qe_audio_mean"),
+    ("BLASER2_ref", "blaser2_ref_mean"),
+    ("A_PCP", "autopcp_mean"),
+    ("SLC_0p2", "dc_0p2_compliance_mean"),
+    ("SLC_0p4", "dc_0p4_compliance_mean"),
+    ("SpeechRate", "speech_rate_syllable_spearman_mean"),
+    ("Pause", "pause_wmean_duration_score_mean"),
+    ("Vsim", "vsim_mean"),
+    ("DNSMOSPro_Nat", "dnsmospro_nat_mean"),
 ]
 
 PER_EXAMPLE_FILES = [
@@ -118,6 +128,8 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--id-col", default="sample_id")
     p.add_argument("--out-json", default="")
     p.add_argument("--out-tsv", default="")
+    p.add_argument("--out-paper-json", default="")
+    p.add_argument("--out-paper-tsv", default="")
     p.add_argument("--out-per-example", default="")
     p.add_argument(
         "--uncertainty",
@@ -163,16 +175,34 @@ def main() -> None:
     for key in AGGREGATE_KEYS:
         aggregate.setdefault(key, None)
 
+    paper_table: dict[str, Any] = {
+        "eval_root": str(root),
+        "manifest": args.manifest,
+        "id_col": args.id_col,
+        "uncertainty": args.uncertainty,
+    }
+    for paper_key, source_key in PAPER_TABLE_FIELDS:
+        paper_table[paper_key] = aggregate.get(source_key)
+        pm_key = source_key.replace("_mean", "_pm")
+        if pm_key in aggregate:
+            paper_table[f"{paper_key}_pm"] = aggregate[pm_key]
+
     out_json = Path(args.out_json) if args.out_json else root / "aggregate_metrics.json"
     out_tsv = Path(args.out_tsv) if args.out_tsv else root / "aggregate_metrics.tsv"
+    out_paper_json = Path(args.out_paper_json) if args.out_paper_json else root / "paper_table_metrics.json"
+    out_paper_tsv = Path(args.out_paper_tsv) if args.out_paper_tsv else root / "paper_table_metrics.tsv"
     out_per = Path(args.out_per_example) if args.out_per_example else root / "per-example_metrics.tsv"
     out_json.parent.mkdir(parents=True, exist_ok=True)
     out_json.write_text(json.dumps(aggregate, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     pd.DataFrame([aggregate]).to_csv(out_tsv, sep="\t", index=False)
+    out_paper_json.write_text(json.dumps(paper_table, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    pd.DataFrame([paper_table]).to_csv(out_paper_tsv, sep="\t", index=False)
     per_example.to_csv(out_per, sep="\t", index=False)
     print(f"Wrote per-example metrics: {out_per}")
     print(f"Wrote aggregate JSON: {out_json}")
     print(f"Wrote aggregate TSV: {out_tsv}")
+    print(f"Wrote paper-table JSON: {out_paper_json}")
+    print(f"Wrote paper-table TSV: {out_paper_tsv}")
 
 
 if __name__ == "__main__":

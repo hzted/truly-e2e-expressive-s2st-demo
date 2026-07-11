@@ -11,14 +11,33 @@ The package covers only paper-facing metrics:
 - Content: BLASER 2.0
 - Prosody: A.PCP
 - Isochrony: duration SLC at `p = 0.2`, duration SLC at `p = 0.4`,
-  speech-rate compliance at `p = 0.2`/`0.4`, syllable speech-rate
-  correlation, pause weighted-mean duration score
+  syllable speech-rate correlation, pause weighted-mean duration score
 - Speaker identity: Vsim
 - Quality: DNSMOSPro, only when reported as an evaluation metric
 - ASR: Whisper large-v3, only when an ASR-based evaluation metric is explicitly enabled
 
 Whisper large-v3 is not a BLASER, DNSMOSPro, Vsim, A.PCP, or VC-DUB cleaning
 dependency.
+
+## Paper Table Field Mapping
+
+The Stopes/local-prosody implementation exposes several internal columns. The
+paper-facing table should use only the following mapping:
+
+| Paper column | Aggregated output key | Underlying implementation field |
+| --- | --- | --- |
+| `BLASER2_QE` | `BLASER2_QE` | `blaser2_qe_audio_mean` |
+| `BLASER2_ref` | `BLASER2_ref` | `blaser2_ref_mean` |
+| `A_PCP` | `A_PCP` | `autopcp_mean` |
+| `SLC_0p2` | `SLC_0p2` | `dc_0p2_compliance_mean` |
+| `SLC_0p4` | `SLC_0p4` | `dc_0p4_compliance_mean` |
+| `SpeechRate` | `SpeechRate` | `speech_rate_syllable_spearman_mean` |
+| `Pause` | `Pause` | `pause_wmean_duration_score_mean` |
+| `Vsim` | `Vsim` | `vsim_mean` |
+| `DNSMOSPro_Nat` | `DNSMOSPro_Nat` | `dnsmospro_nat_mean` |
+
+`sc_0p2_compliance` and `sc_0p4_compliance` may still appear in intermediate
+debug files, but they are not part of the default paper-table output.
 
 ## Input Manifest
 
@@ -88,6 +107,8 @@ Outputs:
 per-example_metrics.tsv
 aggregate_metrics.json
 aggregate_metrics.tsv
+paper_table_metrics.json
+paper_table_metrics.tsv
 ```
 
 ## Plus/Minus Reporting

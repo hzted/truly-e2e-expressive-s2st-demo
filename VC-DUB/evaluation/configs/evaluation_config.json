@@ -13,6 +13,17 @@
   "hypo_lang": "spa",
   "target_lang_col": "target_lang",
   "uncertainty_note": "The table-facing plus/minus must be explicitly labeled as standard deviation, standard error, or 95% confidence interval by the calling paper script.",
+  "paper_table_fields": {
+    "BLASER2_QE": "blaser2_qe_audio_mean",
+    "BLASER2_ref": "blaser2_ref_mean",
+    "A_PCP": "autopcp_mean",
+    "SLC_0p2": "dc_0p2_compliance_mean",
+    "SLC_0p4": "dc_0p4_compliance_mean",
+    "SpeechRate": "speech_rate_syllable_spearman_mean",
+    "Pause": "pause_wmean_duration_score_mean",
+    "Vsim": "vsim_mean",
+    "DNSMOSPro_Nat": "dnsmospro_nat_mean"
+  },
   "metrics": {
     "blaser2": {
       "enabled": true,
@@ -30,8 +41,6 @@
       "reported_fields": [
         "dc_0p2_compliance",
         "dc_0p4_compliance",
-        "sc_0p2_compliance",
-        "sc_0p4_compliance",
         "speech_rate_syllable_spearman",
         "pause_wmean_duration_score"
       ]
