@@ -9,11 +9,16 @@ import pandas as pd
 from _wrapper_utils import load_manifest, run_command, write_dry_outputs
 
 
+def default_impl_root() -> str:
+    return str(Path(__file__).resolve().parent / "impl")
+
+
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Run AutoPCP through eval_stopes_switch.py.")
     p.add_argument("--manifest", required=True)
     p.add_argument("--out-dir", required=True)
-    p.add_argument("--verify-scripts-root", default="/export/fs06/hzhan276/Expressive_S2ST/verify_scripts")
+    p.add_argument("--implementation-root", default=default_impl_root())
+    p.add_argument("--verify-scripts-root", default=None, help="Deprecated alias for --implementation-root.")
     p.add_argument("--python", default="python")
     p.add_argument("--id-col", default="sample_id")
     p.add_argument("--src-lang", default="eng")
@@ -34,7 +39,10 @@ def main() -> None:
     if args.dry_run:
         write_dry_outputs(args.manifest, out_dir, args.id_col, {"autopcp": 0.5}, "summary.json", "apcp_per_example.tsv")
         return
-    script = Path(args.verify_scripts_root) / "eval_stopes_switch.py"
+    impl_root = Path(args.verify_scripts_root or args.implementation_root)
+    script = impl_root / "eval_stopes_switch.py"
+    if not script.is_file():
+        raise FileNotFoundError(f"Missing Stopes metric implementation: {script}")
     cmd = [
         args.python,
         str(script),

@@ -1,8 +1,17 @@
 {
   "full_manifests_archive": "VC-DUB_full_manifests.tar.gz",
-  "artifact_url": "BLOCKER_ADD_PRIVATE_FIGSHARE_OR_ZENODO_URL_BEFORE_REVIEWER_RELEASE",
-  "sha256": "c8763b66a28e12b0b0b85bbe2d48e73ad81745d6366afe7db7ccaf1b8ddc2d98",
-  "sha256_status": "local archive hash only until artifact_url is populated",
-  "github_policy": "The full manifests are not committed to the anonymous GitHub package. Upload this archive to an external anonymous artifact host only if redistribution is permitted by the source-corpus license.",
-  "local_prepared_path": "<outside-git>/VC-DUB_full_manifests.tar.gz"
+  "artifact_url": "https://figshare.com/s/06a010b1ab7f2d0e0486",
+  "sha256": "a03283adf93f627d2d265e5d7aeda935ca2524feb6eda7cf7c0b71a867d56bfc",
+  "sha256_status": "verified locally against VC-DUB_full_manifests.tar.gz before upload",
+  "required_manifest": "docs/figshare_upload_manifest.md",
+  "required_files": [
+    "VC-DUB_full_manifests.tar.gz",
+    "SHA256SUMS",
+    "README_ARTIFACT.txt",
+    "manifest_inventory.tsv",
+    "manifest_inventory.json"
+  ],
+  "github_policy": "The full manifests are not committed to the anonymous GitHub package. They are distributed through the private Figshare artifact link.",
+  "local_prepared_path": "<outside-git>/VC-DUB_full_manifests.tar.gz",
+  "note": "Original audio, denoised/vocal-extracted audio, generated VC waveforms, and checkpoints are not included in this artifact."
 }

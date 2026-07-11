@@ -52,7 +52,7 @@
         "en_es": {
           "expected_source_lid": "eng",
           "expected_target_lid": "spa",
-          "target_keep_pairs": 90000,
+          "reported_retained_pairs": 90000,
           "reported_approximate_retained_dropped_boundary": 3.57,
           "split_dev_test_fraction_matching_released_counts": 0.12,
           "split_test_size_pairs_matching_released_counts": 504
@@ -60,7 +60,7 @@
         "en_de": {
           "expected_source_lid": "eng",
           "expected_target_lid": "deu",
-          "target_keep_pairs": 147639,
+          "reported_retained_pairs": 147639,
           "reported_approximate_retained_dropped_boundary": 3.60,
           "split_dev_test_fraction_matching_released_counts": 0.11,
           "split_test_size_pairs_matching_released_counts": 504

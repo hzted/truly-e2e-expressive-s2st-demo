@@ -5,11 +5,11 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
+from scipy import stats
 
 
 AGGREGATE_KEYS = [
@@ -103,7 +103,10 @@ def scalar_ci95_margin(values: pd.Series) -> float | None:
     vals = pd.to_numeric(values, errors="coerce").dropna()
     if len(vals) <= 1:
         return None
-    return float(1.96 * vals.std(ddof=1) / math.sqrt(len(vals)))
+    mean = float(vals.mean())
+    sem = float(vals.sem())
+    low, high = stats.t.interval(0.95, df=len(vals) - 1, loc=mean, scale=sem)
+    return float(max(mean - low, high - mean))
 
 
 def parse_args() -> argparse.Namespace:

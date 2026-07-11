@@ -9,11 +9,16 @@ import pandas as pd
 from _wrapper_utils import load_manifest, run_command, write_dry_outputs
 
 
+def default_impl_root() -> str:
+    return str(Path(__file__).resolve().parent / "impl")
+
+
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Run vocal-style similarity through eval_stopes_switch.py.")
     p.add_argument("--manifest", required=True)
     p.add_argument("--out-dir", required=True)
-    p.add_argument("--verify-scripts-root", default="/export/fs06/hzhan276/Expressive_S2ST/verify_scripts")
+    p.add_argument("--implementation-root", default=default_impl_root())
+    p.add_argument("--verify-scripts-root", default=None, help="Deprecated alias for --implementation-root.")
     p.add_argument("--python", default="python")
     p.add_argument("--id-col", default="sample_id")
     p.add_argument("--src-lang", default="eng")
@@ -22,7 +27,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--tgt-audio-col", default="hypo_audio")
     p.add_argument("--src-text-col", default="source_text")
     p.add_argument("--tgt-text-col", default="hypo_text")
-    p.add_argument("--wavlm-ckpt", default="/home/hzhan276/stopes/models/wavlm_large_finetune.pth")
+    p.add_argument("--wavlm-ckpt", default="", help="Required for real Vsim evaluation.")
     p.add_argument("--num-shards", default="1")
     p.add_argument("--parallel-jobs", default="1")
     p.add_argument("--dry-run", action="store_true")
@@ -35,7 +40,12 @@ def main() -> None:
     if args.dry_run:
         write_dry_outputs(args.manifest, out_dir, args.id_col, {"vsim": 0.5}, "summary.json", "vsim_per_example.tsv")
         return
-    script = Path(args.verify_scripts_root) / "eval_stopes_switch.py"
+    if not args.wavlm_ckpt:
+        raise ValueError("Real Vsim evaluation requires --wavlm-ckpt.")
+    impl_root = Path(args.verify_scripts_root or args.implementation_root)
+    script = impl_root / "eval_stopes_switch.py"
+    if not script.is_file():
+        raise FileNotFoundError(f"Missing Stopes metric implementation: {script}")
     cmd = [
         args.python,
         str(script),

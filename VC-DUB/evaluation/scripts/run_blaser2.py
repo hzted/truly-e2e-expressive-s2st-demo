@@ -7,11 +7,16 @@ from pathlib import Path
 from _wrapper_utils import copy_metric_file, run_command, write_dry_outputs
 
 
+def default_impl_root() -> str:
+    return str(Path(__file__).resolve().parent / "impl")
+
+
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Run BLASER 2.0 audio evaluation via the project implementation.")
     p.add_argument("--manifest", required=True)
     p.add_argument("--out-dir", required=True)
-    p.add_argument("--verify-scripts-root", default="/export/fs06/hzhan276/Expressive_S2ST/verify_scripts")
+    p.add_argument("--implementation-root", default=default_impl_root())
+    p.add_argument("--verify-scripts-root", default=None, help="Deprecated alias for --implementation-root.")
     p.add_argument("--python", default="python")
     p.add_argument("--id-col", default="sample_id")
     p.add_argument("--source-audio-col", default="source_audio")
@@ -39,7 +44,10 @@ def main() -> None:
             "blaser2_per_example.tsv",
         )
         return
-    script = Path(args.verify_scripts_root) / "eval_blaser2_audio.py"
+    impl_root = Path(args.verify_scripts_root or args.implementation_root)
+    script = impl_root / "eval_blaser2_audio.py"
+    if not script.is_file():
+        raise FileNotFoundError(f"Missing BLASER implementation: {script}")
     cmd = [
         args.python,
         str(script),

@@ -106,7 +106,7 @@ python -u scripts/score_dnsmospro_for_filtering.py \
   --id-col sample_id \
   --src-audio-col pre_src \
   --tgt-audio-col pre_tgt \
-  --combine mean \
+  --combine <confirmed_min_or_mean> \
   --dnsmospro-cmd 'python /path/to/DNSMOSPro/infer.py --audio {audio}' \
   --score-key <confirmed_json_score_key>
 ```
@@ -187,24 +187,35 @@ ${OUTPUT_ROOT}/pair_tsvs/all_pairs.tsv
 ${OUTPUT_ROOT}/merged/vc_manifest.tsv
 ```
 
-## Full Manifest Artifacts
+## Reproducibility Artifacts
 
-The full manifests are not stored in this GitHub tree. If licensing permits
-redistribution, package them separately, for example:
+The full reproducibility artifact is hosted through an anonymous Figshare
+private link:
+
+```text
+https://figshare.com/s/06a010b1ab7f2d0e0486
+```
+
+The Figshare package currently contains:
+
+- per-example VC-DUB construction manifests for the aligned-pair, preprocessing,
+  MMS-LID, Sortformer, and selected clean-pool stages;
+- train/dev/test split manifests, including metadata and VC-materialization
+  inputs;
+- stage-wise count and duration statistics;
+- `SHA256SUMS` integrity checks for the uploaded archive.
+
+The artifact does not redistribute original audio, denoised/vocal-extracted
+audio, or generated voice-converted waveforms.
+
+The expected downloadable files are:
 
 ```text
 VC-DUB_full_manifests.tar.gz
 SHA256SUMS
 ```
 
-If the source corpus license does not permit redistribution of text,
-translations, or codec tokens, release only sanitized metadata such as
-`sample_id`, split, stage decisions, scores, and placeholder reference IDs.
-
-Reviewer-facing releases should not claim that full per-example manifests or
-checkpoints are available until a real private artifact URL and `SHA256SUMS` are
-added. The current placeholder is documented in
-`examples/full_artifact_package.json`.
+Checkpoint artifacts will be added separately if released.
 
 ## Paper Evaluation
 

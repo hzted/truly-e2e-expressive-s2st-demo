@@ -5,10 +5,11 @@
 This package is intended for anonymous review and method reproducibility. It
 includes:
 
-- End-to-end construction, filtering, splitting, and VC materialization scripts.
+- Construction scripts and stage wrappers for filtering, splitting, and optional
+  VC materialization.
 - Model names and filtering criteria.
-- Observed DNSMOSPro quality cutoffs for the En-Es and En-De experimental
-  instantiations.
+- Observed DNSMOSPro retained/dropped boundaries for the En-Es and En-De
+  experimental instantiations.
 - Synthetic small manifests documenting the expected schemas.
 - Non-sensitive stage-wise duration/count statistics.
 

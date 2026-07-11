@@ -203,8 +203,8 @@ def main() -> None:
         rec: dict[str, Any] = {
             "language_pair": spec.language_pair,
             "stage": spec.stage,
-            "source_path": str(spec.source),
-            "release_path": str(dst),
+            "source_path": sanitize_text(str(spec.source), reps),
+            "release_path": sanitize_text(str(dst), reps),
             "kind": spec.kind,
             "required": spec.required,
             "status": "pending",

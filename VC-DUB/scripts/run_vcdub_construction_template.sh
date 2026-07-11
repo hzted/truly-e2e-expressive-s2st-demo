@@ -13,16 +13,20 @@ ALIGNED_METADATA_TSV="${ALIGNED_METADATA_TSV:-/path/to/aligned_pair_metadata.tsv
 DNSMOSPRO_CMD="${DNSMOSPRO_CMD:-python /path/to/DNSMOSPro/infer.py --audio {audio}}"
 DNSMOSPRO_SCORE_KEY="${DNSMOSPRO_SCORE_KEY:-}"
 DNSMOSPRO_SCORE_REGEX="${DNSMOSPRO_SCORE_REGEX:-}"
+DNSMOSPRO_COMBINE="${DNSMOSPRO_COMBINE:-}"  # min or mean; must match original experiment logs
+DNSMOSPRO_SELECTION_MODE="${DNSMOSPRO_SELECTION_MODE:-}"  # cutoff or target_keep_pairs
+DNSMOSPRO_CUTOFF="${DNSMOSPRO_CUTOFF:-}"
+DNSMOSPRO_TARGET_KEEP_PAIRS="${DNSMOSPRO_TARGET_KEEP_PAIRS:-}"
 
 SRC_LID="${SRC_LID:-eng}"
 if [ "${PAIR}" = "en_de" ]; then
   TGT_LID="${TGT_LID:-deu}"
-  TARGET_KEEP="${TARGET_KEEP:-147639}"
+  REPORTED_TARGET_KEEP_PAIRS=147639
   DEV_TEST_RATIO="${DEV_TEST_RATIO:-0.11}"
   TEST_SIZE="${TEST_SIZE:-504}"
 else
   TGT_LID="${TGT_LID:-spa}"
-  TARGET_KEEP="${TARGET_KEEP:-90000}"
+  REPORTED_TARGET_KEEP_PAIRS=90000
   DEV_TEST_RATIO="${DEV_TEST_RATIO:-0.12}"
   TEST_SIZE="${TEST_SIZE:-504}"
 fi
@@ -69,6 +73,32 @@ if [ "${#dnsmos_parse_args[@]}" -eq 0 ]; then
   echo "ERROR: set DNSMOSPRO_SCORE_KEY or DNSMOSPRO_SCORE_REGEX so DNSMOSPro parsing is explicit." >&2
   exit 2
 fi
+if [ -z "${DNSMOSPRO_COMBINE}" ]; then
+  echo "ERROR: set DNSMOSPRO_COMBINE=min or DNSMOSPRO_COMBINE=mean after confirming the original experiment logs." >&2
+  exit 2
+fi
+selection_args=()
+case "${DNSMOSPRO_SELECTION_MODE}" in
+  cutoff)
+    if [ -z "${DNSMOSPRO_CUTOFF}" ]; then
+      echo "ERROR: DNSMOSPRO_SELECTION_MODE=cutoff requires DNSMOSPRO_CUTOFF." >&2
+      exit 2
+    fi
+    selection_args+=(--cutoff "${DNSMOSPRO_CUTOFF}")
+    ;;
+  target_keep_pairs)
+    if [ -z "${DNSMOSPRO_TARGET_KEEP_PAIRS}" ]; then
+      echo "ERROR: DNSMOSPRO_SELECTION_MODE=target_keep_pairs requires DNSMOSPRO_TARGET_KEEP_PAIRS." >&2
+      echo "       Reported retained counts were ${REPORTED_TARGET_KEEP_PAIRS} for ${PAIR}, but do not use them as reconstruction rules until confirmed." >&2
+      exit 2
+    fi
+    selection_args+=(--target-keep-pairs "${DNSMOSPRO_TARGET_KEEP_PAIRS}")
+    ;;
+  *)
+    echo "ERROR: set DNSMOSPRO_SELECTION_MODE to cutoff or target_keep_pairs after confirming the original experiment logs." >&2
+    exit 2
+    ;;
+esac
 
 python -u scripts/score_dnsmospro_for_filtering.py \
   --input-tsv "${WORK_ROOT}/sortformer/sortformer_pair_pass_strict.tsv" \
@@ -76,7 +106,7 @@ python -u scripts/score_dnsmospro_for_filtering.py \
   --id-col sample_id \
   --src-audio-col pre_src \
   --tgt-audio-col pre_tgt \
-  --combine mean \
+  --combine "${DNSMOSPRO_COMBINE}" \
   --dnsmospro-cmd "${DNSMOSPRO_CMD}" \
   "${dnsmos_parse_args[@]}"
 
@@ -86,7 +116,7 @@ python -u scripts/select_dnsmospro_quality_subset.py \
   --out-dir "${WORK_ROOT}/quality_selection" \
   --id-col sample_id \
   --score-col combined_dnsmospro \
-  --target-keep-pairs "${TARGET_KEEP}"
+  "${selection_args[@]}"
 
 echo "[6/7] train/dev/test split assignment"
 python -u scripts/build_vcdub_splits.py \

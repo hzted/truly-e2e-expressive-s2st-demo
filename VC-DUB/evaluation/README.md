@@ -64,7 +64,7 @@ python -u evaluation/scripts/run_all_metrics.py \
   --out-dir /path/to/evaluation_outputs \
   --config evaluation/configs/evaluation_config.json \
   --python /path/to/python \
-  --verify-scripts-root /export/fs06/hzhan276/Expressive_S2ST/verify_scripts \
+  --implementation-root evaluation/scripts/impl \
   --source-lang eng \
   --hypo-lang spa \
   --wavlm-ckpt /path/to/wavlm_large_finetune.pth \
@@ -98,10 +98,11 @@ interval margin.
 
 ## Implementation Notes
 
-The wrappers call the project implementations under `verify_scripts` rather than
-reimplementing metric proxies. If a model checkpoint, dependency version, or
-official implementation commit is missing, treat it as a blocker and fill it from
-the original experiment environment instead of guessing.
+The wrappers call the vendored project implementations under
+`evaluation/scripts/impl` rather than reimplementing metric proxies. If a model
+checkpoint, dependency version, or official implementation commit is missing,
+treat it as a blocker and fill it from the original experiment environment
+instead of guessing.
 
 DNSMOSPro evaluation also requires explicit parsing through
 `--dnsmospro-score-key` or `--dnsmospro-score-regex`; implicit first-number

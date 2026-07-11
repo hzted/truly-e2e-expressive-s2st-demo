@@ -17,8 +17,10 @@ src_lang
 tgt_lang
 ```
 
-`src_audio` is the source/content utterance. `tgt_audio` is the aligned target
-utterance used as the reference voice/prosody side.
+`src_audio` is the source/content utterance. `tgt_audio` is the aligned
+speaker-reference utterance used by optional voice-conversion materialization.
+The schema does not treat target audio as a prosody label; any prosodic transfer
+risk should be evaluated separately in the paper-facing metrics.
 
 ## Preprocessed Pair Manifest
 
