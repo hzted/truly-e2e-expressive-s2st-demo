@@ -1,7 +1,7 @@
 {
   "manifest_schema_version": "vcdub-eval-v1",
   "random_seed": 42,
-  "sample_subset": "all rows unless --sample-frac is passed to underlying scripts",
+  "sample_subset": "all rows by default; pass --sample-frac explicitly to evaluate a sampled subset",
   "id_col": "sample_id",
   "source_audio_col": "source_audio",
   "hypo_audio_col": "hypo_audio",
@@ -29,6 +29,8 @@
       "reported_fields": [
         "dc_0p2_compliance",
         "dc_0p4_compliance",
+        "sc_0p2_compliance",
+        "sc_0p4_compliance",
         "speech_rate_syllable_spearman",
         "pause_wmean_duration_score"
       ]

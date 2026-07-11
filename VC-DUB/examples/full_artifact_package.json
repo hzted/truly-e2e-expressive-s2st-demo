@@ -4,9 +4,11 @@
   "sha256": "a03283adf93f627d2d265e5d7aeda935ca2524feb6eda7cf7c0b71a867d56bfc",
   "sha256_status": "verified locally against VC-DUB_full_manifests.tar.gz before upload",
   "required_manifest": "docs/figshare_upload_manifest.md",
-  "required_files": [
+  "download_files": [
     "VC-DUB_full_manifests.tar.gz",
-    "SHA256SUMS",
+    "SHA256SUMS"
+  ],
+  "archive_members": [
     "README_ARTIFACT.txt",
     "manifest_inventory.tsv",
     "manifest_inventory.json"

@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from _wrapper_utils import load_manifest, run_command, write_dry_outputs
+from _wrapper_utils import run_command, sampled_ids_for_outputs, write_dry_outputs
 
 
 def default_impl_root() -> str:
@@ -29,6 +29,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--tgt-text-col", default="hypo_text")
     p.add_argument("--num-shards", default="1")
     p.add_argument("--parallel-jobs", default="1")
+    p.add_argument("--sample-frac", default="1.0")
     p.add_argument("--dry-run", action="store_true")
     return p.parse_args()
 
@@ -69,12 +70,14 @@ def main() -> None:
         str(args.num_shards),
         "--parallel-jobs",
         str(args.parallel_jobs),
+        "--sample-frac",
+        str(args.sample_frac),
     ]
     run_command(cmd)
     values = out_dir / "autopcp_values.csv"
     if values.is_file():
-        ids = load_manifest(args.manifest)[[args.id_col]].head(len(pd.read_csv(values)))
         vals = pd.read_csv(values)
+        ids = sampled_ids_for_outputs(args.manifest, out_dir, args.id_col, len(vals))
         pd.concat([ids.reset_index(drop=True), vals.reset_index(drop=True)], axis=1).to_csv(
             out_dir / "apcp_per_example.tsv", sep="\t", index=False
         )

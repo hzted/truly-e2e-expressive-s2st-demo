@@ -18,6 +18,8 @@ AGGREGATE_KEYS = [
     "autopcp_mean",
     "dc_0p2_compliance_mean",
     "dc_0p4_compliance_mean",
+    "sc_0p2_compliance_mean",
+    "sc_0p4_compliance_mean",
     "speech_rate_syllable_spearman_mean",
     "pause_wmean_duration_score_mean",
     "vsim_mean",
@@ -49,8 +51,6 @@ def read_json(path: Path) -> dict[str, Any]:
 
 def normalize_key(key: str) -> str:
     aliases = {
-        "sc_0p2_compliance": "dc_0p2_compliance",
-        "sc_0p4_compliance": "dc_0p4_compliance",
         "speech_rate_syllable_pearson": "speech_rate_syllable_pearson",
         "speech_rate_syllable_spearman": "speech_rate_syllable_spearman",
     }
@@ -68,6 +68,8 @@ def add_summary_metrics(merged: dict[str, Any], data: dict[str, Any]) -> None:
             "dnsmospro_nat_mean",
             "dc_0p2_compliance",
             "dc_0p4_compliance",
+            "sc_0p2_compliance",
+            "sc_0p4_compliance",
             "speech_rate_syllable_spearman",
             "pause_wmean_duration_score",
         }:

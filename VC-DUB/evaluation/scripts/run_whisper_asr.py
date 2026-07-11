@@ -28,8 +28,8 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--python", default="python")
     p.add_argument("--source-audio-col", default="source_audio")
     p.add_argument("--hypo-audio-col", default="hypo_audio")
-    p.add_argument("--asr-source-field", default="source_asr")
-    p.add_argument("--asr-hypo-field", default="hypo_asr")
+    p.add_argument("--asr-source-field", default="", help="Defaults to --source-audio-col when omitted.")
+    p.add_argument("--asr-hypo-field", default="", help="Defaults to --hypo-audio-col when omitted.")
     p.add_argument("--source-language", default="english")
     p.add_argument("--hypo-language", default="spanish")
     p.add_argument("--device", default="cuda:0")
@@ -56,6 +56,9 @@ def main() -> None:
     df = pd.read_csv(args.manifest, sep="\t", dtype=str, keep_default_na=False, low_memory=False)
     if args.id_col not in df.columns:
         raise ValueError(f"Missing ID column: {args.id_col}")
+    for col in [args.source_audio_col, args.hypo_audio_col]:
+        if col not in df.columns:
+            raise ValueError(f"Missing audio column: {col}")
     if args.dry_run:
         out = df[[args.id_col]].copy()
         out["whisper_transcript"] = "<dry-run transcript>"
@@ -64,11 +67,19 @@ def main() -> None:
     script = Path(args.implementation_script)
     if not script.is_file():
         raise FileNotFoundError(f"Missing Whisper implementation: {script}")
+    normalized_manifest = out_dir / "whisper_input_manifest.tsv"
+    normalized = df.copy()
+    normalized["id"] = normalized[args.id_col]
+    if "status" not in normalized.columns:
+        normalized["status"] = "ok"
+    normalized.to_csv(normalized_manifest, sep="\t", index=False)
+    asr_source_field = args.asr_source_field or args.source_audio_col
+    asr_hypo_field = args.asr_hypo_field or args.hypo_audio_col
     cmd = [
         args.python,
         str(script),
         "--manifest",
-        args.manifest,
+        str(normalized_manifest),
         "--out-dir",
         str(out_dir),
         "--src-audio-field",
@@ -76,9 +87,9 @@ def main() -> None:
         "--tgt-audio-field",
         args.hypo_audio_col,
         "--asr-src-field",
-        args.asr_source_field,
+        asr_source_field,
         "--asr-tgt-field",
-        args.asr_hypo_field,
+        asr_hypo_field,
         "--src-language",
         args.source_language,
         "--tgt-language",

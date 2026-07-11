@@ -207,6 +207,9 @@ The Figshare package currently contains:
 
 The artifact does not redistribute original audio, denoised/vocal-extracted
 audio, or generated voice-converted waveforms.
+The current artifact does not include audited per-example DNSMOSPro
+score/decision tables; the selected clean-pool manifests and provenance blockers
+are included instead.
 
 The expected downloadable files are:
 
@@ -219,12 +222,15 @@ Checkpoint artifacts will be added separately if released.
 
 ## Paper Evaluation
 
-Generated-audio evaluation commands are separated under `evaluation/`. The
-evaluation package covers only paper-reported metrics:
+Generated-audio evaluation commands are separated under `evaluation/`. These are
+wrappers around the project metric implementations; real-mode execution still
+requires the matching external metric backends, checkpoints, and environment.
+The package covers only paper-reported metrics:
 
 - BLASER 2.0
 - A.PCP
 - SLC at `p = 0.2` and `p = 0.4`
+- speech-rate compliance at `p = 0.2` and `p = 0.4`
 - syllable speech-rate correlation
 - pause weighted-mean duration score
 - Vsim

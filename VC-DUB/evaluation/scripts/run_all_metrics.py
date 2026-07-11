@@ -48,6 +48,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--dnsmospro-score-regex", default="")
     p.add_argument("--num-shards", default="1")
     p.add_argument("--parallel-jobs", default="1")
+    p.add_argument("--sample-frac", default="1.0")
     p.add_argument("--uncertainty", choices=["none", "std", "sem", "ci95"], default="none")
     p.add_argument("--dry-run", action="store_true")
     return p.parse_args()
@@ -76,6 +77,8 @@ def main() -> None:
         str(args.num_shards),
         "--parallel-jobs",
         str(args.parallel_jobs),
+        "--sample-frac",
+        str(args.sample_frac),
     ]
     dry = ["--dry-run"] if args.dry_run else []
 

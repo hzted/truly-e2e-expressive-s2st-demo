@@ -1005,7 +1005,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Run Stopes expressive metrics on a sampled TSV subset.")
     parser.add_argument("--input-tsv", required=True)
     parser.add_argument("--out-dir", required=True)
-    parser.add_argument("--sample-frac", type=float, default=0.2)
+    parser.add_argument("--sample-frac", type=float, default=1.0)
     parser.add_argument("--seed", type=int, default=42)
 
     parser.add_argument("--src-lang", required=True, help="Stopes language code, e.g. eng, deu")

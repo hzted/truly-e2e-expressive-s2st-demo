@@ -23,10 +23,11 @@ the package to claim bit-for-bit reconstruction of the paper manifests.
    `En-De: dev_test_fraction=0.11, test_size=504`) and should still be
    confirmed against original experiment logs before claiming exact rerunnable
    reconstruction.
-7. The external full-manifest/checkpoint artifact URL is not yet present in this
-   GitHub mirror. Do not claim that per-example manifests or checkpoints are
-   released to reviewers until the private Figshare/Zenodo link and SHA256SUMS
-   are added.
+7. The external full-manifest artifact URL is present in this GitHub mirror, but
+   the current artifact does not include checkpoints or audited per-example
+   DNSMOSPro score/decision tables. Do not claim checkpoint release or exact
+   DNSMOSPro score reconstruction until those files and their SHA256 checks are
+   added.
 
 These blockers do not change sample IDs, split assignments, or paper-reported
 results. They document the remaining provenance checks required for exact

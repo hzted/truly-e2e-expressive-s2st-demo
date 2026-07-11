@@ -10,7 +10,9 @@ The package covers only paper-facing metrics:
 
 - Content: BLASER 2.0
 - Prosody: A.PCP
-- Isochrony: SLC at `p = 0.2`, SLC at `p = 0.4`, syllable speech-rate correlation, pause weighted-mean duration score
+- Isochrony: duration SLC at `p = 0.2`, duration SLC at `p = 0.4`,
+  speech-rate compliance at `p = 0.2`/`0.4`, syllable speech-rate
+  correlation, pause weighted-mean duration score
 - Speaker identity: Vsim
 - Quality: DNSMOSPro, only when reported as an evaluation metric
 - ASR: Whisper large-v3, only when an ASR-based evaluation metric is explicitly enabled
@@ -53,6 +55,8 @@ bash evaluation/tests/test_smoke.sh
 ```
 
 This uses `--dry-run`, so it does not require model checkpoints or audio files.
+It validates command plumbing and aggregation only; it does not validate metric
+numerical equivalence.
 
 ## Real Evaluation Command
 
@@ -71,7 +75,8 @@ python -u evaluation/scripts/run_all_metrics.py \
   --dnsmospro-cmd 'python /path/to/DNSMOSPro/infer.py --audio {audio}' \
   --dnsmospro-score-key <confirmed_json_score_key> \
   --num-shards 1 \
-  --parallel-jobs 1
+  --parallel-jobs 1 \
+  --sample-frac 1.0
 ```
 
 Outputs:
@@ -99,10 +104,12 @@ interval margin.
 ## Implementation Notes
 
 The wrappers call the vendored project implementations under
-`evaluation/scripts/impl` rather than reimplementing metric proxies. If a model
-checkpoint, dependency version, or official implementation commit is missing,
-treat it as a blocker and fill it from the original experiment environment
-instead of guessing.
+`evaluation/scripts/impl` rather than fixed-value dry-run outputs. Real-mode
+execution still requires the original metric backends: Stopes, SONAR/BLASER 2.0,
+the WavLM checkpoint used by Vsim, DNSMOSPro, and the matching PyTorch/audio
+stack. If a model checkpoint, dependency version, or official implementation
+commit is missing, treat it as a blocker and fill it from the original
+experiment environment instead of guessing.
 
 DNSMOSPro evaluation also requires explicit parsing through
 `--dnsmospro-score-key` or `--dnsmospro-score-regex`; implicit first-number

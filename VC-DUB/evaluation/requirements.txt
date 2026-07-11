@@ -2,3 +2,15 @@ pandas
 numpy
 scipy
 tqdm
+soundfile
+librosa
+torch
+torchaudio
+transformers
+sentencepiece
+
+# Real metric backends used by the paper wrappers.
+# Install versions/commits matching the original experiment environment.
+stopes
+sonar-space
+fairseq2

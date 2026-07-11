@@ -3,53 +3,62 @@
 Use this checklist for the external reviewer artifact. The GitHub mirror should
 keep only code, schemas, synthetic examples, and non-sensitive summaries.
 
-## Required Package Files
+## Required Figshare Download Files
 
-Upload these files together and generate `SHA256SUMS` after packaging:
+Upload these two files together:
 
 ```text
 VC-DUB_full_manifests.tar.gz
 SHA256SUMS
+```
+
+`SHA256SUMS` is distributed next to the archive. The archive itself should
+contain:
+
+```text
 README_ARTIFACT.txt
 manifest_inventory.tsv
 manifest_inventory.json
+manifests/global/vcdub_filtering_stage_stats.tsv.gz
+manifests/global/vcdub_filtering_stage_stats.json
+manifests/en_es/filtering/stage_00_aligned_pair_manifest.tsv.gz
+manifests/en_es/filtering/stage_01_clearvoice_demucs_manifest.tsv.gz
+manifests/en_es/filtering/stage_02_mms_lid_pass_manifest.tsv.gz
+manifests/en_es/filtering/stage_03_sortformer_single_speaker_pass.tsv.gz
+manifests/en_es/filtering/stage_04_quality_selected_manifest.tsv.gz
+manifests/en_es/splits/all_metadata.tsv.gz
+manifests/en_es/splits/train_basic.tsv.gz
+manifests/en_es/splits/dev_basic.tsv.gz
+manifests/en_es/splits/test_basic.tsv.gz
+manifests/en_es/splits/train_metadata.tsv.gz
+manifests/en_es/splits/dev_metadata.tsv.gz
+manifests/en_es/splits/test_metadata.tsv.gz
+manifests/en_es/splits/train_vc.tsv.gz
+manifests/en_es/splits/dev_vc.tsv.gz
+manifests/en_es/splits/test_vc.tsv.gz
+manifests/en_es/summaries/
+manifests/en_de/filtering/stage_00_aligned_pair_manifest.tsv.gz
+manifests/en_de/filtering/stage_01_clearvoice_demucs_manifest.tsv.gz
+manifests/en_de/filtering/stage_02_mms_lid_pass_manifest.tsv.gz
+manifests/en_de/filtering/stage_03_sortformer_single_speaker_pass.tsv.gz
+manifests/en_de/filtering/stage_04_quality_selected_manifest.tsv.gz
+manifests/en_de/splits/all_metadata.tsv.gz
+manifests/en_de/splits/train_basic.tsv.gz
+manifests/en_de/splits/dev_basic.tsv.gz
+manifests/en_de/splits/test_basic.tsv.gz
+manifests/en_de/splits/train_metadata.tsv.gz
+manifests/en_de/splits/dev_metadata.tsv.gz
+manifests/en_de/splits/test_metadata.tsv.gz
+manifests/en_de/splits/train_vc.tsv.gz
+manifests/en_de/splits/dev_vc.tsv.gz
+manifests/en_de/splits/test_vc.tsv.gz
+manifests/en_de/summaries/
 ```
 
-`VC-DUB_full_manifests.tar.gz` should contain:
-
-```text
-global/vcdub_filtering_stage_stats.tsv.gz
-global/vcdub_filtering_stage_stats.json
-global/threshold_samples/
-en_es/filtering/stage_00_aligned_pair_manifest.tsv.gz
-en_es/filtering/stage_01_mms_lid_pass_manifest.tsv.gz
-en_es/filtering/stage_02_sortformer_single_speaker_pass.tsv.gz
-en_es/filtering/stage_03_dnsmospro_quality_selected_manifest.tsv.gz
-en_es/filtering/dnsmospro_quality_pairs.tsv.gz
-en_es/splits/all_metadata.tsv.gz
-en_es/splits/train_metadata.tsv.gz
-en_es/splits/dev_metadata.tsv.gz
-en_es/splits/test_metadata.tsv.gz
-en_es/splits/train_vc.tsv.gz
-en_es/splits/dev_vc.tsv.gz
-en_es/splits/test_vc.tsv.gz
-en_es/summaries/
-en_de/filtering/stage_00_aligned_pair_manifest.tsv.gz
-en_de/filtering/stage_01_mms_lid_pass_manifest.tsv.gz
-en_de/filtering/stage_02_sortformer_single_speaker_pass.tsv.gz
-en_de/filtering/stage_03_dnsmospro_quality_selected_manifest.tsv.gz
-en_de/filtering/dnsmospro_quality_pairs.tsv.gz
-en_de/splits/all_metadata.tsv.gz
-en_de/splits/train_metadata.tsv.gz
-en_de/splits/dev_metadata.tsv.gz
-en_de/splits/test_metadata.tsv.gz
-en_de/splits/train_vc.tsv.gz
-en_de/splits/dev_vc.tsv.gz
-en_de/splits/test_vc.tsv.gz
-en_de/summaries/
-```
-
-`dnsmospro_quality_pairs.tsv.gz` must include at least:
+The current reviewer artifact includes selected quality-stage manifests but does
+not include audited per-example DNSMOSPro score/decision tables. If exact
+DNSMOSPro score reconstruction is claimed, add `dnsmospro_quality_pairs.tsv.gz`
+for each language pair with at least:
 
 ```text
 sample_id
