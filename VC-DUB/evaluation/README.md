@@ -79,6 +79,9 @@ python -u evaluation/scripts/run_all_metrics.py \
   --sample-frac 1.0
 ```
 
+Use `--num-shards 1` in the reviewer release. Multi-shard evaluation is disabled
+until per-example ID ordering has been fully audited.
+
 Outputs:
 
 ```text
@@ -114,3 +117,6 @@ experiment environment instead of guessing.
 DNSMOSPro evaluation also requires explicit parsing through
 `--dnsmospro-score-key` or `--dnsmospro-score-regex`; implicit first-number
 parsing is disabled.
+
+The optional Whisper wrapper only produces transcripts. It does not compute or
+aggregate WER, CER, ASR-BLEU, or normalized ASR-BLEU in this release.

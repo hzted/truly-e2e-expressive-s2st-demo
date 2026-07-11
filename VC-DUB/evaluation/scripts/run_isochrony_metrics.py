@@ -82,6 +82,11 @@ def write_isochrony_per_example(manifest: str, out_dir: Path, id_col: str) -> No
 def main() -> None:
     args = parse_args()
     out_dir = Path(args.out_dir)
+    if str(args.num_shards) != "1":
+        raise ValueError(
+            "Multi-shard isochrony evaluation is disabled in the reviewer release "
+            "until per-example ID ordering is fully audited. Use --num-shards 1."
+        )
     if args.dry_run:
         write_dry_outputs(
             args.manifest,

@@ -63,6 +63,16 @@ def main() -> None:
         out = df[[args.id_col]].copy()
         out["whisper_transcript"] = "<dry-run transcript>"
         out.to_csv(out_dir / "whisper_transcripts.tsv", sep="\t", index=False)
+        meta = pd.DataFrame(
+            {
+                "path": df[args.id_col],
+                "sentence": "<dry-run source transcript>",
+                "translation": "<dry-run hypothesis transcript>",
+                "src_audio": df[args.source_audio_col],
+                "tgt_audio": df[args.hypo_audio_col],
+            }
+        )
+        meta.to_csv(out_dir / "transvip_text_meta.tsv", sep="\t", index=False)
         return
     script = Path(args.implementation_script)
     if not script.is_file():

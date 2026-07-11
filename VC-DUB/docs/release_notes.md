@@ -13,6 +13,11 @@ includes:
 - Synthetic small manifests documenting the expected schemas.
 - Non-sensitive stage-wise duration/count statistics.
 
+The GitHub mirror does not claim bit-for-bit end-to-end reconstruction. Exact
+construction reruns require the unresolved DNSMOSPro provenance items documented
+in `docs/blockers.md`, plus local execution of the external ClearVoice/Demucs
+preprocessing stage.
+
 ## What Is Not Released In GitHub
 
 The GitHub mirror does not include:

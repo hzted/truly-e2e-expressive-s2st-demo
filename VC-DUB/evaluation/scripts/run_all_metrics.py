@@ -31,6 +31,18 @@ def default_impl_root() -> str:
     return str(Path(__file__).resolve().parent / "impl")
 
 
+def whisper_language_name(lang: str) -> str:
+    mapping = {
+        "en": "english",
+        "eng": "english",
+        "es": "spanish",
+        "spa": "spanish",
+        "de": "german",
+        "deu": "german",
+    }
+    return mapping.get(str(lang).strip().lower(), str(lang).strip().lower())
+
+
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Run all selected VC-DUB paper evaluation metrics.")
     p.add_argument("--manifest", required=True)
@@ -63,6 +75,11 @@ def main() -> None:
     source_lang = args.source_lang or config.get("source_lang", "eng")
     hypo_lang = args.hypo_lang or config.get("hypo_lang", "spa")
     impl_root = args.verify_scripts_root or args.implementation_root
+    if str(args.num_shards) != "1":
+        raise ValueError(
+            "Multi-shard evaluation wrappers are disabled in the reviewer release "
+            "because per-example ID ordering must be audited first. Use --num-shards 1."
+        )
 
     common_stopes = [
         "--implementation-root",
@@ -133,7 +150,17 @@ def main() -> None:
             *dry,
         ])
     if metrics.get("whisper_asr", {}).get("enabled", False):
-        run([args.python, str(root / "scripts" / "run_whisper_asr.py"), *base_args(args, out_dir, "whisper_asr"), "--enabled", *dry])
+        run([
+            args.python,
+            str(root / "scripts" / "run_whisper_asr.py"),
+            *base_args(args, out_dir, "whisper_asr"),
+            "--source-language",
+            whisper_language_name(source_lang),
+            "--hypo-language",
+            whisper_language_name(hypo_lang),
+            "--enabled",
+            *dry,
+        ])
 
     run([
         args.python,

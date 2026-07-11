@@ -358,7 +358,7 @@ def main() -> None:
             for meta, conv_path, pred in zip(pending_meta, pending, preds_per_file):
                 segments = normalize_predicted_segments(pred)
                 metrics = analyze_segments(segments)
-                strict_single = metrics["num_speakers"] <= 1
+                strict_single = metrics["num_speakers"] == 1
                 relaxed_single = strict_single or (
                     metrics["secondary_ratio"] <= args.max_secondary_ratio
                     and metrics["secondary_duration"] <= args.max_secondary_duration
@@ -381,7 +381,7 @@ def main() -> None:
                     pred = model.diarize(audio=conv_path, batch_size=1)
                     segments = normalize_predicted_segments(pred)
                     metrics = analyze_segments(segments)
-                    strict_single = metrics["num_speakers"] <= 1
+                    strict_single = metrics["num_speakers"] == 1
                     relaxed_single = strict_single or (
                         metrics["secondary_ratio"] <= args.max_secondary_ratio
                         and metrics["secondary_duration"] <= args.max_secondary_duration

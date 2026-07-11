@@ -37,6 +37,11 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     out_dir = Path(args.out_dir)
+    if str(args.num_shards) != "1":
+        raise ValueError(
+            "Multi-shard A.PCP evaluation is disabled in the reviewer release "
+            "until sampled ID ordering is fully audited. Use --num-shards 1."
+        )
     if args.dry_run:
         write_dry_outputs(args.manifest, out_dir, args.id_col, {"autopcp": 0.5}, "summary.json", "apcp_per_example.tsv")
         return

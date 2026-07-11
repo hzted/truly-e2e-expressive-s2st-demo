@@ -44,14 +44,15 @@ def build_specs() -> list[ReleaseFile]:
     for pair, roots in LANG_ROOTS.items():
         work = roots["work_root"]
         split = roots["split_root"]
-        rel = Path(roots["release_subdir"])
+        rel = Path("manifests") / roots["release_subdir"]
 
         specs.extend(
             [
                 ReleaseFile(pair, "aligned_pair_manifest", work / "manifests" / "aligned_pair_manifest.tsv", rel / "filtering" / "stage_00_aligned_pair_manifest.tsv.gz", "tsv"),
-                ReleaseFile(pair, "mms_lid_pass", work / "mms_lid" / "lid_pass_manifest.tsv", rel / "filtering" / "stage_01_mms_lid_pass_manifest.tsv.gz", "tsv"),
-                ReleaseFile(pair, "sortformer_single_speaker_pass", work / "sortformer" / "sortformer_pair_pass_strict.tsv", rel / "filtering" / "stage_02_sortformer_single_speaker_pass.tsv.gz", "tsv"),
-                ReleaseFile(pair, "scale_matched_quality_selection", work / "quality_selection" / "dnsmospro_filtered_manifest.tsv", rel / "filtering" / "stage_03_dnsmospro_quality_selected_manifest.tsv.gz", "tsv"),
+                ReleaseFile(pair, "clearvoice_demucs_manifest", work / "preprocessing" / "clearvoice_demucs_manifest.tsv", rel / "filtering" / "stage_01_clearvoice_demucs_manifest.tsv.gz", "tsv", required=False),
+                ReleaseFile(pair, "mms_lid_pass", work / "mms_lid" / "lid_pass_manifest.tsv", rel / "filtering" / "stage_02_mms_lid_pass_manifest.tsv.gz", "tsv"),
+                ReleaseFile(pair, "sortformer_single_speaker_pass", work / "sortformer" / "sortformer_pair_pass_strict.tsv", rel / "filtering" / "stage_03_sortformer_single_speaker_pass.tsv.gz", "tsv"),
+                ReleaseFile(pair, "scale_matched_quality_selection", work / "quality_selection" / "dnsmospro_filtered_manifest.tsv", rel / "filtering" / "stage_04_quality_selected_manifest.tsv.gz", "tsv"),
                 ReleaseFile(pair, "mms_lid_summary", work / "mms_lid" / "mms_lid_summary.json", rel / "summaries" / "mms_lid_summary.json", "json", required=False),
                 ReleaseFile(pair, "sortformer_summary", work / "sortformer" / "sortformer_pair_summary.json", rel / "summaries" / "sortformer_summary.json", "json", required=False),
                 ReleaseFile(pair, "dnsmospro_quality_summary", work / "quality_selection" / "dnsmospro_quality_summary.json", rel / "summaries" / "dnsmospro_quality_summary.json", "json", required=False),
@@ -61,6 +62,7 @@ def build_specs() -> list[ReleaseFile]:
         for split_name in ("train", "dev", "test"):
             specs.extend(
                 [
+                    ReleaseFile(pair, f"{split_name}_basic_split", split / f"{split_name}_basic.tsv", rel / "splits" / f"{split_name}_basic.tsv.gz", "tsv", required=False),
                     ReleaseFile(pair, f"{split_name}_metadata_split", split / f"{split_name}_metadata.tsv", rel / "splits" / f"{split_name}_metadata.tsv.gz", "tsv"),
                     ReleaseFile(pair, f"{split_name}_vc_split", split / f"{split_name}_vc.tsv", rel / "splits" / f"{split_name}_vc.tsv.gz", "tsv", required=False),
                 ]
@@ -76,8 +78,8 @@ def build_specs() -> list[ReleaseFile]:
     stats_root = EXP_ROOT / "data_stats" / "vcdub_filtering_stage_stats"
     specs.extend(
         [
-            ReleaseFile("all", "filtering_stage_stats", stats_root / "vcdub_filtering_stage_stats.tsv", Path("global") / "vcdub_filtering_stage_stats.tsv.gz", "tsv", required=False),
-            ReleaseFile("all", "filtering_stage_stats_json", stats_root / "vcdub_filtering_stage_stats.json", Path("global") / "vcdub_filtering_stage_stats.json", "json", required=False),
+            ReleaseFile("all", "filtering_stage_stats", stats_root / "vcdub_filtering_stage_stats.tsv", Path("manifests") / "global" / "vcdub_filtering_stage_stats.tsv.gz", "tsv", required=False),
+            ReleaseFile("all", "filtering_stage_stats_json", stats_root / "vcdub_filtering_stage_stats.json", Path("manifests") / "global" / "vcdub_filtering_stage_stats.json", "json", required=False),
         ]
     )
 
@@ -92,7 +94,7 @@ def build_specs() -> list[ReleaseFile]:
         "en_de_dnsmospro_threshold_critical_summary.tsv",
     ):
         specs.append(
-            ReleaseFile("all", "threshold_samples", threshold_root / name, Path("global") / "threshold_samples" / f"{name}.gz", "tsv", required=False)
+            ReleaseFile("all", "threshold_samples", threshold_root / name, Path("manifests") / "global" / "threshold_samples" / f"{name}.gz", "tsv", required=False)
         )
     return specs
 
@@ -182,9 +184,38 @@ def write_inventory(records: list[dict[str, Any]], output_root: Path) -> None:
     out_json.write_text(json.dumps(records, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def write_readme_artifact(output_root: Path) -> None:
+    text = """# VC-DUB Figshare Artifact
+
+This archive contains sanitized VC-DUB construction artifacts for anonymous review.
+
+Included:
+- per-example construction manifests for aligned pairs and filtering stages;
+- train/dev/test split manifests;
+- stage-wise count/duration statistics;
+- manifest inventory files;
+- SHA256 integrity checks distributed next to the archive.
+
+Not included:
+- original audio;
+- denoised/vocal-extracted audio;
+- generated voice-converted waveforms;
+- model checkpoints;
+- audited per-example DNSMOSPro scores/decisions.
+
+The selected clean-pool manifest is included as
+`stage_04_quality_selected_manifest.tsv.gz` for each language pair. If exact
+DNSMOSPro score reconstruction is claimed, add the real
+`dnsmospro_quality_pairs.tsv.gz` files containing `sample_id`,
+`src_dnsmospro`, `tgt_dnsmospro`, `combined_dnsmospro`, `selected`, and
+`drop_reason`.
+"""
+    (output_root / "README_ARTIFACT.txt").write_text(text, encoding="utf-8")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output-root", type=Path, default=Path("manifests"))
+    parser.add_argument("--output-root", type=Path, default=Path("."))
     parser.add_argument("--skip-existing", action="store_true", help="Do not rewrite already packaged release files.")
     parser.add_argument("--fail-on-missing-required", action="store_true", default=True)
     parser.add_argument("--no-fail-on-missing-required", dest="fail_on_missing_required", action="store_false")
@@ -204,7 +235,7 @@ def main() -> None:
             "language_pair": spec.language_pair,
             "stage": spec.stage,
             "source_path": sanitize_text(str(spec.source), reps),
-            "release_path": sanitize_text(str(dst), reps),
+            "release_path": str(spec.target_rel),
             "kind": spec.kind,
             "required": spec.required,
             "status": "pending",
@@ -240,6 +271,7 @@ def main() -> None:
         print(f"[written] {dst} ({size / 1024 / 1024:.2f} MiB)")
 
     write_inventory(records, out_root)
+    write_readme_artifact(out_root)
     print(f"Wrote inventory: {out_root / 'manifest_inventory.tsv'}")
 
     if missing_required and args.fail_on_missing_required:

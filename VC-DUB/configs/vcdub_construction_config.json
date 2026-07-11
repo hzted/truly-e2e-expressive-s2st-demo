@@ -32,7 +32,7 @@
     "sortformer": {
       "script": "scripts/score_sortformer_for_filtering.py",
       "model": "nvidia/diar_sortformer_4spk-v1",
-      "criterion": "source and target each have <= 1 detected active speaker",
+      "criterion": "source and target each have exactly 1 detected active speaker; zero detected speakers do not pass the strict gate",
       "audio_preprocessing": "16 kHz mono before diarization"
     },
     "dnsmospro_quality_selection": {
@@ -89,7 +89,7 @@
   },
   "voice_conversion": {
     "position": "optional final local materialization step after filtering and splitting",
-    "input_manifest": "*_metadata.tsv, *_vc.tsv, or stage-03 selected manifest with sample_id/pre_src/pre_tgt columns",
+    "input_manifest": "*_metadata.tsv, *_vc.tsv, or stage-04 selected manifest with sample_id/pre_src/pre_tgt columns",
     "redistribution_policy": "generated VC waveforms are not redistributed"
   },
   "not_construction_dependencies": {

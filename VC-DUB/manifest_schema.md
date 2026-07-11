@@ -73,8 +73,9 @@ tgt_segments_json
 sortformer_single_speaker_pass
 ```
 
-The strict gate keeps pairs where source and target each have at most one
-detected active speaker.
+The strict gate keeps pairs where source and target each have exactly one
+detected active speaker. Rows with zero detected speakers are treated as
+non-passing because the diarizer did not confirm single-speaker speech.
 
 ## DNSMOSPro Quality Output
 
@@ -128,11 +129,30 @@ materialization.
 The final local materialization step converts a metadata or VC manifest into:
 
 ```text
+id
 source
 target
 output
 ```
 
-`source` is the content/source utterance path, `target` is the target/reference
-voice utterance path, and `output` is the desired local path for the generated
-voice-converted waveform.
+`id` is the original `sample_id`, `source` is the content/source utterance path,
+`target` is the target/reference voice utterance path, and `output` is the
+desired local path for the generated voice-converted waveform.
+
+## Stage-Wise Statistics
+
+`scripts/compute_vcdub_filtering_stage_stats.py` writes:
+
+```text
+language_pair
+stage
+num_pairs
+source_hours
+target_hours
+total_hours
+avg_source_duration_sec
+avg_target_duration_sec
+retention_from_previous_stage
+duration_source_columns_used
+manifest_path
+```

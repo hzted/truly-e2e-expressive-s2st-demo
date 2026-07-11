@@ -1069,6 +1069,11 @@ def main() -> None:
         raise ValueError("--wavlm-ckpt is required when --run-vsim is enabled.")
     if args.num_shards < 1:
         raise ValueError("--num-shards must be >= 1")
+    if args.num_shards != 1:
+        raise ValueError(
+            "Multi-shard mode is disabled in this reviewer release because "
+            "per-example ID ordering has not been audited. Use --num-shards 1."
+        )
     if args.parallel_jobs < 1:
         raise ValueError("--parallel-jobs must be >= 1")
 

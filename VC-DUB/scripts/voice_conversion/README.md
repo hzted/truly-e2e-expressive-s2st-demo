@@ -6,7 +6,7 @@ generated voice-converted waveforms are intentionally not redistributed.
 
 ## Inputs
 
-- A selected VC-DUB `*_metadata.tsv`, `*_vc.tsv`, or stage-03 construction
+- A selected VC-DUB `*_metadata.tsv`, `*_vc.tsv`, or stage-04 construction
   manifest, for example `small_example_manifests/en_es/splits/train_metadata.tsv`.
 - A local SeedVC checkout containing `inference.py` and its model dependencies.
 - Local access to the cleaned source/target audio paths referenced by the manifest.
@@ -27,7 +27,7 @@ bash scripts/voice_conversion/run_voice_conversion_materialization.sh
 The wrapper first converts the split manifest into a SeedVC pair TSV with columns:
 
 ```text
-source    target    output
+id    source    target    output
 ```
 
 It then runs SeedVC per shard and writes a merged `vc_manifest.tsv` under:

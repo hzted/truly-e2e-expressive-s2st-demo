@@ -2,6 +2,7 @@
   "manifest_schema_version": "vcdub-eval-v1",
   "random_seed": 42,
   "sample_subset": "all rows by default; pass --sample-frac explicitly to evaluate a sampled subset",
+  "multi_shard_policy": "disabled in reviewer release; use num_shards=1 until per-example ID ordering is audited",
   "id_col": "sample_id",
   "source_audio_col": "source_audio",
   "hypo_audio_col": "hypo_audio",

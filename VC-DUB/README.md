@@ -1,6 +1,6 @@
 # VC-DUB Construction Artifacts
 
-This directory contains reviewer-facing artifacts for reproducing the VC-DUB
+This directory contains reviewer-facing artifacts documenting the VC-DUB
 supervision construction procedure. VC-DUB is released as a construction method,
 not as a fixed standalone audio dataset.
 
@@ -17,12 +17,13 @@ separate artifact package only when licensing permits it.
 - `small_example_manifests/`: synthetic toy manifests that exercise the schemas.
 - `manifest_schema.md`: required columns for each construction stage.
 - `docs/blockers.md`: configuration conflicts that require experiment-log confirmation.
+- `docs/model_dependencies.md`: upstream model/tool links and local preparation notes.
 - `examples/`: small non-sensitive statistics and command examples.
 - `DATA_LICENSE.md`: data-release and redistribution guidance.
 
 ## Construction Pipeline
 
-Construction contains exactly these stages:
+Construction is organized around these stages:
 
 1. aligned-pair metadata preparation
 2. ClearVoice/Demucs preprocessing
@@ -35,6 +36,12 @@ Construction contains exactly these stages:
 Voice conversion is the last step in this release. Filtering and split assignment
 operate on aligned, cleaned source/target utterance pairs and their construction
 metadata. Generated VC waveforms are not redistributed.
+
+The provided runner is a stage wrapper, not a bit-for-bit end-to-end
+reconstruction script. Stages 1--2 require users to prepare aligned metadata and
+run ClearVoice/Demucs in their local environment before the downstream filtering
+wrappers can consume the resulting manifest. Exact DNSMOSPro scoring/selection
+settings remain blockers unless confirmed from the original experiment logs.
 
 Whisper large-v3 is not a construction dependency. It must not affect sample
 retention, deletion, ordering, or train/dev/test split assignment. If ASR-based
@@ -53,6 +60,7 @@ environments: ClearVoice-Studio for denoising, Demucs for vocal extraction, NeMo
 for Sortformer diarization, DNSMOSPro for quality scoring, and SeedVC for optional
 final VC materialization. Install those components from their upstream projects
 and point the command templates to the local checkouts.
+See `docs/model_dependencies.md` for links and preparation notes.
 
 ## Input Requirement
 
@@ -127,14 +135,15 @@ The settings matching the currently released split counts are:
 | En-Es | 90,000 | 0.12 | 504 | 79,200 |
 | En-De | 147,639 | 0.11 | 504 | 131,399 |
 
-These values should still be confirmed against original experiment logs before
-claiming bit-for-bit rerun reproducibility.
+These values reproduce the released split counts, but exact rerunnable
+construction still depends on resolving the DNSMOSPro blockers in
+`docs/blockers.md`.
 
 ```bash
 cd /path/to/truly-e2e-expressive-s2st-demo/VC-DUB
 
 python -u scripts/build_vcdub_splits.py \
-  --selected-manifest-tsv small_example_manifests/en_es/filtering/stage_03_dnsmospro_quality_selected_manifest.tsv \
+  --selected-manifest-tsv small_example_manifests/en_es/filtering/stage_04_quality_selected_manifest.tsv \
   --aligned-metadata-tsv small_example_manifests/en_es/filtering/stage_00_aligned_pair_manifest.tsv \
   --out-dir /tmp/vcdub_example_splits \
   --id-col sample_id \
@@ -164,7 +173,7 @@ split_summary.json
 ## Voice Conversion Materialization
 
 After filtering and splitting, run voice conversion locally from `*_metadata.tsv`,
-`*_vc.tsv`, or a selected stage-03 manifest containing `sample_id`, `pre_src`,
+`*_vc.tsv`, or a selected stage-04 manifest containing `sample_id`, `pre_src`,
 and `pre_tgt`.
 
 ```bash

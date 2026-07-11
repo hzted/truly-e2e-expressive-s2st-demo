@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Build SeedVC-style pair TSVs from a VC-DUB construction manifest.
 
-Input manifests may be `*_metadata.tsv`, `*_vc.tsv`, or a selected stage-03
+Input manifests may be `*_metadata.tsv`, `*_vc.tsv`, or a selected stage-04
 construction manifest. They are expected to contain cleaned source and target
 utterance paths.
-The output TSV has the three columns expected by the SeedVC batch runner:
+The output TSV has the columns expected by the bundled SeedVC batch runner:
 
-source<TAB>target<TAB>output
+id<TAB>source<TAB>target<TAB>output
 """
 
 from __future__ import annotations
@@ -57,7 +57,7 @@ def main() -> None:
         src = str(row[args.source_audio_col])
         tgt = str(row[args.target_audio_col])
         out_wav = out_audio_root / f"{args.output_prefix}{sample_id}{args.output_ext}"
-        rows.append({"source": src, "target": tgt, "output": str(out_wav)})
+        rows.append({"id": sample_id, "source": src, "target": tgt, "output": str(out_wav)})
 
     pd.DataFrame(rows).to_csv(out_tsv, sep="\t", index=False)
     print(f"Wrote SeedVC pair TSV: {out_tsv}")

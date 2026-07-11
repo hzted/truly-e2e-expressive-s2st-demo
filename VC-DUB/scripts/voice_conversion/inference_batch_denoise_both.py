@@ -102,6 +102,12 @@ def row_matches_current_pair(row: dict, idx: str, src_p: Path, tgt_p: Path, out_
     return row_src == src_p.resolve() and row_tgt == tgt_p.resolve() and row_out == out_wav.resolve()
 
 
+def format_manifest_id(idx) -> str:
+    if isinstance(idx, int):
+        return f"{idx:03d}"
+    return str(idx)
+
+
 def load_pair_audio(source_path: str, target_path: str, sr_cfg: int):
     source_audio_raw, _ = librosa.load(source_path, sr=sr_cfg, mono=True)
     target_audio_raw, _ = librosa.load(target_path, sr=sr_cfg, mono=True)
@@ -575,7 +581,7 @@ def convert_one(
 # =========================
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--pair_tsv", required=True, help="TSV header: source target output")
+    ap.add_argument("--pair_tsv", required=True, help="TSV header: id source target output, or legacy source target output")
     ap.add_argument("--output_dir", required=True, help="Directory for outputs/log bookkeeping")
     ap.add_argument("--output_sr", type=int, default=16000)
     ap.add_argument("--skip_existing", action="store_true")
@@ -659,9 +665,10 @@ def main():
         )
 
         def write_failed_row(i, src_p, tgt_p, out_wav, err):
-            print(f"[{i:03d}] FAILED: {src_p.name} -> {tgt_p.name} | {err}")
+            row_id = format_manifest_id(i)
+            print(f"[{row_id}] FAILED: {src_p.name} -> {tgt_p.name} | {err}")
             mf.write(
-                f"{i:03d}\t{src_p.resolve()}\t{tgt_p.resolve()}\t{out_wav}\t\t\tFAILED:{repr(err)}\t\t\t"
+                f"{row_id}\t{src_p.resolve()}\t{tgt_p.resolve()}\t{out_wav}\t\t\tFAILED:{repr(err)}\t\t\t"
                 f"{args.demucs_preprocess}\t{args.demucs_on}\t{args.demucs_model}\t"
                 f"{args.clearvoice_denoise}\t{args.clearvoice_on}\t{args.clearvoice_model}\t"
                 f"\t\t\t\t\n"
@@ -701,9 +708,10 @@ def main():
                 torchaudio.save(str(out_wav), vc_wave_out, args.output_sr)
 
                 total_elapsed_s = time.time() - total_t0
-                print(f"[{i:03d}] saved {out_wav.name} | RTF={rtf:.3f} | total={total_elapsed_s:.3f}s")
+                row_id = format_manifest_id(i)
+                print(f"[{row_id}] saved {out_wav.name} | RTF={rtf:.3f} | total={total_elapsed_s:.3f}s")
                 mf.write(
-                    f"{i:03d}\t{src_p.resolve()}\t{tgt_p.resolve()}\t{out_wav.resolve()}\t"
+                    f"{row_id}\t{src_p.resolve()}\t{tgt_p.resolve()}\t{out_wav.resolve()}\t"
                     f"{pre_src_path}\t{pre_tgt_path}\tDONE\t{rtf:.6f}\t{total_elapsed_s:.6f}\t"
                     f"{args.demucs_preprocess}\t{args.demucs_on}\t{args.demucs_model}\t"
                     f"{args.clearvoice_denoise}\t{args.clearvoice_on}\t{args.clearvoice_model}\t"
@@ -722,9 +730,16 @@ def main():
             reader = csv.reader(f, delimiter="\t")
             header = next(reader, None)
 
-            expected = ["source", "target", "output"]
-            if header is None or [h.strip().lower() for h in header[:3]] != expected:
-                raise ValueError(f"Expected TSV header {expected}, got {header}")
+            header_norm = [h.strip().lower() for h in header] if header else []
+            if header_norm[:4] == ["id", "source", "target", "output"]:
+                has_explicit_id = True
+            elif header_norm[:3] == ["source", "target", "output"]:
+                has_explicit_id = False
+            else:
+                raise ValueError(
+                    "Expected TSV header [id, source, target, output] or "
+                    f"[source, target, output], got {header}"
+                )
 
             def drain_pending(force=False):
                 while pending and (force or len(pending) >= prefetch_depth):
@@ -742,21 +757,31 @@ def main():
 
             try:
                 for i, row in enumerate(reader):
-                    if not row or len(row) < 3:
+                    if not row:
                         continue
-
-                    src = row[0].strip()
-                    tgt = row[1].strip()
-                    out_wav = Path(row[2].strip())
+                    if has_explicit_id:
+                        if len(row) < 4:
+                            continue
+                        row_id = row[0].strip()
+                        src = row[1].strip()
+                        tgt = row[2].strip()
+                        out_wav = Path(row[3].strip())
+                    else:
+                        if len(row) < 3:
+                            continue
+                        row_id = f"{i:03d}"
+                        src = row[0].strip()
+                        tgt = row[1].strip()
+                        out_wav = Path(row[2].strip())
 
                     src_p = Path(src)
                     tgt_p = Path(tgt)
                     out_wav.parent.mkdir(parents=True, exist_ok=True)
 
                     if not src_p.exists():
-                        print(f"[{i:03d}] missing source: {src_p}")
+                        print(f"[{row_id}] missing source: {src_p}")
                         mf.write(
-                            f"{i:03d}\t{src_p}\t{tgt_p}\t{out_wav}\t\t\tMISSING_SRC\t\t\t"
+                            f"{row_id}\t{src_p}\t{tgt_p}\t{out_wav}\t\t\tMISSING_SRC\t\t\t"
                             f"{args.demucs_preprocess}\t{args.demucs_on}\t{args.demucs_model}\t"
                             f"{args.clearvoice_denoise}\t{args.clearvoice_on}\t{args.clearvoice_model}\t"
                             f"\t\t\t\t\n"
@@ -764,19 +789,18 @@ def main():
                         continue
 
                     if not tgt_p.exists():
-                        print(f"[{i:03d}] missing target: {tgt_p}")
+                        print(f"[{row_id}] missing target: {tgt_p}")
                         mf.write(
-                            f"{i:03d}\t{src_p}\t{tgt_p}\t{out_wav}\t\t\tMISSING_TGT\t\t\t"
+                            f"{row_id}\t{src_p}\t{tgt_p}\t{out_wav}\t\t\tMISSING_TGT\t\t\t"
                             f"{args.demucs_preprocess}\t{args.demucs_on}\t{args.demucs_model}\t"
                             f"{args.clearvoice_denoise}\t{args.clearvoice_on}\t{args.clearvoice_model}\t"
                             f"\t\t\t\t\n"
                         )
                         continue
 
-                    row_id = f"{i:03d}"
                     prior_row = prior_rows.get(row_id)
                     if args.skip_existing and row_matches_current_pair(prior_row, row_id, src_p, tgt_p, out_wav) and row_is_resume_safe(prior_row, args.save_preprocessed_audio):
-                        print(f"[{i:03d}] resume verified: {out_wav.name}")
+                        print(f"[{row_id}] resume verified: {out_wav.name}")
                         mf.write(
                             "\t".join([
                                 str(prior_row.get("id", row_id)),
@@ -804,10 +828,10 @@ def main():
                         continue
 
                     if executor is None:
-                        process_one_pair(i, src_p, tgt_p, out_wav)
+                        process_one_pair(row_id, src_p, tgt_p, out_wav)
                     else:
                         fut = executor.submit(load_pair_audio, str(src_p), str(tgt_p), sr_cfg)
-                        pending.append((i, src_p, tgt_p, out_wav, fut))
+                        pending.append((row_id, src_p, tgt_p, out_wav, fut))
                         drain_pending(force=False)
 
                 drain_pending(force=True)

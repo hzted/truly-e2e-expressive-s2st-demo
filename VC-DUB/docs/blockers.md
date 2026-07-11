@@ -13,7 +13,7 @@ the package to claim bit-for-bit reconstruction of the paper manifests.
    currently released selector implements explicit cutoff or top-N selection.
 4. The exact DNSMOSPro implementation commit, model checkpoint, score field, and
    source-target combination rule must be pinned before rerunning construction.
-5. Stage-03 selected manifests should be accompanied by per-example
+5. Stage-04 selected manifests should be accompanied by per-example
    `dnsmospro_quality_pairs.tsv.gz` files containing `sample_id`,
    `src_dnsmospro`, `tgt_dnsmospro`, `combined_dnsmospro`, `selected`, and
    `drop_reason`. If those files are absent from the external artifact, they
@@ -29,6 +29,6 @@ the package to claim bit-for-bit reconstruction of the paper manifests.
    DNSMOSPro score reconstruction until those files and their SHA256 checks are
    added.
 
-These blockers do not change sample IDs, split assignments, or paper-reported
-results. They document the remaining provenance checks required for exact
-reproducibility.
+These items are blockers for exact rerunnable reconstruction. They should not be
+resolved by inference from aggregate counts or by changing paper-reported
+manifests after the fact.

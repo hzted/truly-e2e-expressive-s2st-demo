@@ -196,6 +196,11 @@ def main() -> None:
     print(json.dumps(summary, indent=2, ensure_ascii=False))
     print(f"Wrote scores: {score_path}")
     print(f"Wrote summary: {summary_path}")
+    if summary["num_rows"] > 0 and summary["num_ok"] == 0:
+        raise RuntimeError(
+            "DNSMOSPro produced zero valid scores. Check --dnsmospro-cmd and "
+            "--score-key/--score-regex; refusing to report a successful run."
+        )
 
 
 if __name__ == "__main__":

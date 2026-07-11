@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Template runner for VC-DUB construction.
+# Template runner for VC-DUB construction stage wrappers.
 #
 # This script covers only data construction/cleaning. Whisper ASR and generated
 # audio metrics belong to VC-DUB/evaluation and are intentionally not called here.
+# Stages 1--2 are external prerequisites: prepare aligned metadata, then run
+# ClearVoice/Demucs locally and write PREPROCESSED_MANIFEST for stage 3.
 
 PAIR="${PAIR:-en_es}"  # en_es or en_de
 WORK_ROOT="${WORK_ROOT:-/path/to/vcdub_work/${PAIR}}"
@@ -33,11 +35,11 @@ fi
 
 mkdir -p "${WORK_ROOT}"
 
-echo "[1/7] aligned-pair metadata preparation"
+echo "[1/7] aligned-pair metadata preparation (external prerequisite)"
 echo "      Input preprocessed manifest: ${PREPROCESSED_MANIFEST}"
 echo "      Input aligned metadata:      ${ALIGNED_METADATA_TSV}"
 
-echo "[2/7] ClearVoice/Demucs preprocessing"
+echo "[2/7] ClearVoice/Demucs preprocessing (external prerequisite)"
 echo "      Run ClearVoice + Demucs externally, then write PREPROCESSED_MANIFEST."
 
 echo "[3/7] MMS-LID filtering"

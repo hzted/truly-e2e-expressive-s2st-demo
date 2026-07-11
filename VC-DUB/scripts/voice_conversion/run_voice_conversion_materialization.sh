@@ -4,7 +4,7 @@ set -euo pipefail
 # Materialize VC-DUB voice-converted audio from a selected split manifest.
 #
 # Required inputs:
-#   SPLIT_TSV: VC-DUB *_metadata.tsv, *_vc.tsv, or selected stage-03 manifest.
+#   SPLIT_TSV: VC-DUB *_metadata.tsv, *_vc.tsv, or selected stage-04 manifest.
 #   SEEDVC_ROOT: local SeedVC checkout containing inference.py and model dependencies.
 #   OUTPUT_ROOT: output directory for pair TSVs, wav shards, logs, and merged manifest.
 
