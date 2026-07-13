@@ -410,6 +410,56 @@
       font-size: 14px;
     }
 
+
+    .filter-panel-title {
+      padding: 14px 18px;
+      margin: 0;
+      background: #f3f6fb;
+      border-bottom: 1px solid var(--line);
+      font-size: 17px;
+      font-weight: 750;
+      color: var(--ink);
+    }
+
+    .filter-table {
+      table-layout: auto !important;
+      min-width: 880px;
+      font-size: 14px;
+    }
+
+    .filter-table th,
+    .filter-table td {
+      padding: 10px 12px !important;
+    }
+
+    .filter-table th:first-child,
+    .filter-table td:first-child {
+      min-width: 270px;
+    }
+
+    .filter-settings-table {
+      table-layout: auto !important;
+      font-size: 14px;
+    }
+
+    .filter-settings-table th:first-child,
+    .filter-settings-table td:first-child {
+      width: 22%;
+      min-width: 180px;
+      font-weight: 700;
+    }
+
+    .filter-note {
+      margin: 16px 4px 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .filter-note strong {
+      color: var(--ink);
+    }
+
     @media (max-width: 900px) {
       .stats-row,
       .setup-grid {
@@ -494,6 +544,75 @@
           timing, and expressive delivery.
         </figcaption>
       </figure>
+    </section>
+
+
+    <section id="filtering" class="section-card card-panel">
+      <div class="section-eyebrow">Data Quality Control</div>
+      <h2 class="section-title">VC-DUB Cleaning and Filtering</h2>
+      <p class="section-subtitle">
+        We apply denoising, vocal extraction, language identification,
+        speaker filtering, and speech-quality filtering before constructing
+        the final VC-DUB training splits.
+      </p>
+
+      <div class="table-card" style="margin-bottom: 22px;">
+        <h3 class="filter-panel-title">Panel A: Filtering Statistics</h3>
+        <div class="table-responsive">
+          <table class="table table-hover filter-table">
+            <thead>
+              <tr>
+                <th rowspan="2">Stage</th>
+                <th colspan="3" class="text-center">En–Es</th>
+                <th colspan="3" class="text-center">En–De</th>
+              </tr>
+              <tr>
+                <th class="text-right">Pairs</th>
+                <th class="text-right">Total Hrs.</th>
+                <th class="text-right">Retention</th>
+                <th class="text-right">Pairs</th>
+                <th class="text-right">Total Hrs.</th>
+                <th class="text-right">Retention</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Raw dubbing from Speech Vecalign</td><td class="text-right">352,947</td><td class="text-right">748.29</td><td class="text-right">–</td><td class="text-right">369,139</td><td class="text-right">782.86</td><td class="text-right">–</td></tr>
+              <tr><td>After ClearVoice + Demucs</td><td class="text-right">352,947</td><td class="text-right">748.29</td><td class="text-right">100.0%</td><td class="text-right">369,137</td><td class="text-right">782.86</td><td class="text-right">100.0%</td></tr>
+              <tr><td>After MMS-LID</td><td class="text-right">213,469</td><td class="text-right">536.63</td><td class="text-right">60.5%</td><td class="text-right">298,929</td><td class="text-right">693.40</td><td class="text-right">81.0%</td></tr>
+              <tr><td>After Sortformer single-speaker gate</td><td class="text-right">164,746</td><td class="text-right">349.43</td><td class="text-right">46.7%</td><td class="text-right">237,743</td><td class="text-right">468.28</td><td class="text-right">64.4%</td></tr>
+              <tr><td>After DNSMOSPro quality cutoff</td><td class="text-right">90,000</td><td class="text-right">194.51</td><td class="text-right">25.5%</td><td class="text-right">147,639</td><td class="text-right">295.80</td><td class="text-right">40.0%</td></tr>
+              <tr><td>Training split used in Table 1</td><td class="text-right">79,200</td><td class="text-right">171.13</td><td class="text-right">–</td><td class="text-right">131,399</td><td class="text-right">263.23</td><td class="text-right">–</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <h3 class="filter-panel-title">Panel B: Filtering Settings</h3>
+        <div class="table-responsive">
+          <table class="table filter-settings-table">
+            <tbody>
+              <tr><th>Denoising</th><td>ClearVoice-Studio with MossFormer2_SE_48K under default inference.</td></tr>
+              <tr><th>Vocal extraction</th><td>Demucs <code>htdemucs</code>; we retain the vocal stem and require successful preprocessing on both source and target sides.</td></tr>
+              <tr><th>Language identification</th><td>MMS-LID <code>facebook/mms-lid-126</code>; we retain pairs whose top-1 predicted labels match the expected languages. Expected labels are <code>eng/spa</code> for En–Es and <code>eng/deu</code> for En–De. No confidence threshold is applied.</td></tr>
+              <tr><th>Speaker filtering</th><td>Sortformer <code>nvidia/diar_sortformer_4spk-v1</code>; audio is converted to 16 kHz mono. We retain pairs where both source and target contain at most one detected active speaker.</td></tr>
+              <tr><th>Quality filtering</th><td>DNSMOSPro is used as a quality predictor. We score both source and target utterances, compute a combined source–target quality score, and retain pairs above the empirical quality cutoff. The cutoff characterizes the quality floor of the retained clean pool while keeping the final VC-DUB training split comparable in scale to CVSS-T.</td></tr>
+              <tr><th>DNSMOSPro cutoff</th><td>The retained–dropped boundary is approximately 3.57 for En–Es and 3.60 for En–De.</td></tr>
+              <tr><th>Split construction</th><td>The retained clean pool is subsequently split for controlled S2ST training. The final row in Panel A reports the training split used in Table 1.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="filter-note">
+        <strong>Note.</strong>
+        Total hours denote the combined source and target durations, computed
+        using the same VAD-span definition as Table 1. Retention is computed
+        relative to the original raw dubbing pool. The final training-split row
+        is included for comparison with Table 1 and does not represent an
+        additional cleaning stage. The DNSMOSPro cutoff reports the empirical
+        quality boundary of the retained pool.
+      </p>
     </section>
 
     <section class="section-card card-panel">
