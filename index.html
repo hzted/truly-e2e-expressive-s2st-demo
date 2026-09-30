@@ -736,14 +736,14 @@
         untouched as the target, so no TTS or VC artifacts enter the target supervision.
       </p>
       <figure class="figure-wrap">
-        <img src="./framework.png" class="img-fluid framework-img"
+        <img src="./framework-ab.png" class="img-fluid framework-img"
           alt="(a) VC-Dub construction with multilingual voice conversion; (b) parallel supervision for direct expressive S2ST">
         <figcaption>
           Figure 1 (a, b). <b>(a) <span class="sc">VC-Dub</span> construction:</b> the English dub, which imitates the
           original performance, is voice-converted to the original speaker using the original utterance as the speaker
           reference. <b>(b) Parallel supervision:</b> the voice-converted English speech becomes the source and the
           original German/Spanish recording the target, aligned in semantics, prosody, timing, and speaker identity.
-          <a class="pdf-link" href="./framework.pdf" target="_blank" rel="noopener noreferrer">[PDF]</a>
+          <a class="pdf-link" href="./framework-ab.pdf" target="_blank" rel="noopener noreferrer">[PDF]</a>
         </figcaption>
       </figure>
     </section>
@@ -854,7 +854,7 @@
         the source speech. No target-side prompts or separate expressive-transfer modules are used at inference.
       </p>
       <figure class="figure-wrap">
-        <img src="./model.png" class="img-fluid model-img" alt="DirectS2ST architecture">
+        <img src="./framework-c.png" class="img-fluid model-img" alt="DirectS2ST architecture">
         <figcaption>
           Figure 1 (c). <b>DirectS2ST.</b> A frozen w2v-BERT 2.0 encoder provides source memory through cross-attention.
           The AR temporal decoder generates source text, target text, and the first target codec stream
@@ -863,7 +863,7 @@
           conditioned on a frozen CAMPPlus speaker prefix and the source codec prompt, and is trained with an additional
           speaker-identity loss. At inference, beam search (beam 5) decodes the text–c<sup>(0)</sup> sequence, then the
           depth decoder greedily fills c<sup>(1)</sup>–c<sup>(15)</sup>.
-          <a class="pdf-link" href="./model.pdf" target="_blank" rel="noopener noreferrer">[PDF]</a>
+          <a class="pdf-link" href="./framework-c.pdf" target="_blank" rel="noopener noreferrer">[PDF]</a>
         </figcaption>
       </figure>
     </section>
@@ -1184,18 +1184,13 @@
 
     <section class="reference-box card-panel" id="references">
       <b>References.</b><br>
-      TransVIP: Le et al., <i>TransVIP: Speech to Speech Translation System with Voice and Isochrony Preservation</i>,
-      NeurIPS 2024. <a href="https://arxiv.org/abs/2405.17809">arXiv</a>.<br>
-      Dub-S2ST: Choi, Kim, and Chung, <i>Dub-S2ST: Textless Speech-to-Speech Translation for Seamless Dubbing</i>,
-      Findings of EMNLP 2025.<br>
-      CVSS: Jia et al., <i>CVSS Corpus and Massively Multilingual Speech-to-Speech Translation</i>, LREC 2022.
-      <a href="https://arxiv.org/abs/2201.03713">arXiv</a>.<br>
-      Speech Vecalign: Meng and Koehn, <i>Speech Vecalign: an Embedding-based Method for Aligning Parallel Speech
-      Documents</i>, EMNLP 2025. <a href="https://arxiv.org/abs/2509.18360">arXiv</a>.<br>
-      Seed-VC: Liu, <i>Zero-shot Voice Conversion with Diffusion Transformers</i>, arXiv:2411.09943.
-      <a href="https://github.com/Plachtaa/seed-vc">Code</a>.<br>
-      mExpresso / Seamless: Barrault et al., <i>Seamless: Multilingual Expressive and Streaming Speech Translation</i>,
-      arXiv:2312.05187; Nguyen et al., <i>Expresso</i>, Interspeech 2023.
+      TransVIP: Le et al., <a href="https://proceedings.neurips.cc/paper_files/paper/2024/hash/a32539cb16274581a17e679f6046f4bf-Abstract-Conference.html"><i>TransVIP: Speech to Speech Translation System with Voice and Isochrony Preservation</i></a>, NeurIPS 2024.<br>
+      Dub-S2ST: Choi, Kim, and Chung, <a href="https://aclanthology.org/2025.findings-emnlp.524/"><i>Dub-S2ST: Textless Speech-to-Speech Translation for Seamless Dubbing</i></a>, Findings of EMNLP 2025.<br>
+      CVSS: Jia et al., <a href="https://aclanthology.org/2022.lrec-1.720/"><i>CVSS Corpus and Massively Multilingual Speech-to-Speech Translation</i></a>, LREC 2022.<br>
+      Speech Vecalign: Meng and Koehn, <a href="https://aclanthology.org/2025.emnlp-main.833/"><i>Speech Vecalign: an Embedding-based Method for Aligning Parallel Speech Documents</i></a>, EMNLP 2025.<br>
+      Seed-VC: Liu, <a href="https://arxiv.org/abs/2411.09943"><i>Zero-shot Voice Conversion with Diffusion Transformers</i></a>, arXiv:2411.09943, 2024. <a href="https://github.com/Plachtaa/seed-vc">Code</a>.<br>
+      Expresso: Nguyen et al., <a href="https://www.isca-archive.org/interspeech_2023/nguyen23_interspeech.html"><i>EXPRESSO: A Benchmark and Analysis of Discrete Expressive Speech Resynthesis</i></a>, Interspeech 2023.<br>
+      mExpresso / Seamless: Barrault et al., <a href="https://arxiv.org/abs/2312.05187"><i>Seamless: Multilingual Expressive and Streaming Speech Translation</i></a>, arXiv:2312.05187, 2023.
     </section>
 
     <section class="disclaimer-box card-panel">
