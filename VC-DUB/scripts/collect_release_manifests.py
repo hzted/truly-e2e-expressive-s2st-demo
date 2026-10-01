@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Collect path-sanitized VC-DUB construction manifests for anonymous release."""
+"""Collect path-sanitized VC-DUB construction manifests for release."""
 
 from __future__ import annotations
 
@@ -187,7 +187,7 @@ def write_inventory(records: list[dict[str, Any]], output_root: Path) -> None:
 def write_readme_artifact(output_root: Path) -> None:
     text = """# VC-DUB Figshare Artifact
 
-This archive contains sanitized VC-DUB construction artifacts for anonymous review.
+This archive contains sanitized VC-DUB construction manifests.
 
 Included:
 - per-example construction manifests for aligned pairs and filtering stages;

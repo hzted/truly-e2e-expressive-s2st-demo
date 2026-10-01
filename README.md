@@ -1,13 +1,10 @@
-# Truly End-to-End Expressive S2ST Demo
+# Holistic Parallel Supervision for Expressive Speech-to-Speech Translation
 
-This repository hosts the anonymous demo page and the reviewer-facing VC-DUB
-construction artifact.
+Code and audio demonstrations accompanying the paper.
 
-- Demo page: `index.html`
-- VC-DUB construction package: `VC-DUB/`
-- VC-DUB evaluation package: `VC-DUB/evaluation/`
+- VC-Dub construction utilities: `VC-DUB/`
+- DirectS2ST training and inference: `DirectS2ST/`
+- Evaluation utilities: `VC-DUB/evaluation/`
+- Pretrained checkpoints: [Hugging Face](https://huggingface.co/TedZhangHao/DirectS2ST)
 
-The GitHub mirror contains code, schemas, synthetic examples, and non-sensitive
-summary statistics. Full per-example manifests and checkpoints, when
-redistributable, should be provided through the external artifact package listed
-under `VC-DUB/examples/full_artifact_package.json`.
+The underlying dubbing audio is not redistributed due to licensing constraints.

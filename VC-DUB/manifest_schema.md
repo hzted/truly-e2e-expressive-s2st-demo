@@ -93,7 +93,7 @@ drop_reason
 ```
 
 This is a construction-time artifact. Exact score combination and selection
-settings must be confirmed from experiment logs; see `docs/blockers.md`.
+settings are not pinned; see `docs/reproducibility_limitations.md`.
 
 ## Metadata Split Manifest
 

@@ -65,15 +65,15 @@ def write_isochrony_per_example(manifest: str, out_dir: Path, id_col: str) -> No
     pause_path = out_dir / "pause_scores_copy.csv"
     if pause_path.is_file():
         pause = pd.read_csv(pause_path)
-        pause_cols = [c for c in ["sample_id", "wmean_duration_score", "mean_duration_score"] if c in pause.columns]
-        if "wmean_duration_score" in pause.columns:
-            if "sample_id" in pause_cols:
-                pause_part = pause[pause_cols].rename(columns={"wmean_duration_score": "pause_wmean_duration_score"})
+        renames = {"mean_joint_score": "pause_joint_score", "wmean_duration_score": "pause_wmean_duration_score"}
+        present = [c for c in renames if c in pause.columns]
+        if present:
+            if "sample_id" in pause.columns:
+                pause_part = pause[["sample_id"] + present].rename(columns=renames)
                 per = per.merge(pause_part, on="sample_id", how="left")
             elif len(pause) == len(per):
-                per["pause_wmean_duration_score"] = pd.to_numeric(
-                    pause["wmean_duration_score"], errors="coerce"
-                ).reset_index(drop=True)
+                for col in present:
+                    per[renames[col]] = pd.to_numeric(pause[col], errors="coerce").reset_index(drop=True)
 
     per = per.rename(columns={"sample_id": id_col})
     per.to_csv(out_dir / "isochrony_per_example.tsv", sep="\t", index=False)
@@ -84,7 +84,7 @@ def main() -> None:
     out_dir = Path(args.out_dir)
     if str(args.num_shards) != "1":
         raise ValueError(
-            "Multi-shard isochrony evaluation is disabled in the reviewer release "
+            "Multi-shard isochrony evaluation is disabled in this release "
             "until per-example ID ordering is fully audited. Use --num-shards 1."
         )
     if args.dry_run:
@@ -98,6 +98,7 @@ def main() -> None:
                 "sc_0p2_compliance": 0.5,
                 "sc_0p4_compliance": 0.5,
                 "speech_rate_syllable_spearman": 0.5,
+                "pause_joint_score": 0.5,
                 "pause_wmean_duration_score": 0.5,
             },
             "summary.json",
