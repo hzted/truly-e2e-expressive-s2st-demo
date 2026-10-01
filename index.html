@@ -706,6 +706,14 @@
           href="https://github.com/hzted/truly-e2e-expressive-s2st-demo/tree/main/VC-DUB"
           target="_blank"
           rel="noopener noreferrer">VC-Dub code</a>
+        <a class="hero-button secondary"
+          href="https://github.com/hzted/truly-e2e-expressive-s2st-demo/tree/main/DirectS2ST"
+          target="_blank"
+          rel="noopener noreferrer">DirectS2ST code</a>
+        <a class="hero-button secondary"
+          href="https://huggingface.co/TedZhangHao/DirectS2ST"
+          target="_blank"
+          rel="noopener noreferrer">Checkpoints</a>
       </div>
     </div>
   </header>
@@ -732,8 +740,8 @@
       <p class="section-subtitle">
         Professional dubbing supplies human-performed correspondence in content, prosody, and timing. Multilingual
         voice conversion (Seed-VC) moves the English dub to the original speaker's voice, so the resulting pairs are
-        parallel in content, prosody, timing, <i>and</i> speaker identity. The original German/Spanish recording stays
-        untouched as the target, so no TTS or VC artifacts enter the target supervision.
+        parallel in content, prosody, timing, <i>and</i> speaker identity. The original German/Spanish recording is
+        retained as the target after audio cleaning, without TTS or VC resynthesis.
       </p>
       <figure class="figure-wrap">
         <img src="./framework-ab.png" class="img-fluid framework-img"
@@ -782,7 +790,7 @@
               <tr><td>After MMS-LID</td><td class="text-right">213,469</td><td class="text-right">536.63</td><td class="text-right">60.5%</td><td class="text-right">298,929</td><td class="text-right">693.40</td><td class="text-right">81.0%</td></tr>
               <tr><td>After Sortformer single-speaker gate</td><td class="text-right">164,746</td><td class="text-right">349.43</td><td class="text-right">46.7%</td><td class="text-right">237,743</td><td class="text-right">468.28</td><td class="text-right">64.4%</td></tr>
               <tr><td>After DNSMOSPro quality cutoff</td><td class="text-right">90,000</td><td class="text-right">194.51</td><td class="text-right">25.5%</td><td class="text-right">147,639</td><td class="text-right">295.80</td><td class="text-right">40.0%</td></tr>
-              <tr><td>Training split used in Table 1</td><td class="text-right">79,200</td><td class="text-right">171.13</td><td class="text-right">–</td><td class="text-right">131,399</td><td class="text-right">263.23</td><td class="text-right">–</td></tr>
+              <tr><td>Training split used in Table 1</td><td class="text-right">79,200</td><td class="text-right">171.13</td><td class="text-right">–</td><td class="text-right">131,399</td><td class="text-right">263.22</td><td class="text-right">–</td></tr>
             </tbody>
           </table>
         </div>
@@ -796,7 +804,7 @@
               <tr><th>Denoising</th><td>ClearVoice-Studio with MossFormer2_SE_48K under default inference.</td></tr>
               <tr><th>Vocal extraction</th><td>Demucs <code>htdemucs</code>; we retain the vocal stem and require successful preprocessing on both source and target sides.</td></tr>
               <tr><th>Language identification</th><td>MMS-LID <code>facebook/mms-lid-126</code>; we retain pairs whose top-1 predicted labels match the expected languages. Expected labels are <code>eng/spa</code> for En–Es and <code>eng/deu</code> for En–De. No confidence threshold is applied.</td></tr>
-              <tr><th>Speaker filtering</th><td>Sortformer <code>nvidia/diar_sortformer_4spk-v1</code>; audio is converted to 16 kHz mono. We retain pairs where both source and target contain at most one detected active speaker.</td></tr>
+              <tr><th>Speaker filtering</th><td>Sortformer <code>nvidia/diar_sortformer_4spk-v1</code>; audio is converted to 16 kHz mono. Retain pairs only when exactly one active speaker is detected in each utterance.</td></tr>
               <tr><th>Quality filtering</th><td>DNSMOSPro is used as a quality predictor. We score both source and target utterances, compute a combined source–target quality score, and retain pairs above the empirical quality cutoff. The cutoff characterizes the quality floor of the retained clean pool while keeping the final VC-DUB training split comparable in scale to CVSS-T.</td></tr>
               <tr><th>DNSMOSPro cutoff</th><td>The retained–dropped boundary is approximately 3.57 for En–Es and 3.60 for En–De.</td></tr>
               <tr><th>Split construction</th><td>The retained clean pool is subsequently split for controlled S2ST training. The final row in Panel A reports the training split used in Table 1.</td></tr>
@@ -822,7 +830,8 @@
       <p class="section-subtitle">
         <span class="sc">Raw-Dub</span> already gives stronger content, prosody, and timing correspondence than CVSS-T;
         its main weakness is speaker mismatch. Voice conversion substantially raises Vsim and further increases A.PCP.
-        Shuffling the <span class="sc">VC-Dub</span> pairings (negative control) collapses the correspondence.
+        Shuffling the <span class="sc">VC-Dub</span> pairings (negative control) substantially reduces the
+        correspondence scores.
       </p>
       <div class="table-card">
         <div class="table-responsive">
@@ -850,8 +859,9 @@
       <div class="section-eyebrow">Direct Modeling</div>
       <h2 class="section-title">DirectS2ST</h2>
       <p class="section-subtitle">
-        A Moshi-inspired temporal–depth model that predicts all 16 Mimi codec streams of the target speech directly from
-        the source speech. No target-side prompts or separate expressive-transfer modules are used at inference.
+        DirectS2ST is trained to predict all 16 target Mimi codec streams from source-derived conditions, with every
+        stream supervised by the paired human recording. Its acoustic and speaker prompts are extracted from the source
+        during both training and inference.
       </p>
       <figure class="figure-wrap">
         <img src="./framework-c.png" class="img-fluid model-img" alt="DirectS2ST architecture">
@@ -860,8 +870,8 @@
           The AR temporal decoder generates source text, target text, and the first target codec stream
           c<sup>(0)</sup> with a shared output head; its &lt;SEP&gt; embedding is replaced by a mean–std pooled Mimi
           prompt extracted from the <i>source</i> speech. A NAR depth decoder predicts c<sup>(1)</sup>–c<sup>(15)</sup>,
-          conditioned on a frozen CAMPPlus speaker prefix and the source codec prompt, and is trained with an additional
-          speaker-identity loss. At inference, beam search (beam 5) decodes the text–c<sup>(0)</sup> sequence, then the
+          conditioned on a source codec prompt and a projected source-speaker embedding from a frozen CAMPPlus encoder,
+          and is trained with an additional speaker-identity loss. At inference, beam search (beam 5) decodes the text–c<sup>(0)</sup> sequence, then the
           depth decoder greedily fills c<sup>(1)</sup>–c<sup>(15)</sup>.
           <a class="pdf-link" href="./framework-c.pdf" target="_blank" rel="noopener noreferrer">[PDF]</a>
         </figcaption>
@@ -900,8 +910,10 @@
         significance between training sets within the same model, and <sup style="color:var(--blue)">‡</sup> against
         the strongest baseline in the same language direction (two-sided paired randomization tests, 10,000
         permutations, Holm–Bonferroni correction, p<sub>adj</sub> &lt; 0.05). Bold marks the best score per direction.
-        Dub-S2ST is evaluated only on En→Es because its mHuBERT units do not support German; CVSS-T<sup>S</sup> is its
-        speed-adapted CVSS-T variant.
+        Dub-S2ST is evaluated only on En→Es: the mHuBERT checkpoint used in this baseline covers English, Spanish, and
+        French. CVSS-T<sup>S</sup> is its speed-adapted CVSS-T variant. Dub-S2ST denotes our adapted baseline: we
+        replace its original S2U module with the model of Popuri et al. (2022) and retain its CosyVoice-initialized U2S
+        module. Both components are trained on the corresponding supervision dataset.
       </p>
 
       <div class="table-card">
@@ -948,7 +960,8 @@
       <h2 class="section-title">Speech Samples</h2>
       <p class="section-subtitle">
         Each system is trained on CVSS-T or on our <span class="sc">VC-Dub</span> data. Source utterances come from the
-        mExpresso test set; emphasized words in the texts are shown in <em><b>bold italics</b></em>.
+        mExpresso test set; texts are shown as in the dataset transcripts, with emphasized words in
+        <em><b>bold italics</b></em>.
       </p>
 
       <h3 class="lang-heading">English → Spanish</h3>
@@ -1078,7 +1091,8 @@
 
       <h3 class="lang-heading">English → German</h3>
       <p class="lang-note">
-        10 utterances from the En→De test set across expressive conditions. Dub-S2ST does not support German.
+        10 utterances from the En→De test set across expressive conditions. Dub-S2ST is not included: the mHuBERT
+        checkpoint used in this baseline covers English, Spanish, and French.
       </p>
 <div class="sample-block">
 <div class="sample-head"><span class="sample-index">#1</span><span class="style-chip">Happy</span><span class="sample-id">ex04_happy_00016</span><div class="sample-text"><span class="text-label">Source (En)</span> Oh, no, people do.<br><span class="text-label">Reference (De)</span> Oh nein, die Leute tun das.</div></div>
@@ -1186,6 +1200,7 @@
       <b>References.</b><br>
       TransVIP: Le et al., <a href="https://proceedings.neurips.cc/paper_files/paper/2024/hash/a32539cb16274581a17e679f6046f4bf-Abstract-Conference.html"><i>TransVIP: Speech to Speech Translation System with Voice and Isochrony Preservation</i></a>, NeurIPS 2024.<br>
       Dub-S2ST: Choi, Kim, and Chung, <a href="https://aclanthology.org/2025.findings-emnlp.524/"><i>Dub-S2ST: Textless Speech-to-Speech Translation for Seamless Dubbing</i></a>, Findings of EMNLP 2025.<br>
+      S2U model: Popuri et al., <a href="https://www.isca-archive.org/interspeech_2022/popuri22_interspeech.html"><i>Enhanced Direct Speech-to-Speech Translation Using Self-supervised Pre-training and Data Augmentation</i></a>, Interspeech 2022.<br>
       CVSS: Jia et al., <a href="https://aclanthology.org/2022.lrec-1.720/"><i>CVSS Corpus and Massively Multilingual Speech-to-Speech Translation</i></a>, LREC 2022.<br>
       Speech Vecalign: Meng and Koehn, <a href="https://aclanthology.org/2025.emnlp-main.833/"><i>Speech Vecalign: an Embedding-based Method for Aligning Parallel Speech Documents</i></a>, EMNLP 2025.<br>
       Seed-VC: Liu, <a href="https://arxiv.org/abs/2411.09943"><i>Zero-shot Voice Conversion with Diffusion Transformers</i></a>, arXiv:2411.09943, 2024. <a href="https://github.com/Plachtaa/seed-vc">Code</a>.<br>
