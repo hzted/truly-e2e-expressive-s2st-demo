@@ -1,0 +1,11 @@
+sample_id	style	source_text	reference_translation
+ex01_sad_00317	sad	What's the emergency?	¿Cuál es la emergencia?
+ex01_default_00010	default	I don't know. My mom said I was, but my dad told me to just blow her off.	No sé. Mi mamá me dijo que yo lo estaba, pero mi papá me dijo que solo la ignore.
+ex01_confused_00020	confused	Hold the elevator, please!	¡Paren el ascensor, por favor!
+ex04_sad_00364	sad	OK, now you have a podcast that's available on Audible.	Bien, ahora tienes un pódcast que está disponible en Audible.
+ex01_whisper_00155	whisper	Effort is all it takes.	Todo lo que se necesita es hacer un esfuerzo.
+ex02_enunciated_00170	enunciated	Have you read this?	¿Has leído esto?
+ex04_happy_00230	happy	The vampire slayer?	¿La cazavampiros?
+ex01_default_emphasis_00120	default	The people deserve to know the truth.	La gente merece conocer la verdad.
+ex01_whisper_00272	whisper	So, what's it about?	Entonces, ¿de qué se trata?
+ex02_confused_00216	confused	She stayed in eleven different foster homes?	¿Ella estuvo en once hogares de acogida diferentes?

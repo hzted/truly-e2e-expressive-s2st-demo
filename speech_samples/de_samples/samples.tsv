@@ -1,0 +1,11 @@
+sample_id	style	source_text	reference_translation
+ex01_whisper_00257	whisper	You made a mistake.	Du hast einen Fehler gemacht.
+ex02_happy_00042	happy	Alright, that's it! I'm gonna be right outside those doors.	Alles klar, das war's! Ich werde jetzt durch diese Tür nach draußen gehen.
+ex03_confused_00269	confused	Does the prosecution have a recommendation?	Hat die Staatsanwaltschaft eine Empfehlung?
+ex01_default_00028	default	He wrote Gulliver's Travel.	Er hat Gullivers Reisen geschrieben.
+ex01_sad_00010	sad	I don't know. My mom said I was, but my dad told me to just blow her off.	Ich weiß nicht. Meine Mutter hat es gesagt, aber mein Vater hat gesagt, ich soll nicht auf sie hören.
+ex01_enunciated_00205	enunciated	The people got too greedy.	Die Leute wurden zu gierig.
+ex01_default_emphasis_00181	default	Well, I'm with *Kevin.*	Nun ja, ich bin mit *Kevin* zusammen.
+ex04_happy_00087	happy	I hoped that help!	Ich hoffe, das hilft!
+ex04_sad_00189	sad	OK, Barbara Long. And which Evans, Dorothy Evens or Jessica Evans?	Okay, Barbara Long. Und welche Evans, Dorothy Evans oder Jessica Evans?
+ex03_confused_00149	confused	Where do your loyalties lie?	Wem bist du loyal?

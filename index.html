@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-  <title>Truly End-to-End Expressive Speech-to-Speech Translation via Voice Conversion</title>
+  <title>Holistic Parallel Supervision for Expressive Speech-to-Speech Translation</title>
 
   <style>
     :root {
@@ -487,28 +487,233 @@
         display: none;
       }
     }
+
+    .framework-img {
+      max-width: 980px !important;
+    }
+
+    .model-img {
+      max-width: 980px !important;
+    }
+
+    .pdf-link {
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .results-table {
+      table-layout: auto !important;
+      min-width: 820px;
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .results-table th,
+    .results-table td {
+      padding: 9px 10px !important;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .results-table td.text-left,
+    .results-table th.text-left {
+      text-align: left;
+    }
+
+    .results-table tr.group-start td {
+      border-top: 2px solid #cfd8e6 !important;
+    }
+
+    .results-table tr.ours td {
+      background: rgba(71, 99, 255, 0.05);
+    }
+
+    .results-table .dir-cell {
+      font-weight: 750;
+      background: #f8fafd;
+    }
+
+    .results-table sup {
+      color: var(--blue);
+      font-weight: 700;
+      margin-left: 1px;
+    }
+
+    .results-caption {
+      margin: 14px 4px 26px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .results-caption strong {
+      color: var(--ink);
+    }
+
+    .sc {
+      font-variant: small-caps;
+    }
+
+    .lang-heading {
+      margin: 30px 0 6px;
+      font-size: 21px;
+      font-weight: 760;
+      letter-spacing: -0.02em;
+    }
+
+    .lang-note {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+
+    .sample-block {
+      padding: 18px 20px 20px;
+      margin-bottom: 16px;
+      border-radius: 20px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .sample-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px 12px;
+      margin-bottom: 12px;
+    }
+
+    .sample-index {
+      font-weight: 750;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .sample-id {
+      color: var(--muted);
+      font-size: 12px;
+      font-family: SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .sample-text {
+      width: 100%;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .sample-text .text-label {
+      display: inline-block;
+      min-width: 88px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .audio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 12px;
+    }
+
+    .audio-cell {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: #f8fafd;
+      border: 1px solid var(--line);
+    }
+
+    .audio-cell.source {
+      background: #fff8ec;
+      border-color: #f3e2c4;
+    }
+
+    .audio-cell.ours {
+      background: rgba(71, 99, 255, 0.07);
+      border-color: rgba(71, 99, 255, 0.28);
+    }
+
+    .audio-label {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .audio-label .train-data {
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .audio-label .proposed-tag {
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .mos-wrap {
+      max-width: 720px;
+      margin: 8px auto 0;
+    }
+
+    .results-table.mos-table {
+      min-width: 0;
+    }
+
+    .audio-grid.pairs {
+      grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+      grid-template-rows: auto auto;
+      grid-auto-flow: column;
+    }
+
+    .audio-grid.pairs .audio-cell.source {
+      grid-row: span 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    @media (max-width: 760px) {
+      .audio-grid.pairs {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: none;
+        grid-auto-flow: row;
+      }
+
+      .audio-grid.pairs .audio-cell.source {
+        grid-row: auto;
+      }
+    }
   </style>
 </head>
 
 <body>
   <header class="hero">
     <div class="hero-content">
-      <div class="badge-pill-soft">Demo Website · Expressive S2ST</div>
+      <div class="badge-pill-soft">Demo · Expressive Speech-to-Speech Translation</div>
       <h1 class="paper-title">
-        Truly End-to-End Expressive Speech-to-Speech Translation via Voice Conversion for Expressive Multilingual Alignment
+        Holistic Parallel Supervision for Expressive Speech-to-Speech Translation
       </h1>
-      <p class="author-line"><i>Anonymous Authors</i></p>
+      <p class="author-line">
+        Hao Zhang, Ismail Rasim Ulgen, Bismarck Bamfo Odoom, Rui Liu, Zihan Zhang, Berrak Sisman, Philipp Koehn<br>
+        <span style="font-size: 16px;">Center for Language and Speech Processing, Johns Hopkins University</span>
+      </p>
       <div class="hero-actions">
         <a class="hero-button primary" href="#samples">Listen to Samples</a>
-        <a class="hero-button secondary" href="#framework">View Framework</a>
+        <a class="hero-button secondary" href="#results">Results</a>
+        <a class="hero-button secondary" href="#framework">Framework</a>
         <a class="hero-button secondary"
           href="https://github.com/hzted/truly-e2e-expressive-s2st-demo/tree/main/VC-DUB"
           target="_blank"
-          rel="noopener noreferrer">VC-DUB codes</a>
+          rel="noopener noreferrer">VC-Dub code</a>
         <a class="hero-button secondary"
-          href="https://example.com/paper"
+          href="https://github.com/hzted/truly-e2e-expressive-s2st-demo/tree/main/DirectS2ST"
           target="_blank"
-          rel="noopener noreferrer">Paper</a>
+          rel="noopener noreferrer">DirectS2ST code</a>
+        <a class="hero-button secondary"
+          href="https://huggingface.co/TedZhangHao/DirectS2ST"
+          target="_blank"
+          rel="noopener noreferrer">Checkpoints</a>
       </div>
     </div>
   </header>
@@ -516,36 +721,40 @@
   <main class="page-shell">
     <section class="abstract-box card-panel">
       <b>Abstract:</b>
-      Expressive speech-to-speech translation (S2ST) remains limited by the lack of multilingual speech pairs
-      that are parallel not only in content but also in speaker identity and prosody. Existing systems therefore
-      often rely on modular training, target-side prompts, or partially aligned supervision, creating a mismatch
-      between training and inference. Dubbed speech provides a promising starting point because it naturally
-      exhibits substantial temporal and prosodic correspondence across languages, but cross-lingual speaker
-      mismatch makes it less suitable for truly end-to-end training, where the translation pairs are parallel in
-      every aspect. We propose a voice-conversion-based data construction framework that reduces this mismatch
-      and turns dubbed speech into training pairs better tailored for direct expressive S2ST. To validate our
-      data-level strategy, we train a direct S2ST model that maps source speech to target speech units without
-      target-side acoustic prompts or intermediate expressive-transfer modules. Together, the converted speech
-      pairs and direct model provide a more train-test-consistent setup for truly end-to-end expressive S2ST.
+      Expressiveness is central to speech-to-speech translation (S2ST), yet existing datasets rarely align source and
+      target speech jointly in content, prosody, timing, and speaker identity. Consequently, current systems often rely
+      on indirect conditioning or transfer mechanisms. To obtain this supervision, we introduce a training-data
+      construction strategy that combines professional dubbing, which provides human-performed correspondence in
+      content, prosody, and timing, with multilingual voice conversion to reduce speaker mismatch. We evaluate this
+      supervision using existing expressive S2ST systems and DirectS2ST, an end-to-end method developed in this work
+      that predicts the complete target-speech representation directly from source speech. Experiments on
+      English–German and English–Spanish show that holistic parallel supervision improves expressive realization across
+      all evaluated systems. DirectS2ST exhibits the largest gains in content, prosody, timing, speaker similarity, and
+      human-rated expressiveness. To our knowledge, this work provides the first systematic investigation of holistic
+      parallel supervision for expressive S2ST.
     </section>
 
     <section id="framework" class="section-card card-panel">
-      <div class="section-eyebrow">Data Construction</div>
-      <h2 class="section-title">Voice-Conversion-Based Expressive Multilingual Alignment</h2>
+      <div class="section-eyebrow">Training Data Construction</div>
+      <h2 class="section-title"><span class="sc">VC-Dub</span>: Dubbing + Voice Conversion</h2>
       <p class="section-subtitle">
-        Voice conversion transforms dubbed target speech toward the source speaker while preserving target-language
-        content and expressive delivery, producing supervision better matched to direct expressive S2ST training.
+        Professional dubbing supplies human-performed correspondence in content, prosody, and timing. Multilingual
+        voice conversion (Seed-VC) moves the English dub to the original speaker's voice, so the resulting pairs are
+        parallel in content, prosody, timing, <i>and</i> speaker identity. The original German/Spanish recording is
+        retained as the target after audio cleaning, without TTS or VC resynthesis.
       </p>
       <figure class="figure-wrap">
-        <img src="./framework.png" class="img-fluid framework-img" alt="Voice-conversion-based expressive multilingual alignment framework">
+        <img src="./framework-ab.png" class="img-fluid framework-img"
+          alt="(a) VC-Dub construction with multilingual voice conversion; (b) parallel supervision for direct expressive S2ST">
         <figcaption>
-          Figure 1: Overview of the proposed voice-conversion-based expressive multilingual alignment pipeline.
-          Voice conversion reduces cross-lingual speaker mismatch in dubbed speech while preserving translated content,
-          timing, and expressive delivery.
+          Figure 1 (a, b). <b>(a) <span class="sc">VC-Dub</span> construction:</b> the English dub, which imitates the
+          original performance, is voice-converted to the original speaker using the original utterance as the speaker
+          reference. <b>(b) Parallel supervision:</b> the voice-converted English speech becomes the source and the
+          original German/Spanish recording the target, aligned in semantics, prosody, timing, and speaker identity.
+          <a class="pdf-link" href="./framework-ab.pdf" target="_blank" rel="noopener noreferrer">[PDF]</a>
         </figcaption>
       </figure>
     </section>
-
 
     <section id="filtering" class="section-card card-panel">
       <div class="section-eyebrow">Data Quality Control</div>
@@ -580,8 +789,8 @@
               <tr><td>After ClearVoice + Demucs</td><td class="text-right">352,947</td><td class="text-right">748.29</td><td class="text-right">100.0%</td><td class="text-right">369,137</td><td class="text-right">782.86</td><td class="text-right">100.0%</td></tr>
               <tr><td>After MMS-LID</td><td class="text-right">213,469</td><td class="text-right">536.63</td><td class="text-right">60.5%</td><td class="text-right">298,929</td><td class="text-right">693.40</td><td class="text-right">81.0%</td></tr>
               <tr><td>After Sortformer single-speaker gate</td><td class="text-right">164,746</td><td class="text-right">349.43</td><td class="text-right">46.7%</td><td class="text-right">237,743</td><td class="text-right">468.28</td><td class="text-right">64.4%</td></tr>
-              <tr><td>After DNSMOSPro quality cutoff</td><td class="text-right">90,000</td><td class="text-right">194.51</td><td class="text-right">25.5%</td><td class="text-right">147,639</td><td class="text-right">295.80</td><td class="text-right">40.0%</td></tr>
-              <tr><td>Training split used in Table 1</td><td class="text-right">79,200</td><td class="text-right">171.13</td><td class="text-right">–</td><td class="text-right">131,399</td><td class="text-right">263.23</td><td class="text-right">–</td></tr>
+              <tr><td>After DNSMOSPro quality selection</td><td class="text-right">90,000</td><td class="text-right">194.51</td><td class="text-right">25.5%</td><td class="text-right">147,639</td><td class="text-right">295.80</td><td class="text-right">40.0%</td></tr>
+              <tr><td>Training split used in Table 1</td><td class="text-right">79,200</td><td class="text-right">171.13</td><td class="text-right">–</td><td class="text-right">131,399</td><td class="text-right">263.22</td><td class="text-right">–</td></tr>
             </tbody>
           </table>
         </div>
@@ -595,9 +804,9 @@
               <tr><th>Denoising</th><td>ClearVoice-Studio with MossFormer2_SE_48K under default inference.</td></tr>
               <tr><th>Vocal extraction</th><td>Demucs <code>htdemucs</code>; we retain the vocal stem and require successful preprocessing on both source and target sides.</td></tr>
               <tr><th>Language identification</th><td>MMS-LID <code>facebook/mms-lid-126</code>; we retain pairs whose top-1 predicted labels match the expected languages. Expected labels are <code>eng/spa</code> for En–Es and <code>eng/deu</code> for En–De. No confidence threshold is applied.</td></tr>
-              <tr><th>Speaker filtering</th><td>Sortformer <code>nvidia/diar_sortformer_4spk-v1</code>; audio is converted to 16 kHz mono. We retain pairs where both source and target contain at most one detected active speaker.</td></tr>
-              <tr><th>Quality filtering</th><td>DNSMOSPro is used as a quality predictor. We score both source and target utterances, compute a combined source–target quality score, and retain pairs above the empirical quality cutoff. The cutoff characterizes the quality floor of the retained clean pool while keeping the final VC-DUB training split comparable in scale to CVSS-T.</td></tr>
-              <tr><th>DNSMOSPro cutoff</th><td>The retained–dropped boundary is approximately 3.57 for En–Es and 3.60 for En–De.</td></tr>
+              <tr><th>Speaker filtering</th><td>Sortformer <code>nvidia/diar_sortformer_4spk-v1</code>; audio is converted to 16 kHz mono. Retain pairs only when exactly one active speaker is detected in each utterance.</td></tr>
+              <tr><th>Quality filtering</th><td>Pairs are selected using source–target DNSMOSPro scores: both utterances are scored, and pairs are ranked by a combined source–target score and retained until the corpus is comparable in scale to CVSS-T.</td></tr>
+              <tr><th>Observed DNSMOSPro boundary</th><td>The observed retained/dropped boundaries are approximately 3.57 for En–Es and 3.60 for En–De; these are not preset thresholds. See the <a href="https://github.com/hzted/truly-e2e-expressive-s2st-demo/tree/main/VC-DUB">repository</a> for the available settings and <a href="https://github.com/hzted/truly-e2e-expressive-s2st-demo/blob/main/VC-DUB/docs/reproducibility_limitations.md">reproducibility limitations</a>.</td></tr>
               <tr><th>Split construction</th><td>The retained clean pool is subsequently split for controlled S2ST training. The final row in Panel A reports the training split used in Table 1.</td></tr>
             </tbody>
           </table>
@@ -610,221 +819,404 @@
         using the same VAD-span definition as Table 1. Retention is computed
         relative to the original raw dubbing pool. The final training-split row
         is included for comparison with Table 1 and does not represent an
-        additional cleaning stage. The DNSMOSPro cutoff reports the empirical
-        quality boundary of the retained pool.
+        additional cleaning stage. The DNSMOSPro boundaries are observed after
+        scale-matched selection, not preset thresholds.
       </p>
     </section>
 
-    <section class="section-card card-panel">
-      <div class="section-eyebrow">Direct Modeling</div>
-      <h2 class="section-title">Direct Speech-to-Speech Translation Model</h2>
+    <section id="pair-analysis" class="section-card card-panel">
+      <div class="section-eyebrow">Training Data Analysis</div>
+      <h2 class="section-title">Pair-Level Correspondence</h2>
       <p class="section-subtitle">
-        The model directly maps source speech representations into structured target codec tokens using temporal and
-        depth decoding, avoiding target-side acoustic prompts during inference.
+        <span class="sc">Raw-Dub</span> already gives stronger content, prosody, and timing correspondence than CVSS-T;
+        its main weakness is speaker mismatch. Voice conversion substantially raises Vsim and further increases A.PCP.
+        Shuffling the <span class="sc">VC-Dub</span> pairings (negative control) substantially reduces the
+        correspondence scores.
+      </p>
+      <div class="table-card">
+        <div class="table-responsive">
+<table class="table results-table">
+<thead><tr><th>Dir.</th><th class="text-left">Dataset</th><th>BLASER↑</th><th>A.PCP↑</th><th>Rate↑</th><th>Pause↑</th><th>Vsim↑</th><th>DNSMOSPro↑ (src | tgt)</th></tr></thead><tbody>
+<tr class="group-start"><td class="dir-cell" rowspan="4">En→De</td><td class="text-left">CVSS-T</td><td>3.405</td><td>2.505</td><td>0.365</td><td>0.524</td><td>0.208</td><td>3.160 | 2.797</td></tr>
+<tr class=""><td class="text-left"><span class="sc">Raw-Dub</span></td><td><b>3.634</b></td><td>2.759</td><td>0.416</td><td>0.682</td><td>0.060</td><td>3.900 | 3.684</td></tr>
+<tr class=""><td class="text-left"><span class="sc">VC-Dub</span></td><td>3.611</td><td><b>3.000</b></td><td><b>0.435</b></td><td><b>0.698</b></td><td><b>0.406</b></td><td><b>4.104 | 3.684</b></td></tr>
+<tr class=""><td class="text-left">w/ Shuffled</td><td>2.285</td><td>2.218</td><td>-0.009</td><td>0.394</td><td>0.025</td><td>4.104 | 3.684</td></tr>
+<tr class="group-start"><td class="dir-cell" rowspan="4">En→Es</td><td class="text-left">CVSS-T</td><td>3.400</td><td>2.537</td><td>0.372</td><td>0.550</td><td>0.194</td><td>3.173 | 2.780</td></tr>
+<tr class=""><td class="text-left"><span class="sc">Raw-Dub</span></td><td><b>3.632</b></td><td>2.920</td><td>0.417</td><td>0.676</td><td>0.046</td><td>3.913 | 3.714</td></tr>
+<tr class=""><td class="text-left"><span class="sc">VC-Dub</span></td><td>3.606</td><td><b>3.183</b></td><td><b>0.436</b></td><td><b>0.686</b></td><td><b>0.362</b></td><td><b>4.091 | 3.714</b></td></tr>
+<tr class=""><td class="text-left">w/ Shuffled</td><td>2.199</td><td>2.345</td><td>-0.003</td><td>0.361</td><td>0.027</td><td>4.091 | 3.714</td></tr>
+</tbody></table>
+        </div>
+      </div>
+      <p class="results-caption">
+        <strong>Table 2.</strong> Pair-level correspondence and speech quality of the training data for CVSS-T,
+        <span class="sc">Raw-Dub</span>, and <span class="sc">VC-Dub</span>. Shuffled <span class="sc">VC-Dub</span>
+        pairs provide a negative control. DNSMOSPro is reported as source (En) | target (De/Es).
+      </p>
+    </section>
+
+    <section id="model" class="section-card card-panel">
+      <div class="section-eyebrow">Direct Modeling</div>
+      <h2 class="section-title">DirectS2ST</h2>
+      <p class="section-subtitle">
+        DirectS2ST is trained to predict all 16 target Mimi codec streams from source-derived conditions, with every
+        stream supervised by the paired human recording. Its acoustic and speaker prompts are extracted from the source
+        during both training and inference.
       </p>
       <figure class="figure-wrap">
-        <img src="./model.png" class="img-fluid model-img" alt="Direct speech-to-speech translation model architecture">
+        <img src="./framework-c.png" class="img-fluid model-img" alt="DirectS2ST architecture">
         <figcaption>
-          Figure 2: Architecture of the direct speech-to-speech translation model. The model maps source speech
-          representations to target Mimi codec tokens using a temporal decoder and a depth decoder.
+          Figure 1 (c). <b>DirectS2ST.</b> A frozen w2v-BERT 2.0 encoder provides source memory through cross-attention.
+          The AR temporal decoder generates source text, target text, and the first target codec stream
+          c<sup>(0)</sup> with a shared output head; its &lt;SEP&gt; embedding is replaced by a mean–std pooled Mimi
+          prompt extracted from the <i>source</i> speech. A NAR depth decoder predicts c<sup>(1)</sup>–c<sup>(15)</sup>,
+          conditioned on a source codec prompt and a projected source-speaker embedding from a frozen CAMPPlus encoder,
+          and is trained with an additional speaker-identity loss. At inference, beam search (beam 5) decodes the text–c<sup>(0)</sup> sequence, then the
+          depth decoder greedily fills c<sup>(1)</sup>–c<sup>(15)</sup>.
+          <a class="pdf-link" href="./framework-c.pdf" target="_blank" rel="noopener noreferrer">[PDF]</a>
         </figcaption>
       </figure>
+    </section>
+
+    <section id="results" class="section-card card-panel">
+      <div class="section-eyebrow">Evaluation on mExpresso</div>
+      <h2 class="section-title">Results</h2>
+      <p class="section-subtitle">
+        504 test utterances per direction, evenly distributed across seven expressive conditions. Content: ASR-BLEU
+        (Whisper-large-v3) and BLASER 2.0-QE; prosody and timing: AutoPCP (A.PCP), speaking-rate correlation (Rate) and
+        pause similarity (Pause); speaker similarity: Vsim; naturalness: NISQA-TTS (NAT).
+      </p>
+
+      <div class="table-card">
+        <div class="table-responsive">
+<table class="table results-table">
+<thead><tr><th>Dir.</th><th class="text-left">Model</th><th class="text-left">Train</th><th>ASR-BLEU↑</th><th>BLASER↑</th><th>A.PCP↑</th><th>Rate↑</th><th>Pause↑</th><th>Vsim↑</th><th>NAT↑</th></tr></thead><tbody>
+<tr class="group-start"><td class="dir-cell" rowspan="4">En→De</td><td class="text-left">TransVIP</td><td class="text-left">CVSS-T</td><td>12.25</td><td>3.397</td><td>2.609</td><td>0.470</td><td>0.489</td><td>0.126</td><td>3.257</td></tr>
+<tr class=""><td class="text-left">TransVIP</td><td class="text-left"><span class="sc">VC-Dub</span></td><td><b>13.84</b></td><td><b>3.399</b></td><td>2.743<sup>†</sup></td><td><b>0.600</b><sup>†</sup></td><td>0.549<sup>†</sup></td><td>0.169<sup>†</sup></td><td><b>3.472</b><sup>†</sup></td></tr>
+<tr class="group-start"><td class="text-left">DirectS2ST</td><td class="text-left">CVSS-T</td><td>6.01</td><td>3.234</td><td>2.162</td><td>0.334</td><td>0.687</td><td>0.114</td><td>3.339</td></tr>
+<tr class="ours"><td class="text-left">DirectS2ST</td><td class="text-left"><span class="sc">VC-Dub</span></td><td>10.52<sup>†</sup></td><td>3.373<sup>†</sup></td><td><b>2.905</b><sup>†,‡</sup></td><td>0.589<sup>†</sup></td><td><b>0.752</b><sup>†,‡</sup></td><td><b>0.217</b><sup>†,‡</sup></td><td>3.450<sup>†</sup></td></tr>
+<tr class="group-start"><td class="dir-cell" rowspan="7">En→Es</td><td class="text-left">TransVIP</td><td class="text-left">CVSS-T</td><td>15.53</td><td>3.354</td><td>2.664</td><td>0.601</td><td>0.494</td><td>0.138</td><td>3.092</td></tr>
+<tr class=""><td class="text-left">TransVIP</td><td class="text-left"><span class="sc">VC-Dub</span></td><td><b>18.96</b><sup>†</sup></td><td><b>3.433</b><sup>†</sup></td><td>2.803<sup>†</sup></td><td><b>0.671</b><sup>†</sup></td><td>0.562<sup>†</sup></td><td>0.158<sup>†</sup></td><td>3.407<sup>†</sup></td></tr>
+<tr class="group-start"><td class="text-left">Dub-S2ST</td><td class="text-left">CVSS-T</td><td>11.61</td><td>3.239</td><td>2.933</td><td>0.581</td><td>0.596</td><td>0.218</td><td>3.658</td></tr>
+<tr class=""><td class="text-left">Dub-S2ST</td><td class="text-left">CVSS-T<sup>S</sup></td><td>11.89</td><td>3.226</td><td>2.938</td><td>0.608</td><td>0.572</td><td>0.214</td><td>3.631</td></tr>
+<tr class=""><td class="text-left">Dub-S2ST</td><td class="text-left"><span class="sc">VC-Dub</span></td><td>15.21</td><td>3.321<sup>†</sup></td><td>3.012<sup>†</sup></td><td>0.595</td><td>0.612</td><td><b>0.238</b><sup>†</sup></td><td><b>3.759</b><sup>†</sup></td></tr>
+<tr class="group-start"><td class="text-left">DirectS2ST</td><td class="text-left">CVSS-T</td><td>10.00</td><td>3.153</td><td>2.238</td><td>0.433</td><td>0.652</td><td>0.105</td><td>3.361</td></tr>
+<tr class="ours"><td class="text-left">DirectS2ST</td><td class="text-left"><span class="sc">VC-Dub</span></td><td>14.22<sup>†</sup></td><td>3.259<sup>†</sup></td><td><b>3.091</b><sup>†,‡</sup></td><td>0.669<sup>†</sup></td><td><b>0.733</b><sup>†,‡</sup></td><td>0.205<sup>†</sup></td><td>3.466<sup>†</sup></td></tr>
+</tbody></table>
+        </div>
+      </div>
+      <p class="results-caption">
+        <strong>Table 3.</strong> Expressive S2ST results on mExpresso. <sup style="color:var(--blue)">†</sup> denotes
+        significance between training sets within the same model, and <sup style="color:var(--blue)">‡</sup> against
+        the strongest baseline in the same language direction (two-sided paired randomization tests, 10,000
+        permutations, Holm–Bonferroni correction, p<sub>adj</sub> &lt; 0.05). Bold marks the best score per direction.
+        Dub-S2ST is evaluated only on En→Es: the mHuBERT checkpoint used in this baseline covers English, Spanish, and
+        French. CVSS-T<sup>S</sup> is its speed-adapted CVSS-T variant. Dub-S2ST denotes our adapted baseline: we
+        replace its original S2U module with the model of Popuri et al. (2022) and retain its CosyVoice-initialized U2S
+        module. Both components are trained on the corresponding supervision dataset.
+      </p>
+
+      <div class="table-card">
+        <div class="table-responsive">
+<table class="table results-table">
+<thead><tr><th>Dir.</th><th class="text-left">Train</th><th>ASR-BLEU↑</th><th>BLASER↑</th><th>A.PCP↑</th><th>Rate↑</th><th>Pause↑</th><th>Vsim↑</th><th>NAT↑</th></tr></thead><tbody>
+<tr class="group-start"><td class="dir-cell" rowspan="2">En→De</td><td class="text-left"><span class="sc">VC-Dub</span></td><td>10.52</td><td>3.373</td><td>2.905<sup>†</sup></td><td>0.589<sup>†</sup></td><td>0.752</td><td>0.217<sup>†</sup></td><td>3.450</td></tr>
+<tr class=""><td class="text-left"><span class="sc">Raw-Dub</span></td><td>9.37</td><td>3.339</td><td>2.712</td><td>0.455</td><td>0.741</td><td>0.065</td><td>3.430</td></tr>
+<tr class="group-start"><td class="dir-cell" rowspan="2">En→Es</td><td class="text-left"><span class="sc">VC-Dub</span></td><td>14.22</td><td>3.259</td><td>3.091<sup>†</sup></td><td>0.669<sup>†</sup></td><td>0.733</td><td>0.205<sup>†</sup></td><td>3.466</td></tr>
+<tr class=""><td class="text-left"><span class="sc">Raw-Dub</span></td><td>14.53</td><td>3.266</td><td>2.824</td><td>0.555</td><td>0.730</td><td>0.058</td><td>3.470</td></tr>
+</tbody></table>
+        </div>
+      </div>
+      <p class="results-caption">
+        <strong>Table 4.</strong> Contribution of voice conversion: DirectS2ST trained on the same aligned dubbing pairs
+        with (<span class="sc">VC-Dub</span>) and without (<span class="sc">Raw-Dub</span>) VC. VC mainly improves
+        speaker similarity, with additional gains in A.PCP and Rate.
+      </p>
+
+      <div class="mos-wrap">
+        <div class="table-card">
+          <div class="table-responsive">
+<table class="table results-table mos-table">
+<thead><tr><th class="text-left">Model</th><th class="text-left">Training Data</th><th>MOS↑</th><th>95% CI</th></tr></thead><tbody>
+<tr class="group-start"><td class="text-left">TransVIP</td><td class="text-left">CVSS-T</td><td>1.82</td><td>[1.62, 2.01]</td></tr>
+<tr class=""><td class="text-left">TransVIP</td><td class="text-left"><span class="sc">VC-Dub</span></td><td>2.24<sup>†</sup></td><td>[2.03, 2.44]</td></tr>
+<tr class="group-start"><td class="text-left">Dub-S2ST</td><td class="text-left">CVSS-T</td><td>2.88</td><td>[2.63, 3.12]</td></tr>
+<tr class=""><td class="text-left">Dub-S2ST</td><td class="text-left"><span class="sc">VC-Dub</span></td><td><b>3.59</b><sup>†</sup></td><td><b>[3.34, 3.84]</b></td></tr>
+<tr class="group-start"><td class="text-left">DirectS2ST</td><td class="text-left">CVSS-T</td><td>2.13</td><td>[1.93, 2.33]</td></tr>
+<tr class="ours"><td class="text-left">DirectS2ST</td><td class="text-left"><span class="sc">VC-Dub</span></td><td>3.42<sup>†</sup></td><td>[3.20, 3.64]</td></tr>
+</tbody></table>
+          </div>
+        </div>
+        <p class="results-caption" style="margin-bottom: 0;">
+          <strong>Table 5.</strong> Expressiveness MOS (En→Es, 9 listeners × 10 utterances) with 95% confidence
+          intervals. ICC(A,1) = 0.445, ICC(A,9) = 0.878. <sup style="color:var(--blue)">†</sup> p<sub>adj</sub> &lt; 0.05
+          (crossed linear mixed-effects model, Holm–Bonferroni).
+        </p>
+      </div>
     </section>
 
     <section id="samples" class="section-card card-panel">
       <div class="section-eyebrow">Audio Demo</div>
       <h2 class="section-title">Speech Samples</h2>
       <p class="section-subtitle">
-        The following examples compare source speech, baseline systems, and the proposed VC-aligned direct S2ST model
-        under multiple expressive speaking styles.
+        Each system is trained on CVSS-T or on our <span class="sc">VC-Dub</span> data. Source utterances come from the
+        mExpresso test set; texts are shown as in the dataset transcripts, with emphasized words in
+        <em><b>bold italics</b></em>.
       </p>
 
-      <div class="setup-grid">
-        <div class="setup-card">
-          <h5>Experimental Setup</h5>
-          <p>
-            Source speech examples are drawn from an expressive speech translation evaluation set. Each row compares
-            TransVIP <a class="cite-link" href="#ref-transvip">[1]</a> and DirectS2ST systems trained with either
-            CVSS-T <a class="cite-link" href="#ref-cvss">[2]</a> or our DUB-VC data constructed from Speech Vecalign
-            <a class="cite-link" href="#ref-speechvecalign">[3]</a> and Seed-VC
-            <a class="cite-link" href="#ref-seedvc">[4]</a>.
-          </p>
-        </div>
-        <div class="setup-card">
-          <h5>Methods</h5>
-          <ul style="margin-bottom:0; padding-left:20px;">
-            <li>Source Speech</li>
-            <li>TransVIP <a class="cite-link" href="#ref-transvip">[1]</a> - CVSS-T <a class="cite-link" href="#ref-cvss">[2]</a></li>
-            <li>TransVIP <a class="cite-link" href="#ref-transvip">[1]</a> - DUB-VC <a class="cite-link" href="#ref-speechvecalign">[3]</a><a class="cite-link" href="#ref-seedvc">[4]</a></li>
-            <li>DirectS2ST - CVSS-T <a class="cite-link" href="#ref-cvss">[2]</a></li>
-            <li>DirectS2ST - DUB-VC (Proposed) <a class="cite-link" href="#ref-speechvecalign">[3]</a><a class="cite-link" href="#ref-seedvc">[4]</a></li>
-          </ul>
-        </div>
-      </div>
+      <h3 class="lang-heading">English → Spanish</h3>
+      <p class="lang-note">
+        The 10 utterances used in the expressiveness listening test (Table 5), with all six system configurations.
+      </p>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#1</span><span class="style-chip">Sad</span><span class="sample-id">ex01_sad_00317</span><div class="sample-text"><span class="text-label">Source (En)</span> What&#x27;s the emergency?<br><span class="text-label">Reference (Es)</span> ¿Cuál es la emergencia?</div></div>
+<div class="audio-grid pairs" style="--cols: 4">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/es_listening/source/ex01_sad_00317.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_cvsst/ex01_sad_00317.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_vcdub/ex01_sad_00317.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_cvsst/ex01_sad_00317.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_vcdub/ex01_sad_00317.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_cvsst/ex01_sad_00317.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_vcdub/ex01_sad_00317.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#2</span><span class="style-chip">Default</span><span class="sample-id">ex01_default_00010</span><div class="sample-text"><span class="text-label">Source (En)</span> I don&#x27;t know. My mom said I was, but my dad told me to just blow her off.<br><span class="text-label">Reference (Es)</span> No sé. Mi mamá me dijo que yo lo estaba, pero mi papá me dijo que solo la ignore.</div></div>
+<div class="audio-grid pairs" style="--cols: 4">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/es_listening/source/ex01_default_00010.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_cvsst/ex01_default_00010.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_vcdub/ex01_default_00010.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_cvsst/ex01_default_00010.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_vcdub/ex01_default_00010.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_cvsst/ex01_default_00010.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_vcdub/ex01_default_00010.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#3</span><span class="style-chip">Confused</span><span class="sample-id">ex01_confused_00020</span><div class="sample-text"><span class="text-label">Source (En)</span> Hold the elevator, please!<br><span class="text-label">Reference (Es)</span> ¡Paren el ascensor, por favor!</div></div>
+<div class="audio-grid pairs" style="--cols: 4">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/es_listening/source/ex01_confused_00020.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_cvsst/ex01_confused_00020.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_vcdub/ex01_confused_00020.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_cvsst/ex01_confused_00020.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_vcdub/ex01_confused_00020.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_cvsst/ex01_confused_00020.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_vcdub/ex01_confused_00020.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#4</span><span class="style-chip">Sad</span><span class="sample-id">ex04_sad_00364</span><div class="sample-text"><span class="text-label">Source (En)</span> OK, now you have a podcast that&#x27;s available on Audible.<br><span class="text-label">Reference (Es)</span> Bien, ahora tienes un pódcast que está disponible en Audible.</div></div>
+<div class="audio-grid pairs" style="--cols: 4">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/es_listening/source/ex04_sad_00364.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_cvsst/ex04_sad_00364.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_vcdub/ex04_sad_00364.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_cvsst/ex04_sad_00364.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_vcdub/ex04_sad_00364.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_cvsst/ex04_sad_00364.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_vcdub/ex04_sad_00364.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#5</span><span class="style-chip">Whisper</span><span class="sample-id">ex01_whisper_00155</span><div class="sample-text"><span class="text-label">Source (En)</span> Effort is all it takes.<br><span class="text-label">Reference (Es)</span> Todo lo que se necesita es hacer un esfuerzo.</div></div>
+<div class="audio-grid pairs" style="--cols: 4">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/es_listening/source/ex01_whisper_00155.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_cvsst/ex01_whisper_00155.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_vcdub/ex01_whisper_00155.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_cvsst/ex01_whisper_00155.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_vcdub/ex01_whisper_00155.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_cvsst/ex01_whisper_00155.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_vcdub/ex01_whisper_00155.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#6</span><span class="style-chip">Enunciated</span><span class="sample-id">ex02_enunciated_00170</span><div class="sample-text"><span class="text-label">Source (En)</span> Have you read this?<br><span class="text-label">Reference (Es)</span> ¿Has leído esto?</div></div>
+<div class="audio-grid pairs" style="--cols: 4">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/es_listening/source/ex02_enunciated_00170.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_cvsst/ex02_enunciated_00170.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_vcdub/ex02_enunciated_00170.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_cvsst/ex02_enunciated_00170.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_vcdub/ex02_enunciated_00170.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_cvsst/ex02_enunciated_00170.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_vcdub/ex02_enunciated_00170.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#7</span><span class="style-chip">Happy</span><span class="sample-id">ex04_happy_00230</span><div class="sample-text"><span class="text-label">Source (En)</span> The vampire slayer?<br><span class="text-label">Reference (Es)</span> ¿La cazavampiros?</div></div>
+<div class="audio-grid pairs" style="--cols: 4">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/es_listening/source/ex04_happy_00230.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_cvsst/ex04_happy_00230.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_vcdub/ex04_happy_00230.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_cvsst/ex04_happy_00230.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_vcdub/ex04_happy_00230.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_cvsst/ex04_happy_00230.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_vcdub/ex04_happy_00230.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#8</span><span class="style-chip">Emphasis</span><span class="sample-id">ex01_default_emphasis_00120</span><div class="sample-text"><span class="text-label">Source (En)</span> The people deserve to know the truth.<br><span class="text-label">Reference (Es)</span> La gente merece conocer la verdad.</div></div>
+<div class="audio-grid pairs" style="--cols: 4">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/es_listening/source/ex01_default_emphasis_00120.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_cvsst/ex01_default_emphasis_00120.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_vcdub/ex01_default_emphasis_00120.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_cvsst/ex01_default_emphasis_00120.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_vcdub/ex01_default_emphasis_00120.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_cvsst/ex01_default_emphasis_00120.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_vcdub/ex01_default_emphasis_00120.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#9</span><span class="style-chip">Whisper</span><span class="sample-id">ex01_whisper_00272</span><div class="sample-text"><span class="text-label">Source (En)</span> So, what&#x27;s it about?<br><span class="text-label">Reference (Es)</span> Entonces, ¿de qué se trata?</div></div>
+<div class="audio-grid pairs" style="--cols: 4">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/es_listening/source/ex01_whisper_00272.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_cvsst/ex01_whisper_00272.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_vcdub/ex01_whisper_00272.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_cvsst/ex01_whisper_00272.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_vcdub/ex01_whisper_00272.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_cvsst/ex01_whisper_00272.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_vcdub/ex01_whisper_00272.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#10</span><span class="style-chip">Confused</span><span class="sample-id">ex02_confused_00216</span><div class="sample-text"><span class="text-label">Source (En)</span> She stayed in eleven different foster homes?<br><span class="text-label">Reference (Es)</span> ¿Ella estuvo en once hogares de acogida diferentes?</div></div>
+<div class="audio-grid pairs" style="--cols: 4">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/es_listening/source/ex02_confused_00216.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_cvsst/ex02_confused_00216.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/transvip_vcdub/ex02_confused_00216.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_cvsst/ex02_confused_00216.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">Dub-S2ST <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/es_listening/dubs2st_vcdub/ex02_confused_00216.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_cvsst/ex02_confused_00216.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/es_listening/direct_vcdub/ex02_confused_00216.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
 
-      <div class="table-card big-screen">
-        <table class="table table-hover">
-                    <tbody>
-            <tr class="lang-row">
-              <th colspan="6">English-to-German Examples</th>
-            </tr>
-            <tr>
-              <th>Style</th>
-              <th class="method-head">
-                <span class="model-name">Source Speech</span>
-              </th>
-              <th class="method-head">
-                <span class="model-name">TransVIP</span>
-                <span class="train-data">CVSS-T</span>
-              </th>
-              <th class="method-head">
-                <span class="model-name">TransVIP</span>
-                <span class="train-data">DUB-VC</span>
-              </th>
-              <th class="method-head">
-                <span class="model-name">DirectS2ST</span>
-                <span class="train-data">CVSS-T</span>
-              </th>
-              <th class="method-head">
-                <span class="model-name">DirectS2ST</span>
-                <span class="train-data">DUB-VC</span>
-                <span class="proposed-tag">(Proposed)</span>
-              </th>
-            </tr>
-            <tr>
-              <th><span class="style-chip">Emphsis</span></th>
-              <td><audio controls><source src="speech_samples/source_de/ex03_default_emphasis_00159.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_cvss_de/ex03_default_emphasis_00159.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_dub_de/ex03_default_emphasis_00159.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_cvss_de/ex03_default_emphasis_00159.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_dub_de/ex03_default_emphasis_00159.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-            </tr>
-            <tr>
-              <th><span class="style-chip">Sad</span></th>
-              <td><audio controls><source src="speech_samples/source_de/ex01_sad_00354.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_cvss_de/ex01_sad_00354.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_dub_de/ex01_sad_00354.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_cvss_de/ex01_sad_00354.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_dub_de/ex01_sad_00354.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-            </tr>
-            <tr>
-              <th><span class="style-chip">Whisper</span></th>
-              <td><audio controls><source src="speech_samples/source_de/ex01_whisper_00059.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_cvss_de/ex01_whisper_00059.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_dub_de/ex01_whisper_00059.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_cvss_de/ex01_whisper_00059.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_dub_de/ex01_whisper_00059.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-            </tr>
-            <tr>
-              <th><span class="style-chip">Laughing</span></th>
-              <td><audio controls><source src="speech_samples/source_de/ex01_laughing_00161.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_cvss_de/ex01_laughing_00161.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_dub_de/ex01_laughing_00161.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_cvss_de/ex01_laughing_00161.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_dub_de/ex01_laughing_00161.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-            </tr>
-
-            <tr class="lang-row">
-              <th colspan="6">English-to-Spanish Examples</th>
-            </tr>
-            <tr>
-              <th>Style</th>
-              <th class="method-head">
-                <span class="model-name">Source Speech</span>
-              </th>
-              <th class="method-head">
-                <span class="model-name">TransVIP</span>
-                <span class="train-data">CVSS-T</span>
-              </th>
-              <th class="method-head">
-                <span class="model-name">TransVIP</span>
-                <span class="train-data">DUB-VC</span>
-              </th>
-              <th class="method-head">
-                <span class="model-name">DirectS2ST</span>
-                <span class="train-data">CVSS-T</span>
-              </th>
-              <th class="method-head">
-                <span class="model-name">DirectS2ST</span>
-                <span class="train-data">DUB-VC</span>
-                <span class="proposed-tag">(Proposed)</span>
-              </th>
-            </tr>
-            <tr>
-              <th><span class="style-chip">Happy</span></th>
-              <td><audio controls><source src="speech_samples/source_es/ex03_happy_00164.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_cvss_es/ex03_happy_00164.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_dub_es/ex03_happy_00164.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_cvss_es/ex03_happy_00164.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_dub_es/ex03_happy_00164.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-            </tr>
-            <tr>
-              <th><span class="style-chip">Whisper</span></th>
-              <td><audio controls><source src="speech_samples/source_es/ex03_whisper_00194.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_cvss_es/ex03_whisper_00194.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_dub_es/ex03_whisper_00194.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_cvss_es/ex03_whisper_00194.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_dub_es/ex03_whisper_00194.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-            </tr>
-            <tr>
-              <th><span class="style-chip">Confused</span></th>
-              <td><audio controls><source src="speech_samples/source_es/ex03_confused_00308.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_cvss_es/ex03_confused_00308.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_dub_es/ex03_confused_00308.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_cvss_es/ex03_confused_00308.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_dub_es/ex03_confused_00308.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-            </tr>
-            <tr>
-              <th><span class="style-chip">Default</span></th>
-              <td><audio controls><source src="speech_samples/source_es/ex04_default_00017.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_cvss_es/ex04_default_00017.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/transvip_dub_es/ex04_default_00017.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_cvss_es/ex04_default_00017.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-              <td><audio controls><source src="speech_samples/directs2st_dub_es/ex04_default_00017.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <h3 class="lang-heading">English → German</h3>
+      <p class="lang-note">
+        10 utterances from the En→De test set across expressive conditions. Dub-S2ST is not included: the mHuBERT
+        checkpoint used in this baseline covers English, Spanish, and French.
+      </p>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#1</span><span class="style-chip">Whisper</span><span class="sample-id">ex01_whisper_00257</span><div class="sample-text"><span class="text-label">Source (En)</span> You made a mistake.<br><span class="text-label">Reference (De)</span> Du hast einen Fehler gemacht.</div></div>
+<div class="audio-grid pairs" style="--cols: 3">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/de_samples/source/ex01_whisper_00257.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_cvsst/ex01_whisper_00257.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_vcdub/ex01_whisper_00257.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_cvsst/ex01_whisper_00257.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_vcdub/ex01_whisper_00257.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#2</span><span class="style-chip">Happy</span><span class="sample-id">ex02_happy_00042</span><div class="sample-text"><span class="text-label">Source (En)</span> Alright, that&#x27;s it! I&#x27;m gonna be right outside those doors.<br><span class="text-label">Reference (De)</span> Alles klar, das war&#x27;s! Ich werde jetzt durch diese Tür nach draußen gehen.</div></div>
+<div class="audio-grid pairs" style="--cols: 3">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/de_samples/source/ex02_happy_00042.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_cvsst/ex02_happy_00042.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_vcdub/ex02_happy_00042.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_cvsst/ex02_happy_00042.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_vcdub/ex02_happy_00042.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#3</span><span class="style-chip">Confused</span><span class="sample-id">ex03_confused_00269</span><div class="sample-text"><span class="text-label">Source (En)</span> Does the prosecution have a recommendation?<br><span class="text-label">Reference (De)</span> Hat die Staatsanwaltschaft eine Empfehlung?</div></div>
+<div class="audio-grid pairs" style="--cols: 3">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/de_samples/source/ex03_confused_00269.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_cvsst/ex03_confused_00269.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_vcdub/ex03_confused_00269.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_cvsst/ex03_confused_00269.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_vcdub/ex03_confused_00269.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#4</span><span class="style-chip">Default</span><span class="sample-id">ex01_default_00028</span><div class="sample-text"><span class="text-label">Source (En)</span> He wrote Gulliver&#x27;s Travel.<br><span class="text-label">Reference (De)</span> Er hat Gullivers Reisen geschrieben.</div></div>
+<div class="audio-grid pairs" style="--cols: 3">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/de_samples/source/ex01_default_00028.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_cvsst/ex01_default_00028.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_vcdub/ex01_default_00028.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_cvsst/ex01_default_00028.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_vcdub/ex01_default_00028.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#5</span><span class="style-chip">Sad</span><span class="sample-id">ex01_sad_00010</span><div class="sample-text"><span class="text-label">Source (En)</span> I don&#x27;t know. My mom said I was, but my dad told me to just blow her off.<br><span class="text-label">Reference (De)</span> Ich weiß nicht. Meine Mutter hat es gesagt, aber mein Vater hat gesagt, ich soll nicht auf sie hören.</div></div>
+<div class="audio-grid pairs" style="--cols: 3">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/de_samples/source/ex01_sad_00010.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_cvsst/ex01_sad_00010.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_vcdub/ex01_sad_00010.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_cvsst/ex01_sad_00010.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_vcdub/ex01_sad_00010.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#6</span><span class="style-chip">Enunciated</span><span class="sample-id">ex01_enunciated_00205</span><div class="sample-text"><span class="text-label">Source (En)</span> The people got too greedy.<br><span class="text-label">Reference (De)</span> Die Leute wurden zu gierig.</div></div>
+<div class="audio-grid pairs" style="--cols: 3">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/de_samples/source/ex01_enunciated_00205.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_cvsst/ex01_enunciated_00205.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_vcdub/ex01_enunciated_00205.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_cvsst/ex01_enunciated_00205.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_vcdub/ex01_enunciated_00205.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#7</span><span class="style-chip">Emphasis</span><span class="sample-id">ex01_default_emphasis_00181</span><div class="sample-text"><span class="text-label">Source (En)</span> Well, I&#x27;m with <em><b>Kevin.</b></em><br><span class="text-label">Reference (De)</span> Nun ja, ich bin mit <em><b>Kevin</b></em> zusammen.</div></div>
+<div class="audio-grid pairs" style="--cols: 3">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/de_samples/source/ex01_default_emphasis_00181.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_cvsst/ex01_default_emphasis_00181.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_vcdub/ex01_default_emphasis_00181.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_cvsst/ex01_default_emphasis_00181.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_vcdub/ex01_default_emphasis_00181.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#8</span><span class="style-chip">Happy</span><span class="sample-id">ex04_happy_00087</span><div class="sample-text"><span class="text-label">Source (En)</span> I hoped that help!<br><span class="text-label">Reference (De)</span> Ich hoffe, das hilft!</div></div>
+<div class="audio-grid pairs" style="--cols: 3">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/de_samples/source/ex04_happy_00087.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_cvsst/ex04_happy_00087.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_vcdub/ex04_happy_00087.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_cvsst/ex04_happy_00087.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_vcdub/ex04_happy_00087.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#9</span><span class="style-chip">Sad</span><span class="sample-id">ex04_sad_00189</span><div class="sample-text"><span class="text-label">Source (En)</span> OK, Barbara Long. And which Evans, Dorothy Evens or Jessica Evans?<br><span class="text-label">Reference (De)</span> Okay, Barbara Long. Und welche Evans, Dorothy Evans oder Jessica Evans?</div></div>
+<div class="audio-grid pairs" style="--cols: 3">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/de_samples/source/ex04_sad_00189.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_cvsst/ex04_sad_00189.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_vcdub/ex04_sad_00189.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_cvsst/ex04_sad_00189.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_vcdub/ex04_sad_00189.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
+<div class="sample-block">
+<div class="sample-head"><span class="sample-index">#10</span><span class="style-chip">Confused</span><span class="sample-id">ex03_confused_00149</span><div class="sample-text"><span class="text-label">Source (En)</span> Where do your loyalties lie?<br><span class="text-label">Reference (De)</span> Wem bist du loyal?</div></div>
+<div class="audio-grid pairs" style="--cols: 3">
+<div class="audio-cell source"><div class="audio-label">Source speech (En)</div><audio controls preload="none"><source src="speech_samples/de_samples/source/ex03_confused_00149.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_cvsst/ex03_confused_00149.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">TransVIP <span class="train-data">· VC-Dub</span></div><audio controls preload="none"><source src="speech_samples/de_samples/transvip_vcdub/ex03_confused_00149.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell "><div class="audio-label">DirectS2ST <span class="train-data">· CVSS-T</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_cvsst/ex03_confused_00149.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+<div class="audio-cell ours"><div class="audio-label">DirectS2ST <span class="train-data">· VC-Dub</span> <span class="proposed-tag">(ours)</span></div><audio controls preload="none"><source src="speech_samples/de_samples/direct_vcdub/ex03_confused_00149.wav" type="audio/wav">Your browser does not support the audio element.</audio></div>
+</div>
+</div>
     </section>
 
     <section class="reference-box card-panel" id="references">
       <b>References.</b><br>
-      <span id="ref-transvip">[1] Le, C., Qian, Y., Wang, D., Zhou, L., Liu, S., Wang, X., Yousefi, M., Qian, Y., Li, J., Zhao, S., and Zeng, M. (2024).
-      <i>TransVIP: Speech to Speech Translation System with Voice and Isochrony Preservation.</i> NeurIPS 2024.
-      <a href="https://proceedings.neurips.cc/paper_files/paper/2024/hash/a32539cb16274581a17e679f6046f4bf-Abstract-Conference.html">Paper</a> /
-      <a href="https://arxiv.org/abs/2405.17809">arXiv</a>.</span><br>
-      <span id="ref-cvss">[2] Jia, Y., Ramanovich, M. T., Wang, Q., and Zen, H. (2022).
-      <i>CVSS Corpus and Massively Multilingual Speech-to-Speech Translation.</i> LREC 2022.
-      <a href="https://aclanthology.org/2022.lrec-1.720/">ACL Anthology</a> /
-      <a href="https://arxiv.org/abs/2201.03713">arXiv</a>.</span><br>
-      <span id="ref-speechvecalign">[3] Meng, C. and Koehn, P. (2025).
-      <i>Speech Vecalign: an Embedding-based Method for Aligning Parallel Speech Documents.</i> EMNLP 2025.
-      <a href="https://aclanthology.org/2025.emnlp-main.833/">ACL Anthology</a> /
-      <a href="https://arxiv.org/abs/2509.18360">arXiv</a>.</span><br>
-      <span id="ref-seedvc">[4] Liu, S. (2024).
-      <i>Zero-shot Voice Conversion with Diffusion Transformers.</i> arXiv:2411.09943.
-      <a href="https://arxiv.org/abs/2411.09943">arXiv</a> /
-      <a href="https://github.com/Plachtaa/seed-vc">Code</a>.</span>
+      TransVIP: Le et al., <a href="https://proceedings.neurips.cc/paper_files/paper/2024/hash/a32539cb16274581a17e679f6046f4bf-Abstract-Conference.html"><i>TransVIP: Speech to Speech Translation System with Voice and Isochrony Preservation</i></a>, NeurIPS 2024.<br>
+      Dub-S2ST: Choi, Kim, and Chung, <a href="https://aclanthology.org/2025.findings-emnlp.524/"><i>Dub-S2ST: Textless Speech-to-Speech Translation for Seamless Dubbing</i></a>, Findings of EMNLP 2025.<br>
+      S2U model: Popuri et al., <a href="https://www.isca-archive.org/interspeech_2022/popuri22_interspeech.html"><i>Enhanced Direct Speech-to-Speech Translation Using Self-supervised Pre-training and Data Augmentation</i></a>, Interspeech 2022.<br>
+      CVSS: Jia et al., <a href="https://aclanthology.org/2022.lrec-1.720/"><i>CVSS Corpus and Massively Multilingual Speech-to-Speech Translation</i></a>, LREC 2022.<br>
+      Speech Vecalign: Meng and Koehn, <a href="https://aclanthology.org/2025.emnlp-main.833/"><i>Speech Vecalign: an Embedding-based Method for Aligning Parallel Speech Documents</i></a>, EMNLP 2025.<br>
+      Seed-VC: Liu, <a href="https://arxiv.org/abs/2411.09943"><i>Zero-shot Voice Conversion with Diffusion Transformers</i></a>, arXiv:2411.09943, 2024. <a href="https://github.com/Plachtaa/seed-vc">Code</a>.<br>
+      Expresso: Nguyen et al., <a href="https://www.isca-archive.org/interspeech_2023/nguyen23_interspeech.html"><i>EXPRESSO: A Benchmark and Analysis of Discrete Expressive Speech Resynthesis</i></a>, Interspeech 2023.<br>
+      mExpresso / Seamless: Barrault et al., <a href="https://arxiv.org/abs/2312.05187"><i>Seamless: Multilingual Expressive and Streaming Speech Translation</i></a>, arXiv:2312.05187, 2023.
     </section>
 
     <section class="disclaimer-box card-panel">
-      <b>Disclaimer:</b> Audio samples are provided for research demonstration purposes only.
+      <b>Disclaimer:</b> Audio samples are provided for research demonstration purposes only. Due to licensing
+      constraints, the dubbing dataset itself cannot be shared; the construction scripts are released in
+      <a href="https://github.com/hzted/truly-e2e-expressive-s2st-demo/tree/main/VC-DUB">VC-DUB/</a>.
     </section>
   </main>
 
   <footer>
-    Demo website for expressive speech-to-speech translation.
+    Holistic Parallel Supervision for Expressive Speech-to-Speech Translation · demo page
   </footer>
-
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0wLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6bWh2IMqE241RiqJxyMiZ6OW/JmZQ5stwEULTy"
-    crossorigin="anonymous"></script>
 </body>
-
 </html>
