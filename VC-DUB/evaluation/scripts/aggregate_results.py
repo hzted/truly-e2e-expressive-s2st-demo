@@ -19,6 +19,7 @@ AGGREGATE_KEYS = [
     "dc_0p2_compliance_mean",
     "dc_0p4_compliance_mean",
     "speech_rate_syllable_spearman_mean",
+    "pause_joint_score_mean",
     "pause_wmean_duration_score_mean",
     "vsim_mean",
     "dnsmospro_nat_mean",
@@ -81,6 +82,7 @@ def add_summary_metrics(merged: dict[str, Any], data: dict[str, Any]) -> None:
             "sc_0p2_compliance",
             "sc_0p4_compliance",
             "speech_rate_syllable_spearman",
+            "pause_joint_score",
             "pause_wmean_duration_score",
         }:
             out_key = nkey if nkey.endswith("_mean") else f"{nkey}_mean"

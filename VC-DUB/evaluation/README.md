@@ -1,49 +1,40 @@
-# VC-DUB Paper Evaluation Package
+# Evaluation utilities
 
-This package is separate from VC-DUB construction/cleaning. It evaluates final
-generated audio and must not be used to decide which construction examples are
-kept, dropped, ordered, or assigned to train/dev/test.
+Scripts for scoring generated speech against its source. They are separate from
+VC-Dub construction and are not used to filter or split construction data.
 
 ## Metrics
 
-The package covers only paper-facing metrics:
+### Used in the paper (Table 3)
 
-- Content: BLASER 2.0
-- Prosody: A.PCP
-- Isochrony: duration SLC at `p = 0.2`, duration SLC at `p = 0.4`,
-  syllable speech-rate correlation, pause weighted-mean duration score
-- Speaker identity: Vsim
-- Quality: DNSMOSPro, only when reported as an evaluation metric
-- ASR: Whisper large-v3, only when an ASR-based evaluation metric is explicitly enabled
-
-Whisper large-v3 is not a BLASER, DNSMOSPro, Vsim, A.PCP, or VC-DUB cleaning
-dependency.
-
-## Paper Table Field Mapping
-
-The Stopes/local-prosody implementation exposes several internal columns. The
-paper-facing table should use only the following mapping:
-
-| Paper column | Aggregated output key | Underlying implementation field |
+| Paper column | Metric | In this package |
 | --- | --- | --- |
-| `BLASER2_QE` | `BLASER2_QE` | `blaser2_qe_audio_mean` |
-| `BLASER2_ref` | `BLASER2_ref` | `blaser2_ref_mean` |
-| `A_PCP` | `A_PCP` | `autopcp_mean` |
-| `SLC_0p2` | `SLC_0p2` | `dc_0p2_compliance_mean` |
-| `SLC_0p4` | `SLC_0p4` | `dc_0p4_compliance_mean` |
-| `SpeechRate` | `SpeechRate` | `speech_rate_syllable_spearman_mean` |
-| `Pause` | `Pause` | `pause_wmean_duration_score_mean` |
-| `Vsim` | `Vsim` | `vsim_mean` |
-| `DNSMOSPro_Nat` | `DNSMOSPro_Nat` | `dnsmospro_nat_mean` |
+| ASR-BLEU | Whisper-large-v3 transcripts scored with SacreBLEU | Transcription only (`run_whisper_asr.py`); BLEU scoring is not included |
+| BLASER | BLASER 2.0-QE | `BLASER2_QE` |
+| A.PCP | AutoPCP (STOPES) | `A_PCP` |
+| Rate | Spearman correlation of source and target syllable speech rates (STOPES) | `SpeechRate` |
+| Pause | Pause alignment (STOPES): per-utterance duration score weighted by pause length (`wmean_duration_score`), averaged over utterances | `Pause` |
+| Vsim | Vocal-style similarity (STOPES, WavLM) | `Vsim` |
+| NAT | NISQA-TTS | Not included |
 
-`sc_0p2_compliance` and `sc_0p4_compliance` may still appear in intermediate
-debug files, but they are not part of the default paper-table output.
+DNSMOSPro appears in the paper only as a speech-quality score of the training
+data (Table 2); it is not the NAT column.
 
-## Input Manifest
+### Additionally supported
 
-Use a single TSV keyed by `sample_id`. See `examples/manifest_schema.md`.
+- `BLASER2_ref`: reference-based BLASER 2.0
+- `SLC_0p2`, `SLC_0p4`: duration speech-length compliance
+- `DNSMOSPro_Nat`: DNSMOSPro naturalness
 
-Required core columns:
+### Not included
+
+NISQA-TTS scoring and ASR-BLEU scoring (BLEU, WER, CER).
+
+## Input manifest
+
+A single TSV keyed by `sample_id`; see `examples/manifest_schema.md`.
+
+Required columns:
 
 ```text
 sample_id
@@ -57,7 +48,7 @@ target_lang
 status
 ```
 
-Recommended optional columns:
+Optional columns:
 
 ```text
 reference_audio
@@ -65,7 +56,7 @@ reference_text
 reference_translation
 ```
 
-## One-Command Smoke Test
+## Smoke test
 
 From the `VC-DUB` directory:
 
@@ -73,11 +64,10 @@ From the `VC-DUB` directory:
 bash evaluation/tests/test_smoke.sh
 ```
 
-This uses `--dry-run`, so it does not require model checkpoints or audio files.
-It validates command plumbing and aggregation only; it does not validate metric
-numerical equivalence.
+This runs with `--dry-run`: it checks the command plumbing and aggregation, not
+metric values, and needs no checkpoints or audio.
 
-## Real Evaluation Command
+## Running
 
 From the `VC-DUB` directory:
 
@@ -92,16 +82,13 @@ python -u evaluation/scripts/run_all_metrics.py \
   --hypo-lang spa \
   --wavlm-ckpt /path/to/wavlm_large_finetune.pth \
   --dnsmospro-cmd 'python /path/to/DNSMOSPro/infer.py --audio {audio}' \
-  --dnsmospro-score-key <confirmed_json_score_key> \
+  --dnsmospro-score-key <json_score_key> \
   --num-shards 1 \
   --parallel-jobs 1 \
   --sample-frac 1.0
 ```
 
-Use `--num-shards 1` in the reviewer release. Multi-shard evaluation is disabled
-until per-example ID ordering has been fully audited.
-
-Outputs:
+Only `--num-shards 1` is supported. Outputs:
 
 ```text
 per-example_metrics.tsv
@@ -111,33 +98,12 @@ paper_table_metrics.json
 paper_table_metrics.tsv
 ```
 
-## Plus/Minus Reporting
+`--uncertainty {std,sem,ci95}` adds `*_pm` fields; without it none are added.
 
-The aggregator does not silently choose what table `±` means. Pass one of:
+## Requirements
 
-```text
---uncertainty std
---uncertainty sem
---uncertainty ci95
-```
-
-If omitted, no `*_pm` fields are added. The paper table caption should explicitly
-state whether `±` is standard deviation, standard error, or a 95% confidence
-interval margin.
-
-## Implementation Notes
-
-The wrappers call the vendored project implementations under
-`evaluation/scripts/impl` rather than fixed-value dry-run outputs. Real-mode
-execution still requires the original metric backends: Stopes, SONAR/BLASER 2.0,
-the WavLM checkpoint used by Vsim, DNSMOSPro, and the matching PyTorch/audio
-stack. If a model checkpoint, dependency version, or official implementation
-commit is missing, treat it as a blocker and fill it from the original
-experiment environment instead of guessing.
-
-DNSMOSPro evaluation also requires explicit parsing through
-`--dnsmospro-score-key` or `--dnsmospro-score-regex`; implicit first-number
-parsing is disabled.
-
-The optional Whisper wrapper only produces transcripts. It does not compute or
-aggregate WER, CER, ASR-BLEU, or normalized ASR-BLEU in this release.
+The wrappers call the implementations in `evaluation/scripts/impl` and need the
+metric backends: STOPES, SONAR/BLASER 2.0, the WavLM checkpoint used by Vsim,
+DNSMOSPro (for `DNSMOSPro_Nat`), and a matching PyTorch/audio stack.
+DNSMOSPro output is parsed only through `--dnsmospro-score-key` or
+`--dnsmospro-score-regex`.

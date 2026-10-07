@@ -77,7 +77,7 @@ def main() -> None:
     impl_root = args.verify_scripts_root or args.implementation_root
     if str(args.num_shards) != "1":
         raise ValueError(
-            "Multi-shard evaluation wrappers are disabled in the reviewer release "
+            "Multi-shard evaluation wrappers are disabled in this release "
             "because per-example ID ordering must be audited first. Use --num-shards 1."
         )
 

@@ -39,7 +39,7 @@ def main() -> None:
     out_dir = Path(args.out_dir)
     if str(args.num_shards) != "1":
         raise ValueError(
-            "Multi-shard A.PCP evaluation is disabled in the reviewer release "
+            "Multi-shard A.PCP evaluation is disabled in this release "
             "until sampled ID ordering is fully audited. Use --num-shards 1."
         )
     if args.dry_run:

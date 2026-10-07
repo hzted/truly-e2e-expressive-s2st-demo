@@ -66,7 +66,7 @@
           "split_test_size_pairs_matching_released_counts": 504
         }
       },
-      "blocker": "Exact DNSMOSPro implementation commit, score field, source-target combination rule, and threshold/duration-matching rule require confirmation; see docs/blockers.md."
+      "not_pinned": "Exact DNSMOSPro implementation commit, score field, source-target combination rule, and threshold/duration-matching rule are not pinned in this release; see docs/reproducibility_limitations.md."
     }
   },
   "splits": {
